@@ -1,7 +1,7 @@
 package mypokemons;
 import mymoves.*;
 
-public class Clefable extends Clefairy {
+public final class Clefable extends Clefairy {
     public Clefable(String name, int lvl){
         super(name, lvl);
 

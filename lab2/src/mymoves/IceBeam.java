@@ -3,7 +3,7 @@ package mymoves;
 import ru.ifmo.se.pokemon.*;
 import static utils.Util.chance;
 
-public class IceBeam extends SpecialMove {
+public final class IceBeam extends SpecialMove {
     public IceBeam (double pow, double acc){
         super(Type.ICE, pow, acc);
     }

@@ -2,7 +2,7 @@ package mypokemons;
 import ru.ifmo.se.pokemon.*;
 import mymoves.*;
 
-public class Snorunt extends Pokemon {
+public final class Snorunt extends Pokemon {
     public Snorunt(String name, int lvl){
         super(name, lvl);
 
