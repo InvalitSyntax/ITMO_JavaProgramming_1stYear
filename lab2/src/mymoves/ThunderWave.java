@@ -13,10 +13,10 @@ public final class ThunderWave extends StatusMove {
 
     @Override
     protected void applyOppEffects(Pokemon def){
-        Effect.paralyze(def);
-        new Effect().chance(0.25).turns(1).stat(Stat.ATTACK, -1);
         if (!def.hasType(Type.ELECTRIC)) {
-            def.setCondition(new Effect().attack(0.25).turns(1).stat(Stat.SPEED, -2));
+            Effect.paralyze(def);
+        } else {
+            System.out.println("Electric покемон не может быть парализован");
         }
     }
 }
