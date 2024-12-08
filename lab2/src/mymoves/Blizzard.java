@@ -3,7 +3,7 @@ package mymoves;
 import static utils.Util.chance;
 import ru.ifmo.se.pokemon.*;
 
-public final class Blizzard extends SpecialMove {
+public class Blizzard extends SpecialMove {
     public Blizzard (double pow, double acc){
         super(Type.ICE, pow, acc);
     }

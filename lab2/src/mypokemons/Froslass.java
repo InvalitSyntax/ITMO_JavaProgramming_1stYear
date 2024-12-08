@@ -3,7 +3,7 @@ import ru.ifmo.se.pokemon.*;
 import mymoves.*;
 
 
-public final class Froslass extends Pokemon {
+public class Froslass extends Pokemon {
     public Froslass(String name, int lvl){
         super(name, lvl);
 
