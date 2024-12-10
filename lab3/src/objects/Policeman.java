@@ -1,36 +1,54 @@
 package objects;
 
+import exeptions.IllegalArrestException;
+import interfaces.CanArrest;
+
 import java.util.Objects;
 
-public class Policeman extends Person {
+public class Policeman extends Person implements CanArrest {
     private boolean knowHowToArrest = true;
 
     public Policeman(String name, int age) {
         super(name, age);
     }
 
-    public void getKnowHowToArrestPrint() {
-        if (knowHowToArrest) {
-            System.out.println(getNameCapitalized() + " знает как арестовывать.");
+    public void arrest(LittleMan littleMan) throws IllegalArrestException {
+        if (getKnowHowToArrest()) {
+            if (littleMan.getArrested()) {
+                throw new IllegalArrestException("Нельзя вновь арестовать уже посаженного " + littleMan);
+            }
+            System.out.println(getNameCapitalized() +
+                    " арестовывает " + littleMan.getName() + " за "
+                    + littleMan.getViolationDetail().violation());
+
+            littleMan.setArrested(true);
         } else {
             System.out.println(getNameCapitalized() + " не знает как арестовывать");
         }
     }
 
+    public static void letGo(LittleMan littleMan) {
+        littleMan.setArrested(false);
+        littleMan.clearViolationDetail();
+        System.out.println(littleMan.getNameCapitalized() + " отпускают");
+    }
+
+    @Override
     public boolean getKnowHowToArrest() {
         return knowHowToArrest;
     }
 
+    @Override
     public void setKnowHowToArrest(boolean knowHowToArrest) {
         this.knowHowToArrest = knowHowToArrest;
         if (!knowHowToArrest) {
-            getKnowHowToArrestPrint();
+            System.out.println(getNameCapitalized() + " не знает как арестовывать");
         }
     }
 
     @Override
-    public String getNameWithType(){
-        return "коротышка " + getName();
+    public String getNameWithType() {
+        return "полицейский " + getName();
     }
 
     @Override

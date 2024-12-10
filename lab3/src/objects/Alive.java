@@ -1,20 +1,24 @@
 package objects;
 
+import interfaces.HasName;
+
 import java.util.Objects;
 
-abstract class Alive {
+abstract class Alive implements HasName {
     private final String name;
 
     Alive(String name) {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
     abstract public String getNameCapitalized();
     abstract public String getNameWithType();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

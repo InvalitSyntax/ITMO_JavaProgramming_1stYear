@@ -1,21 +1,55 @@
 package objects;
 
-import enums.Violation;
-import exeptions.IllegalArrestException;
-import interfaces.Awaiting;
-import objects.actions.ArrestActions;
-import objects.actions.Randoms;
-import objects.actions.Do;
-import objects.actions.Think;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
-public class World implements Awaiting {
-    public World() {
-        System.out.println("В мире где живут коротышки..");
+public class World {
+    private static World instance;
+    public static World getInstance() {
+        if (instance == null) {
+            instance = new World();
+        }
+        return instance;
+    }
+    public void initWorld(int numberOfLittleMans, int numberOfPoliceman) {
+        ArrayList<String> namesList = new ArrayList<>(Arrays.asList(
+                "Борислав", "Бранислав", "Велислав", "Владимир", "Владислав", "Всеволод", "Всеслав", "Добромир",
+                "Добромил", "Иван", "Игорь", "Любомир", "Милослав", "Мирослав", "Млад", "Мстислав", "Олег", "Радослав",
+                "Ростислав", "Рус", "Светозар", "Святослав", "Станислав", "Ярослав", "Благослава", "Бранислава",
+                "Варвара", "Велислава", "Вера", "Влада", "Владислава", "Власта", "Вячеслава", "Дарина", "Добромила",
+                "Доброслава", "Забава", "Зарина", "Купава", "Лада", "Леля", "Любовь", "Звенислава", "Злата", "Людмила",
+                "Марья", "Милослава", "Мирослава", "Млада", "Мстислава", "Надежда", "Рада", "Радослава", "Росава",
+                "Ростислава", "Светлана", "Снежана", "Станислава", "Ярослава"
+        ));
+
+        Random rand = new Random();
+        for (int i = 0; i < numberOfLittleMans; i++) {
+            int indexOfName = rand.nextInt(namesList.size());
+            instance.addObjToList(
+                    new LittleMan(
+                            namesList.get(indexOfName),
+                            rand.nextInt(9))
+            );
+            namesList.remove(indexOfName);
+        }
+
+        for (int i = 0; i < numberOfPoliceman; i++) {
+            int indexOfName = rand.nextInt(namesList.size());
+            instance.addObjToList(
+                    new Policeman(
+                            namesList.get(indexOfName),
+                            rand.nextInt(18, 45))
+            );
+            namesList.remove(indexOfName);
+        }
+        instance.addObjToList(new Person("некоторые", 25));
+        instance.addObjToList(new Word("арест"));
     }
 
-    private int time = 0;
+    private World() {
+        System.out.println("В мире где живут коротышки..");
+    }
 
     private final ArrayList<LittleMan> littleManArrayList = new ArrayList<>();
     private final ArrayList<Policeman> policemanArrayList = new ArrayList<>();
@@ -52,82 +86,5 @@ public class World implements Awaiting {
 
     public ArrayList<Word> getWordArrayList() {
         return wordArrayList;
-    }
-
-    public void startSimulation() {
-        while (true) {
-            for (LittleMan littleMan : littleManArrayList) {
-                if (Randoms.isTrueWithChance(20)) {
-                    Do.apply(littleMan, Randoms.getRandomEnum(Violation.class), time);
-                }
-            }
-            for (Policeman policeman : policemanArrayList) {
-                if (Randoms.isTrueWithChance(50)) {
-                    for (LittleMan littleMan : littleManArrayList) {
-                        if (littleMan.getViolationDetail() != null) {
-                            try {
-                                ArrestActions.arrest(policeman, littleMan);
-                                for (Person person : personArrayList) {
-                                    Think.apply(person, littleMan.getViolationDetail());
-                                }
-                            } catch (IllegalArrestException e) {
-                                System.out.println("Ошибка: " + e.getMessage());
-                            }
-                        }
-                    }
-                }
-            }
-            for (LittleMan littleMan : littleManArrayList) {
-                if (littleMan.getArrested()) {
-                    Think.apply(littleMan, "как же " + littleMan.getTime() +
-                            " тянется время, я правда сожалею о " + littleMan.getViolationDetail().violation());
-                    if (time - littleMan.getViolationDetail().timeWhenDid() >= 5) {
-                        ArrestActions.letGo(littleMan);
-                    }
-                } else {
-                    littleMan.updateAge(Randoms.getRandomIntInRange(3, 7));
-                }
-
-            }
-
-            int countOfNotViolated = 0;
-            for (LittleMan littleMan : littleManArrayList) {
-                if (!littleMan.getAvailableToViolate()) {
-                    countOfNotViolated++;
-                }
-            }
-            if (countOfNotViolated == littleManArrayList.size()) {
-                System.out.println("Нарушителей порядка не осталось");
-                for (Policeman policeman : policemanArrayList) {
-                    policeman.setKnowHowToArrest(false);
-                }
-            }
-            int countOfPolicemanWhoCantArrested = 0;
-            for (Policeman policeman : policemanArrayList) {
-                if (!policeman.getKnowHowToArrest()) {
-                    countOfPolicemanWhoCantArrested++;
-                }
-            }
-            if (countOfPolicemanWhoCantArrested == policemanArrayList.size()) {
-                for (Word word : wordArrayList) {
-                    word.setKnowledge(false);
-                }
-                return;
-            }
-
-            System.out.println("Время шло..." + "\n");
-            sleep(4);
-
-        }
-
-    }
-
-    public void sleep(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000L);
-            time += seconds;
-        } catch (InterruptedException e) {
-            System.out.println("Ожидание прервано: " + e.getMessage());
-        }
     }
 }

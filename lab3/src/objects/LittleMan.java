@@ -2,11 +2,14 @@ package objects;
 
 import enums.Intelligence;
 import enums.Time;
+import enums.Violation;
+import interfaces.CanDoViolate;
+import objects.actions.Randoms;
 import records.ViolationDetail;
 
 import java.util.Objects;
 
-public class LittleMan extends Person {
+public class LittleMan extends Person implements CanDoViolate {
     private Time time;
     private Intelligence intelligence;
     private boolean availableToViolate;
@@ -57,6 +60,25 @@ public class LittleMan extends Person {
         }
     }
 
+    @Override
+    public void doViolate(int timeOfViolate) {
+        Violation violation = Randoms.getRandomEnum(Violation.class);
+        if (getAvailableToViolate() & !getArrested()){
+            System.out.println(getNameCapitalized() + " делать " + violation);
+            setViolationDetail(new ViolationDetail(violation, timeOfViolate));
+        } else {
+            System.out.println(getNameCapitalized() + " больше не делает " + violation);
+        }
+    }
+
+    @Override
+    public void thinkAboutViolation(ViolationDetail violationDetail) {
+        if (getArrested()){
+            System.out.println(getNameCapitalized() + " думает о том, как же " + getTime() +
+                    " тянется время, я правда сожалею о " + getViolationDetail().violation());
+        }
+    }
+
     private void updateAvailableToViolate() {
         this.availableToViolate = this.intelligence != Intelligence.HIGH;
     }
@@ -87,18 +109,6 @@ public class LittleMan extends Person {
 
     public Time getTime() {
         return time;
-    }
-
-    public Intelligence getIntelligence() {
-        return intelligence;
-    }
-
-    public void getIntelligencePrint() {
-        System.out.println(getNameWithType() + " " + this.intelligence);
-    }
-
-    public void getTimePrint() {
-        System.out.println("у " + getNameWithType() + " время тянется " + this.time);
     }
 
     @Override
