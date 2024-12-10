@@ -85,11 +85,6 @@ public class LittleMan extends Person {
         return arrested;
     }
 
-    @Override
-    public String getName(){
-        return "коротышка " + super.getName();
-    }
-
     public Time getTime() {
         return time;
     }
@@ -99,12 +94,18 @@ public class LittleMan extends Person {
     }
 
     public void getIntelligencePrint() {
-        System.out.println(getName() + " " + this.intelligence);
+        System.out.println(getNameWithType() + " " + this.intelligence);
     }
 
     public void getTimePrint() {
-        System.out.println("у " + getName() + " время тянется " + this.time);
+        System.out.println("у " + getNameWithType() + " время тянется " + this.time);
     }
+
+    @Override
+    public String getNameWithType(){
+        return "коротышка " + getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -29,8 +29,8 @@ public class Policeman extends Person {
     }
 
     @Override
-    public String getName() {
-        return "полицейский " + super.getName();
+    public String getNameWithType(){
+        return "коротышка " + getName();
     }
 
     @Override

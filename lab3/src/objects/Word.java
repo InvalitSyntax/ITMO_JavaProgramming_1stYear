@@ -15,11 +15,15 @@ public class Word {
     }
 
     public String getWord() {
+        return word;
+    }
+
+    public String getWordWithType() {
         return "слово " + word;
     }
 
     public String getWordCapitalized() {
-        return getWord().substring(0, 1).toUpperCase() + getWord().substring(1);
+        return getWordWithType().substring(0, 1).toUpperCase() + getWord().substring(1);
     }
 
     public void setKnowledge(boolean isKnowledge) {

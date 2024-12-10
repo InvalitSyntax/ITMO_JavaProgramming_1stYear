@@ -14,6 +14,7 @@ abstract class Alive {
     }
 
     abstract public String getNameCapitalized();
+    abstract public String getNameWithType();
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

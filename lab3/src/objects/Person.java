@@ -16,8 +16,12 @@ public class Person extends Alive{
         this.age = age;
     }
 
+    public String getNameWithType(){
+        return getName();
+    }
+
     public String getNameCapitalized() {
-        return getName().substring(0, 1).toUpperCase() + getName().substring(1);
+        return getNameWithType().substring(0, 1).toUpperCase() + getName().substring(1);
     }
     @Override
     public String toString() {
