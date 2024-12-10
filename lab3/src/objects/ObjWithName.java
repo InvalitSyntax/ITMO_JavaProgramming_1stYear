@@ -4,10 +4,10 @@ import interfaces.HasName;
 
 import java.util.Objects;
 
-abstract class Alive implements HasName {
+abstract class ObjWithName implements HasName {
     private final String name;
 
-    Alive(String name) {
+    ObjWithName(String name) {
         this.name = name;
     }
 
@@ -23,8 +23,8 @@ abstract class Alive implements HasName {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Alive alive = (Alive) o;
-        return Objects.equals(name, alive.name);
+        ObjWithName objWithName = (ObjWithName) o;
+        return Objects.equals(name, objWithName.name);
     }
 
     @Override

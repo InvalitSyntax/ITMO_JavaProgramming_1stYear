@@ -1,14 +1,13 @@
 package objects;
 
-import interfaces.HasName;
-
 import java.util.Objects;
 
-public class Word implements HasName {
+public class Word extends ObjWithName {
     private final String name;
     private boolean isKnowledge = true;
 
     public Word(String name) {
+        super(name);
         this.name = name;
     }
 
@@ -17,18 +16,20 @@ public class Word implements HasName {
         return name;
     }
 
-    public String getWordWithType() {
+    @Override
+    public String getNameWithType() {
         return "слово " + getName();
     }
 
-    public String getWordCapitalized() {
-        return getWordWithType().substring(0, 1).toUpperCase() + getWordWithType().substring(1);
+    @Override
+    public String getNameCapitalized() {
+        return getNameWithType().substring(0, 1).toUpperCase() + getNameWithType().substring(1);
     }
 
     public void setKnowledge(boolean isKnowledge) {
         this.isKnowledge = isKnowledge;
         if (!isKnowledge) {
-            System.out.println(getWordCapitalized() + " было забыто");
+            System.out.println(getNameCapitalized() + " было забыто");
         }
     }
 

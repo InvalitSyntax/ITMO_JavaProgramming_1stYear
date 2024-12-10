@@ -5,7 +5,7 @@ import records.ViolationDetail;
 
 import java.util.Objects;
 
-public class Person extends Alive implements HasAge, CanThinkAboutViolation {
+public class Person extends ObjWithName implements HasAge, CanThinkAboutViolation {
     private int age;
     public Person(String name, int age) {
         super(name);
