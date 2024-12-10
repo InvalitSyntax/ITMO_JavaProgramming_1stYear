@@ -53,5 +53,7 @@ public class Main {
 
 
         world.startSimulation();
+
+        //анчекд исключения!!!
     }
 }

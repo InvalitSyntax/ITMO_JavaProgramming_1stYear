@@ -28,10 +28,10 @@ public class Policeman extends Person {
         }
     }
 
-        @Override
-        public String getName() {
-            return "полицейский " + super.getName();
-        }
+    @Override
+    public String getName() {
+        return "полицейский " + super.getName();
+    }
 
     @Override
     public boolean equals(Object o) {

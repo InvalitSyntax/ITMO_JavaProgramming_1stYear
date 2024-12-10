@@ -8,7 +8,7 @@ public class ArrestActions {
     public static void arrest(Policeman policeman, LittleMan littleMan) throws IllegalArrestException {
         if (policeman.getKnowHowToArrest()){
             if(littleMan.getArrested()){
-                throw new IllegalArrestException("Нельзя вновь арестовать уже посаженного коротышку!");
+                throw new IllegalArrestException("Нельзя вновь арестовать уже посаженного "+littleMan);
             }
             System.out.println(policeman.getNameCapitalized() +
                     " арестовывает " + littleMan.getName() + " за "
