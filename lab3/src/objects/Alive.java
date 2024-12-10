@@ -1,16 +1,36 @@
 package objects;
 
-import enums.Action;
+import java.util.Objects;
 
-public class Alive extends Obj {
-    public Alive(String name) {
-        super(name);
+abstract class Alive {
+    private final String name;
+
+    Alive(String name) {
+        this.name = name;
     }
 
-    public void doSomething(Action action) {
-        System.out.println(getName() + " " + action);
+    public String getName() {
+        return this.name;
     }
-    public void doSomething(Action action, String whatToDo) {
-        System.out.println(getName() + " " + action + " " + whatToDo);
+
+    abstract public String getNameCapitalized();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Alive alive = (Alive) o;
+        return Objects.equals(name, alive.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Живое{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

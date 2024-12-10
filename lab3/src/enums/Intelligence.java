@@ -1,10 +1,10 @@
 package enums;
 
 public enum Intelligence {
-    LOW("глупый"), MEDIUM("не особо умный"), HIGH("умный");
+    LOW("глупый"), MEDIUM("умнее"), HIGH("умный");
     private final String intelligent;
 
-    private Intelligence(String intelligent) {
+    Intelligence(String intelligent) {
         this.intelligent = intelligent;
     }
 
