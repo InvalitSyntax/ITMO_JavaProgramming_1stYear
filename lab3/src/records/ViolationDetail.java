@@ -1,3 +1,5 @@
 package records;
 
-public record ViolationDetail(String reason, int daysOfArrest) {}
+import enums.Violation;
+
+public record ViolationDetail(Violation violation, int daysOfArrest) {}
