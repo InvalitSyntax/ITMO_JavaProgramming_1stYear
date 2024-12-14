@@ -3,75 +3,90 @@ package objects;
 import exeptions.IllegalAgeSetting;
 import exeptions.IllegalArrestException;
 import interfaces.GetBooleanFromArrayAndFunc;
-import interfaces.Utils;
+import objects.alive.AliveObject;
 import objects.alive.LittleMan;
 import objects.alive.Policeman;
 import objects.alive.Spectator;
+import objects.lifeless.LifelessObject;
 import objects.lifeless.Word;
 
 import static interfaces.GetBooleanFromArrayAndFunc.getBooleansFromArray;
-import static interfaces.Utils.getRandomIntInRange;
+import static objects.Utils.getRandomIntInRange;
 
 public class Simulate {
     public static void startSimulation(World world, int sleepTime) {
         int localTime = 0;
-        GetBooleanFromArrayAndFunc<LittleMan> getBooleanFromLittleMan = (arrayList, function) ->
-                getBooleansFromArray(arrayList, function, false);
+        GetBooleanFromArrayAndFunc<AliveObject,LittleMan>
+                getBooleanFromLittleMan = (arrayList, function)->
+                getBooleansFromArray(arrayList, LittleMan.class, function, false);
 
-        GetBooleanFromArrayAndFunc<Policeman> getBooleanFromPoliceman = (arrayList, function) ->
-                getBooleansFromArray(arrayList, function, false);
+        GetBooleanFromArrayAndFunc<AliveObject, Policeman>
+                getBooleanFromPoliceman = (arrayList, function) ->
+                getBooleansFromArray(arrayList, Policeman.class, function, false);
 
         while (true) {
-            for (LittleMan littleMan : world.getLittleManArrayList()) {
-                if (Utils.isTrueWithChance(20)) {
-                    littleMan.doViolate(localTime);
+            for (AliveObject aliveObject : world.getAliveObjectArrayList()) {
+                if (aliveObject instanceof LittleMan) {
+                    if (Utils.isTrueWithChance(20)) {
+                        ((LittleMan) aliveObject).doViolate(localTime);
+                    }
                 }
             }
-            for (Policeman policeman : world.getListPolicemen()) {
-                for (LittleMan littleMan : world.getLittleManArrayList()) {
-                    if (littleMan.getViolationDetail() != null) {
-                        if (Utils.isTrueWithChance(50)) {
-                            try {
-                                policeman.arrest(littleMan);
-                                for (Spectator spectator : world.getSpectatorsArrayList()) {
-                                    spectator.thinkAboutSomebodyViolation(littleMan.getViolationDetail().violation());
+            for (AliveObject aliveObject1 : world.getAliveObjectArrayList()) {
+                if (aliveObject1 instanceof Policeman) {
+                    for (AliveObject aliveObject2 : world.getAliveObjectArrayList()) {
+                        if (aliveObject2 instanceof LittleMan) {
+                            if (((LittleMan)aliveObject2).getViolationDetail() != null) {
+                                if (Utils.isTrueWithChance(50)) {
+                                    try {
+                                        ((Policeman) aliveObject1).arrest((LittleMan)aliveObject2);
+                                        for (AliveObject aliveObject3 : world.getAliveObjectArrayList()) {
+                                            if (aliveObject3 instanceof Spectator) {
+                                                ((Spectator)aliveObject3).thinkAboutSomebodyViolation(
+                                                        ((LittleMan)aliveObject2).getViolationDetail().violation());
+                                            }
+                                        }
+                                    } catch (IllegalArrestException e) {
+                                        System.out.println("Ошибка: " + e.getMessage());
+                                    }
                                 }
-                            } catch (IllegalArrestException e) {
-                                System.out.println("Ошибка: " + e.getMessage());
                             }
                         }
                     }
                 }
             }
-            for (LittleMan littleMan : world.getLittleManArrayList()) {
-                if (littleMan.getArrested()) {
-                    littleMan.thinkAboutViolation();
-                    if (localTime - littleMan.getViolationDetail().timeWhenItDid() >= 5) {
-                        Policeman.letGo(littleMan);
+            for (AliveObject aliveObject : world.getAliveObjectArrayList()) {
+                if (aliveObject instanceof LittleMan) {
+                    if (((LittleMan)aliveObject).getArrested()) {
+                        ((LittleMan)aliveObject).thinkAboutViolation();
+                        if (localTime - ((LittleMan)aliveObject).getViolationDetail().timeWhenItDid() >= 5) {
+                            Policeman.letGo(((LittleMan)aliveObject));
+                        }
+                    } else {
+                        try {
+                            ((LittleMan)aliveObject).updateAge(getRandomIntInRange(1, 6));
+                        } catch (IllegalAgeSetting e) {
+                            System.out.println("Ошибка: " + e.getMessage());
+                            //e.printStackTrace();
+                        }
                     }
-                } else {
-                    try {
-                        littleMan.updateAge(getRandomIntInRange(1, 6));
-                    }
-                    catch (IllegalAgeSetting e) {
-                        System.out.println("Ошибка: " + e.getMessage());
-                        //e.printStackTrace();
-                    }
-
                 }
-
             }
 
-            if (getBooleanFromLittleMan.apply(world.getLittleManArrayList(), LittleMan::getAvailableToViolate)) {
+            if (getBooleanFromLittleMan.apply(world.getAliveObjectArrayList(), LittleMan::getAvailableToViolate)) {
                 System.out.println("Нарушителей порядка не осталось");
-                for (Policeman policeman : world.getListPolicemen()) {
-                    policeman.setKnowHowToArrest(false);
+                for (AliveObject aliveObject : world.getAliveObjectArrayList()) {
+                    if (aliveObject instanceof Policeman) {
+                        ((Policeman)aliveObject).setKnowHowToArrest(false);
+                    }
                 }
             }
 
-            if (getBooleanFromPoliceman.apply(world.getListPolicemen(), Policeman::getKnowHowToArrest)) {
-                for (Word word : world.getWordArrayList()) {
-                    word.setKnown(false);
+            if (getBooleanFromPoliceman.apply(world.getAliveObjectArrayList(), Policeman::getKnowHowToArrest)) {
+                for (LifelessObject lifelessObject : world.getLifelessObjectArrayList()) {
+                    if (lifelessObject instanceof Word){
+                        ((Word)lifelessObject).setKnown(false);
+                    }
                 }
                 return;
             }

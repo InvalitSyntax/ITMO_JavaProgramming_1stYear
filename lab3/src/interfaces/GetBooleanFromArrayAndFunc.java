@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface GetBooleanFromArrayAndFunc<T> {
-    boolean apply(ArrayList<T> arrayList, Function<T, Boolean> function);
+public interface GetBooleanFromArrayAndFunc<T, E> {
+    boolean apply(ArrayList<T> arrayList, Function<E, Boolean> function);
 
-    static <T> boolean getBooleansFromArray(ArrayList<T> arrayList, Function<T, Boolean> function, boolean reverse) {
+    static <T, E> boolean getBooleansFromArray(ArrayList<T> arrayList, Class<E> clazz, Function<E, Boolean> function, boolean reverse) {
         for (T t : arrayList) {
-            if (function.apply(t) != reverse) {
-                return false;
+            if (clazz.isInstance(t)) {
+                E e = clazz.cast(t);
+                if (function.apply(e) != reverse) {
+                    return false;
+                }
             }
         }
         return true;

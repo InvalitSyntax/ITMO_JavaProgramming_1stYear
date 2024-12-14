@@ -1,8 +1,10 @@
 package objects;
 
+import objects.alive.AliveObject;
 import objects.alive.LittleMan;
 import objects.alive.Policeman;
 import objects.alive.Spectator;
+import objects.lifeless.LifelessObject;
 import objects.lifeless.Word;
 
 import java.util.ArrayList;
@@ -18,12 +20,12 @@ public class World {
         return instance;
     }
 
-    private final ArrayList<LittleMan> littleManArrayList = new ArrayList<>();
-    private final ArrayList<Policeman> policemanArrayList = new ArrayList<>();
-    private final ArrayList<Spectator> spectatorsArrayList = new ArrayList<>();
-    private final ArrayList<Word> wordsArrayList = new ArrayList<>();
+    private final ArrayList<AliveObject> aliveObjectArrayList = new ArrayList<>();
+    private final ArrayList<LifelessObject> lifelessObjectArrayList = new ArrayList<>();
 
     public void initWorld(int numberOfLittleMans, int numberOfPoliceman) {
+        aliveObjectArrayList.clear();
+        lifelessObjectArrayList.clear();
         ArrayList<String> namesList = new ArrayList<>(Arrays.asList(
                 "Борислав", "Бранислав", "Велислав", "Владимир", "Владислав", "Всеволод", "Всеслав", "Добромир",
                 "Добромил", "Иван", "Игорь", "Любомир", "Милослав", "Мирослав", "Млад", "Мстислав", "Олег", "Радослав",
@@ -36,45 +38,47 @@ public class World {
 
         Random rand = new Random();
         for (int i = 0; i < numberOfLittleMans; i++) {
-            int indexOfName = rand.nextInt(namesList.size());
-            instance.littleManArrayList.add(
-                    new LittleMan(
-                            namesList.get(indexOfName),
-                            rand.nextInt(9))
-            );
-            namesList.remove(indexOfName);
+            try {
+                int indexOfName = rand.nextInt(namesList.size());
+                instance.aliveObjectArrayList.add(
+                        new LittleMan(
+                                namesList.get(indexOfName),
+                                rand.nextInt(9))
+                );
+                namesList.remove(indexOfName);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage() + " установлено максимальное кол-во коротышек");
+            }
+
         }
 
         for (int i = 0; i < numberOfPoliceman; i++) {
-            int indexOfName = rand.nextInt(namesList.size());
-            instance.policemanArrayList.add(
-                    new Policeman(
-                            namesList.get(indexOfName),
-                            rand.nextInt(18, 45))
-            );
-            namesList.remove(indexOfName);
+            try {
+                int indexOfName = rand.nextInt(namesList.size());
+                instance.aliveObjectArrayList.add(
+                        new Policeman(
+                                namesList.get(indexOfName),
+                                rand.nextInt(18, 45))
+                );
+                namesList.remove(indexOfName);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage() + " установлено максимальное кол-во полицейских");
+            }
+
         }
-        instance.spectatorsArrayList.add(new Spectator("некоторые", 25));
-        instance.wordsArrayList.add(new Word("арест", true));
+        instance.aliveObjectArrayList.add(new Spectator("некоторые", 25));
+        instance.lifelessObjectArrayList.add(new Word("арест", true));
     }
 
     private World() {
         System.out.println("В мире где живут коротышки..");
     }
 
-    public ArrayList<Policeman> getListPolicemen() {
-        return policemanArrayList;
+    public ArrayList<AliveObject> getAliveObjectArrayList() {
+        return aliveObjectArrayList;
     }
 
-    public ArrayList<LittleMan> getLittleManArrayList() {
-        return littleManArrayList;
-    }
-
-    public ArrayList<Spectator> getSpectatorsArrayList() {
-        return spectatorsArrayList;
-    }
-
-    public ArrayList<Word> getWordArrayList() {
-        return wordsArrayList;
+    public ArrayList<LifelessObject> getLifelessObjectArrayList() {
+        return lifelessObjectArrayList;
     }
 }

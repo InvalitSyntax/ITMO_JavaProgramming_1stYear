@@ -2,9 +2,9 @@ package objects.alive;
 
 import enums.Violation;
 
-import static interfaces.Utils.capitalized;
+import static objects.Utils.capitalized;
 
-public final class Spectator extends AliveObjectWithType {
+public final class Spectator extends AliveObject {
 
     public Spectator(String name, int age) {
         super(name, age, "наблюдатель");

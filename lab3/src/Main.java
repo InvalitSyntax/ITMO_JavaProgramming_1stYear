@@ -4,13 +4,13 @@ import static objects.Simulate.startSimulation;
 
 public class Main {
     public static void main(String[] args) {
-        /* todo: попросить gpt объяснить ту ересь с дженериками
-         */
-
         World world = World.getInstance();
-        world.initWorld(5, 2);
+        world.initWorld(3, 2);
 
-        startSimulation(world, 2);
+        startSimulation(world, 4);
 
+        /*
+        todo: вопросы
+         */
     }
 }

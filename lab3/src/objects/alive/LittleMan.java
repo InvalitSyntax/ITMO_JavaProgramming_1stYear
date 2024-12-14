@@ -8,10 +8,11 @@ import records.ViolationDetail;
 
 import java.util.Objects;
 
-import static interfaces.Utils.capitalized;
+import static objects.Utils.capitalized;
+import static objects.Utils.getRandomEnum;
 
 
-public final class LittleMan extends AliveObjectWithType implements HasIntelligence, HasTimeSpeed, CanDoViolate {
+public final class LittleMan extends AliveObject implements HasIntelligence, HasTimeSpeed, CanDoViolate {
     private TimeSpeed timeSpeed;
     private Intelligence intelligence;
     private boolean availableToViolate;
@@ -71,7 +72,7 @@ public final class LittleMan extends AliveObjectWithType implements HasIntellige
 
     @Override
     public void doViolate(int timeOfViolate) {
-        Violation violation = Utils.getRandomEnum(Violation.class);
+        Violation violation = getRandomEnum(Violation.class);
         if (this.availableToViolate & !this.arrested) {
             System.out.printf("%s %s делать %s\n",capitalized(getType()), capitalized(getName()), violation);
             violationDetail = new ViolationDetail(violation, timeOfViolate);

@@ -4,9 +4,9 @@ package objects.alive;
 import exeptions.IllegalArrestException;
 import interfaces.CanArrest;
 
-import static interfaces.Utils.capitalized;
+import static objects.Utils.capitalized;
 
-public final class Policeman extends AliveObjectWithType implements CanArrest {
+public final class Policeman extends AliveObject implements CanArrest {
     private boolean knowHowToArrest = true;
 
     public Policeman(String name, int age) {

@@ -1,17 +1,21 @@
 package objects.lifeless;
 
-import objects.MyObject;
-
-public abstract class LifelessObject extends MyObject {
+public abstract class LifelessObject {
     private final String type;
+    private final String name;
+
 
     public LifelessObject(String name, String type) {
-        super(name);
         this.type = type;
+        this.name = name;
     }
 
     public String getType() {
         return type;
+    }
+
+    public String getName() {
+        return name;
     }
     @Override
     public boolean equals(Object o) {

@@ -1,15 +1,17 @@
 package objects.alive;
 
 import exeptions.IllegalAgeSetting;
-import objects.MyObject;
 
 import java.util.Objects;
 
-public abstract class AliveObject extends MyObject {
+public abstract class AliveObject {
     private int age;
+    private final String type;
+    private final String name;
 
-    public AliveObject(String name, int age) {
-        super(name);
+    public AliveObject(String name, int age, String type) {
+        this.type = type;
+        this.name = name;
         if (age < 0) {
             throw new IllegalAgeSetting("Возраст " + name +  " должен быть положительным");
         } else {
@@ -17,8 +19,16 @@ public abstract class AliveObject extends MyObject {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public String getType(){
+        return type;
     }
 
     public void setAge(int age) {
@@ -36,7 +46,6 @@ public abstract class AliveObject extends MyObject {
             setAge(getAge() + plusAge);
         }
     }
-    abstract String getType();
 
     @Override
     public boolean equals(Object obj) {
@@ -48,7 +57,7 @@ public abstract class AliveObject extends MyObject {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), age);
+        return Objects.hash(super.hashCode(), age, type, name);
     }
 
     @Override

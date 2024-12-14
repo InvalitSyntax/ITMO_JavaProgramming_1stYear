@@ -2,7 +2,7 @@ package objects.lifeless;
 
 import interfaces.CanBeKnown;
 
-import static interfaces.Utils.capitalized;
+import static objects.Utils.capitalized;
 
 public class Word extends LifelessObject implements CanBeKnown {
     private boolean known;
