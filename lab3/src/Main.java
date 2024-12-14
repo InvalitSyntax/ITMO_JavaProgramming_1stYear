@@ -8,9 +8,9 @@ public class Main {
          */
 
         World world = World.getInstance();
-        world.initWorld(2, 2);
+        world.initWorld(5, 2);
 
-        startSimulation(world, 1);
+        startSimulation(world, 2);
 
     }
 }

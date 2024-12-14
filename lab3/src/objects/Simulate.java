@@ -51,7 +51,7 @@ public class Simulate {
                     }
                 } else {
                     try {
-                        littleMan.updateAge(getRandomIntInRange(3, 7));
+                        littleMan.updateAge(getRandomIntInRange(1, 6));
                     }
                     catch (IllegalAgeSetting e) {
                         System.out.println("Ошибка: " + e.getMessage());
