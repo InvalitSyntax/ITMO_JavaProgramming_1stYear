@@ -2,23 +2,23 @@ package objects;
 
 import exeptions.IllegalAgeSetting;
 import exeptions.IllegalArrestException;
-import interfaces.FuncInterface;
+import interfaces.GetBooleanFromArrayAndFunc;
 import interfaces.Utils;
 import objects.alive.LittleMan;
 import objects.alive.Policeman;
 import objects.alive.Spectator;
 import objects.lifeless.Word;
 
-import static interfaces.FuncInterface.getBooleansFromArray;
+import static interfaces.GetBooleanFromArrayAndFunc.getBooleansFromArray;
 import static interfaces.Utils.getRandomIntInRange;
 
 public class Simulate {
     public static void startSimulation(World world, int sleepTime) {
         int localTime = 0;
-        FuncInterface<LittleMan> getBooleanFromLittleMan = (arrayList, function) ->
+        GetBooleanFromArrayAndFunc<LittleMan> getBooleanFromLittleMan = (arrayList, function) ->
                 getBooleansFromArray(arrayList, function, false);
 
-        FuncInterface<Policeman> getBooleanFromPoliceman = (arrayList, function) ->
+        GetBooleanFromArrayAndFunc<Policeman> getBooleanFromPoliceman = (arrayList, function) ->
                 getBooleansFromArray(arrayList, function, false);
 
         while (true) {

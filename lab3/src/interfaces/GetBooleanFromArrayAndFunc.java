@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface FuncInterface<T> {
+public interface GetBooleanFromArrayAndFunc<T> {
     boolean apply(ArrayList<T> arrayList, Function<T, Boolean> function);
 
     static <T> boolean getBooleansFromArray(ArrayList<T> arrayList, Function<T, Boolean> function, boolean reverse) {
