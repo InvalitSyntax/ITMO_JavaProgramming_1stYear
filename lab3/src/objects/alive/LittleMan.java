@@ -6,6 +6,8 @@ import enums.Violation;
 import interfaces.*;
 import records.ViolationDetail;
 
+import java.util.Objects;
+
 import static interfaces.Utils.capitalized;
 
 
@@ -27,7 +29,7 @@ public final class LittleMan extends AliveObjectWithType implements HasIntellige
     @Override
     public void setAge(int age) {
         if (age < 0) {
-            throw new IllegalArgumentException("Возраст" + getAge() +  "должен быть положительным");
+            throw new IllegalArgumentException("Возраст " + getAge() +  " должен быть положительным");
         } else {
             super.setAge(age);
             updateIntelligence();
@@ -43,13 +45,13 @@ public final class LittleMan extends AliveObjectWithType implements HasIntellige
         } else if (getAge() < 18) {
             if (this.intelligence != Intelligence.MEDIUM) {
                 this.intelligence = Intelligence.MEDIUM;
-                System.out.println(capitalized(getType()) + capitalized(getName()) + " стал " + this.intelligence);
+                System.out.printf("%s %s стал %s\n", capitalized(getType()), capitalized(getName()), this.intelligence);
             }
 
         } else {
             if (this.intelligence != Intelligence.HIGH) {
                 this.intelligence = Intelligence.HIGH;
-                System.out.println(capitalized(getType()) + capitalized(getName()) + " стал " + this.intelligence);
+                System.out.printf("%s %s стал %s\n", capitalized(getType()), capitalized(getName()), this.intelligence);
             }
         }
     }
@@ -71,22 +73,25 @@ public final class LittleMan extends AliveObjectWithType implements HasIntellige
     public void doViolate(int timeOfViolate) {
         Violation violation = Utils.getRandomEnum(Violation.class);
         if (this.availableToViolate & !this.arrested) {
-            System.out.println(capitalized(getType()) + capitalized(getName()) + " делать " + violation);
+            System.out.printf("%s %s делать %s\n",capitalized(getType()), capitalized(getName()), violation);
             violationDetail = new ViolationDetail(violation, timeOfViolate);
         } else {
-            System.out.println(capitalized(getType()) + capitalized(getName()) + " больше не делает " + violation);
+            System.out.printf("%s %s больше не делать %s\n",capitalized(getType()), capitalized(getName()), violation);
         }
     }
 
     public void thinkAboutViolation() {
         if (this.arrested){
-            System.out.println(capitalized(getType()) + capitalized(getName()) + " думает о том, как же " + this.timeSpeed +
-                    " тянется время, я правда сожалею о " + this.violationDetail.violation());
+            System.out.printf("%s %s думает о том, как же %s тянется время, я правда сожалею о %s\n",
+                    capitalized(getType()), capitalized(getName()), this.timeSpeed, this.violationDetail.violation());
         }
     }
 
     public boolean getArrested() {
         return arrested;
+    }
+    public boolean getAvailableToViolate() {
+        return availableToViolate;
     }
 
     public void setArrested(boolean arrested) {
@@ -95,5 +100,43 @@ public final class LittleMan extends AliveObjectWithType implements HasIntellige
 
     public ViolationDetail getViolationDetail() {
         return violationDetail;
+    }
+
+    public void clearViolationDetail() {
+        this.violationDetail = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        LittleMan littleMan = (LittleMan) o;
+        return availableToViolate == littleMan.availableToViolate &&
+                arrested == littleMan.arrested &&
+                (Objects.equals(violationDetail, littleMan.violationDetail));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (availableToViolate ? 1 : 0);
+        result = 31 * result + (arrested ? 1 : 0);
+        result = 31 * result + (violationDetail != null ? violationDetail.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LittleMan{" +
+                "name='" + getName() + '\'' +
+                ", age=" + getAge() +
+                ", type='" + getType() + '\'' +
+                ", timeSpeed=" + timeSpeed +
+                ", intelligence=" + intelligence +
+                ", availableToViolate=" + availableToViolate +
+                ", arrested=" + arrested +
+                ", violationDetail=" + violationDetail +
+                '}';
     }
 }
