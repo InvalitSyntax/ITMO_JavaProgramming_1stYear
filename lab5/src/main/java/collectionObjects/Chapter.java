@@ -1,7 +1,10 @@
 package collectionObjects;
 
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "chapter")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -17,7 +20,8 @@ public class Chapter {
         setWorld(world); // Используем сеттер для проверки ограничений
     }
 
-    public Chapter() {}
+    public Chapter() {
+    }
 
     // Геттеры
     public String getName() {
@@ -42,6 +46,7 @@ public class Chapter {
         }
         this.world = world;
     }
+
     @Override
     public String toString() {
         return "Chapter {\n" +

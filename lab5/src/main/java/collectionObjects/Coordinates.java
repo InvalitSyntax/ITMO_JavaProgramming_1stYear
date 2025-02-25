@@ -1,6 +1,9 @@
 package collectionObjects;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "coordinates")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -16,7 +19,8 @@ public class Coordinates {
         setY(y); // Используем сеттер для проверки ограничений
     }
 
-    public Coordinates() {}
+    public Coordinates() {
+    }
 
     // Геттеры
     public double getX() {
@@ -38,6 +42,7 @@ public class Coordinates {
         }
         this.y = y;
     }
+
     @Override
     public String toString() {
         return "Coordinates {\n" +

@@ -1,6 +1,6 @@
-
-import collectionManager.XMLUtil;
+import collectionManager.ConsoleManager;
 import collectionManager.SpaceMarineCollection;
+import collectionManager.XMLUtil;
 import collectionObjects.*;
 
 import javax.xml.bind.JAXBException;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /*
 
 TODO: переписать/разобраться с адаптером
- сделать коллекцию единичной(приватный генератор)
+ сделать коллекцию единичной(приватный генератор), подумать над тем, что загруженная коллекция является новой(ну и ладно)
  генерация id
 
  */
@@ -37,7 +37,9 @@ public class Main {
         XMLUtil.saveCollectionToFile(collection, "collection.xml");
 
         // Загрузка коллекции из XML
-        SpaceMarineCollection loadedCollection = XMLUtil.loadCollectionFromFile("collection.xml");
-        System.out.println(loadedCollection);
+        collection = XMLUtil.loadCollectionFromFile("collection.xml");
+        System.out.println(collection);
+
+        new ConsoleManager(collection);
     }
 }

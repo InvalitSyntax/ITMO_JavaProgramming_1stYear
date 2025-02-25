@@ -2,9 +2,12 @@ package collectionObjects;
 
 import collectionManager.ZonedDateTimeAdapter;
 
-import java.time.ZonedDateTime;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.ZonedDateTime;
 
 @XmlRootElement(name = "spaceMarine")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -42,7 +45,8 @@ public class SpaceMarine {
         this.chapter = chapter;
     }
 
-    public SpaceMarine() {}
+    public SpaceMarine() {
+    }
 
     // Геттеры
     public int getId() {
@@ -125,6 +129,7 @@ public class SpaceMarine {
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
     }
+
     @Override
     public String toString() {
         return "SpaceMarine {\n" +
