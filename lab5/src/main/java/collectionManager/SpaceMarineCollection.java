@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class SpaceMarineCollection {
-    private Deque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
+    private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
 
     // Конструктор
     public SpaceMarineCollection() {
@@ -14,12 +14,12 @@ public class SpaceMarineCollection {
     }
 
     // Геттер для коллекции
-    public Deque<SpaceMarine> getMarines() {
+    public ArrayDeque<SpaceMarine> getMarines() {
         return marines;
     }
 
     // Сеттер для коллекции
-    public void setMarines(Deque<SpaceMarine> marines) {
+    public void setMarines(ArrayDeque<SpaceMarine> marines) {
         this.marines = marines;
     }
 

@@ -1,10 +1,22 @@
+import collectionManager.CollectionLoaderFromFile;
+import collectionManager.CollectionSaverInFile;
 import collectionManager.SpaceMarineCollection;
 import collectionObjects.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.io.IOException;
+
+/*
+
+TODO: переписать/разобраться с конвертором
+ сделать коллекцию единичной(приватный генератор)
+ поправить дату инициализации
+
+ */
+
+
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Создаем объекты
         Coordinates coordinates1 = new Coordinates(10.5, -500.0f);
         Chapter chapter1 = new Chapter("Blood Angels", "Baal");
@@ -20,6 +32,16 @@ public class Main {
         collection.addMarine(marine2);
 
         // Выводим коллекцию
+        System.out.println(collection);
+
+        try {
+            CollectionSaverInFile.save("output.xml", collection.getMarines());
+            collection.setMarines(CollectionLoaderFromFile.load("output.xml"));
+            System.out.println("Коллекция успешно сохранена в файл!");
+        } catch (IOException e) {
+            System.err.println("Ошибка при сохранении файла: " + e.getMessage());
+        }
+
         System.out.println(collection);
     }
 }
