@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<spaceMarineCollection>
+    <marine>
+        <id>1</id>
+        <name>Captain Titus</name>
+        <coordinates>
+            <x>10.5</x>
+            <y>-500.0</y>
+        </coordinates>
+        <creationDate>2025-02-25T17:28:13.4789265+03:00[Europe/Moscow]</creationDate>
+        <health>100.0</health>
+        <loyal>true</loyal>
+        <weaponType>BOLT_RIFLE</weaponType>
+        <meleeWeapon>CHAIN_SWORD</meleeWeapon>
+        <chapter>
+            <name>Blood Angels</name>
+            <world>Baal</world>
+        </chapter>
+    </marine>
+    <marine>
+        <id>2</id>
+        <name>Captain Sicarius</name>
+        <coordinates>
+            <x>15.0</x>
+            <y>-300.0</y>
+        </coordinates>
+        <creationDate>2025-02-25T17:28:13.4789265+03:00[Europe/Moscow]</creationDate>
+        <health>95.0</health>
+        <loyal>true</loyal>
+        <weaponType>COMBI_PLASMA_GUN</weaponType>
+        <meleeWeapon>POWER_SWORD</meleeWeapon>
+        <chapter>
+            <name>Ultramarines</name>
+            <world>Macragge</world>
+        </chapter>
+    </marine>
+</spaceMarineCollection>

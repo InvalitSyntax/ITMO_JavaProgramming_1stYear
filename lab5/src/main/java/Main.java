@@ -1,5 +1,5 @@
 
-import collectionManager.JAXBUtil;
+import collectionManager.XMLUtil;
 import collectionManager.SpaceMarineCollection;
 import collectionObjects.*;
 
@@ -10,11 +10,12 @@ import java.io.IOException;
 
 TODO: переписать/разобраться с адаптером
  сделать коллекцию единичной(приватный генератор)
+ генерация id
 
  */
 
 public class Main {
-    public static void main(String[] args) throws JAXBException {
+    public static void main(String[] args) throws JAXBException, IOException {
         // Создаем объекты
         Coordinates coordinates1 = new Coordinates(10.5, -500.0f);
         Chapter chapter1 = new Chapter("Blood Angels", "Baal");
@@ -33,12 +34,10 @@ public class Main {
         System.out.println(collection);
 
         // Сохранение коллекции в XML
-        collectionManager.JAXBUtil.saveCollectionToFile(collection, "collection.xml");
+        XMLUtil.saveCollectionToFile(collection, "collection.xml");
 
         // Загрузка коллекции из XML
-        SpaceMarineCollection loadedCollection = collectionManager.JAXBUtil.loadCollectionFromFile("collection.xml");
+        SpaceMarineCollection loadedCollection = XMLUtil.loadCollectionFromFile("collection.xml");
         System.out.println(loadedCollection);
-
-        System.out.println(collection);
     }
 }

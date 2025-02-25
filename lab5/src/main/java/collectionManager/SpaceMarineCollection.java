@@ -4,10 +4,9 @@ import collectionObjects.SpaceMarine;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayDeque;
-import java.util.Deque;
 
 @XmlRootElement(name = "spaceMarineCollection")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD) // Указываем, что JAXB должен использовать поля
 public class SpaceMarineCollection {
     @XmlElement(name = "marine")
     private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
