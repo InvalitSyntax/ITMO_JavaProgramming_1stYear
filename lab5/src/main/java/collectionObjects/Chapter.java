@@ -1,7 +1,14 @@
 package collectionObjects;
 
+
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement(name = "chapter")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Chapter {
+    @XmlElement(required = true)
     private String name; // Поле не может быть null, строка не может быть пустой
+    @XmlElement(required = true)
     private String world; // Поле не может быть null
 
     // Конструктор
@@ -9,6 +16,8 @@ public class Chapter {
         setName(name); // Используем сеттер для проверки ограничений
         setWorld(world); // Используем сеттер для проверки ограничений
     }
+
+    public Chapter() {}
 
     // Геттеры
     public String getName() {

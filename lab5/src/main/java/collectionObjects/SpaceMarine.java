@@ -1,16 +1,32 @@
 package collectionObjects;
 
-import java.time.ZonedDateTime;
+import collectionManager.ZonedDateTimeAdapter;
 
+import java.time.ZonedDateTime;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+@XmlRootElement(name = "spaceMarine")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SpaceMarine {
+    @XmlElement(required = true)
     private int id; // Значение поля должно быть больше 0, уникальное, генерируется автоматически
+    @XmlElement(required = true)
     private String name; // Поле не может быть null, строка не может быть пустой
+    @XmlElement(required = true)
     private Coordinates coordinates; // Поле не может быть null
+    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     private ZonedDateTime creationDate; // Поле не может быть null, генерируется автоматически
+    @XmlElement(required = true)
     private Float health; // Поле не может быть null, значение должно быть больше 0
+    @XmlElement(required = true)
     private boolean loyal;
+    @XmlElement(required = true)
     private Weapon weaponType; // Поле может быть null
+    @XmlElement(required = true)
     private MeleeWeapon meleeWeapon; // Поле может быть null
+    @XmlElement(required = true)
     private Chapter chapter; // Поле может быть null
 
     // Конструктор

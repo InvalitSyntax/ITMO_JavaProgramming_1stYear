@@ -1,22 +1,20 @@
-import collectionManager.CollectionLoaderFromFile;
-import collectionManager.CollectionSaverInFile;
+
+import collectionManager.JAXBUtil;
 import collectionManager.SpaceMarineCollection;
 import collectionObjects.*;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 /*
 
-TODO: переписать/разобраться с конвертором
+TODO: переписать/разобраться с адаптером
  сделать коллекцию единичной(приватный генератор)
- поправить дату инициализации
 
  */
 
-
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws JAXBException {
         // Создаем объекты
         Coordinates coordinates1 = new Coordinates(10.5, -500.0f);
         Chapter chapter1 = new Chapter("Blood Angels", "Baal");
@@ -34,13 +32,12 @@ public class Main {
         // Выводим коллекцию
         System.out.println(collection);
 
-        try {
-            CollectionSaverInFile.save("output.xml", collection.getMarines());
-            collection.setMarines(CollectionLoaderFromFile.load("output.xml"));
-            System.out.println("Коллекция успешно сохранена в файл!");
-        } catch (IOException e) {
-            System.err.println("Ошибка при сохранении файла: " + e.getMessage());
-        }
+        // Сохранение коллекции в XML
+        collectionManager.JAXBUtil.saveCollectionToFile(collection, "collection.xml");
+
+        // Загрузка коллекции из XML
+        SpaceMarineCollection loadedCollection = collectionManager.JAXBUtil.loadCollectionFromFile("collection.xml");
+        System.out.println(loadedCollection);
 
         System.out.println(collection);
     }

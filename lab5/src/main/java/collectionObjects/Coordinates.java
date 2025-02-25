@@ -1,7 +1,13 @@
 package collectionObjects;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement(name = "coordinates")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinates {
+    @XmlElement(required = true)
     private double x;
+    @XmlElement(required = true)
     private Float y; // Значение поля должно быть больше -501, поле не может быть null
 
     // Конструктор
@@ -9,6 +15,8 @@ public class Coordinates {
         this.x = x;
         setY(y); // Используем сеттер для проверки ограничений
     }
+
+    public Coordinates() {}
 
     // Геттеры
     public double getX() {
