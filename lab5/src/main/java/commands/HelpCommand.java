@@ -1,8 +1,10 @@
 package commands;
 
+import controll.AppController;
+
 public class HelpCommand implements Command {
     @Override
-    public void execute(String[] args) {
+    public void execute(AppController app, String[] args) {
         System.out.println("""
                 help : вывести справку по доступным командам
                 info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)

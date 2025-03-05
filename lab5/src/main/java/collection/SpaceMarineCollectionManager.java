@@ -1,6 +1,7 @@
-package collectionManager;
+package collection;
 
-import collectionObjects.SpaceMarine;
+import model.SpaceMarine;
+import storage.ZonedDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,9 +11,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 
+
+//TODO: время создания будет изменяться при загрузки из файла - пофиксить
+
+
 @XmlRootElement(name = "spaceMarineCollection")
 @XmlAccessorType(XmlAccessType.FIELD) // Указываем, что JAXB должен использовать поля
-public class SpaceMarineCollection {
+public class SpaceMarineCollectionManager {
     @XmlElement(name = "marine")
     private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
     @XmlElement(required = true)
@@ -20,7 +25,7 @@ public class SpaceMarineCollection {
     private ZonedDateTime creationDate;
 
     // Конструктор
-    public SpaceMarineCollection() {
+    public SpaceMarineCollectionManager() {
         this.marines = new ArrayDeque<>();
         this.creationDate = ZonedDateTime.now();
     }
@@ -81,6 +86,10 @@ public class SpaceMarineCollection {
             throw new IllegalArgumentException("Marine cannot be null");
         }
         marines.remove(marine);
+    }
+
+    public void clearMarines() {
+        marines.clear();
     }
 
     // Красивый toString

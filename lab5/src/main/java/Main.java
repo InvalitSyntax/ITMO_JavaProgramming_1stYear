@@ -1,9 +1,8 @@
-import collectionManager.ConsoleManager;
-import collectionManager.SpaceMarineCollection;
-import collectionManager.XMLUtil;
-import collectionObjects.*;
+import collection.SpaceMarineCollectionManager;
+import controll.AppController;
+import input.CommandManager;
+import storage.XMLIOManager;
 
-import javax.xml.bind.Binder;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
@@ -17,7 +16,7 @@ TODO: переписать/разобраться с адаптером
 
 public class Main {
     public static void main(String[] args) throws JAXBException, IOException {
-        // Создаем объекты
+        /* // Создаем объекты
         Coordinates coordinates1 = new Coordinates(10.5, -500.0f);
         Chapter chapter1 = new Chapter("Blood Angels", "Baal");
         SpaceMarine marine1 = new SpaceMarine(1, "Captain Titus", coordinates1, 100.0f, true, Weapon.BOLT_RIFLE, MeleeWeapon.CHAIN_SWORD, chapter1);
@@ -27,7 +26,7 @@ public class Main {
         SpaceMarine marine2 = new SpaceMarine(2, "Captain Sicarius", coordinates2, 95.0f, true, Weapon.COMBI_PLASMA_GUN, MeleeWeapon.POWER_SWORD, chapter2);
 
         // Создаем коллекцию и добавляем объекты
-        SpaceMarineCollection collection = new SpaceMarineCollection();
+        SpaceMarineCollectionManager collection = new SpaceMarineCollectionManager();
         collection.addMarine(marine1);
         collection.addMarine(marine2);
 
@@ -41,6 +40,19 @@ public class Main {
         collection = XMLUtil.loadCollectionFromFile("collection.xml");
         System.out.println(collection);
 
-        new ConsoleManager(collection);
+        // new ConsoleManager(collection);
+
+        */
+
+        if (args.length == 0){
+            System.out.println("Для работы приложения напишите названия файла в виде:\n<name.xml>, где name - ваше желаемое название файла");
+        } else {
+            SpaceMarineCollectionManager spaceMarineCollectionManager = new SpaceMarineCollectionManager();
+            XMLIOManager xmlioManager = new XMLIOManager(args[0]);
+            CommandManager commandManager = new CommandManager();
+
+            AppController appController = new AppController(commandManager, spaceMarineCollectionManager, xmlioManager);
+            appController.run();
+        }
     }
 }

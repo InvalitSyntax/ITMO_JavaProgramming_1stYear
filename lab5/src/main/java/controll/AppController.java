@@ -1,13 +1,13 @@
-package collectionManager;
+package controll;
 
+import input.CommandManager;
+import collection.SpaceMarineCollectionManager;
+import storage.XMLIOManager;
 import commands.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-// https://javarush.com/quests/lectures/questsyntaxpro.level02.lecture05
 
 /*TODO:
     info - поправить вывод даты
@@ -17,8 +17,8 @@ import java.util.Scanner;
     add {element} : добавить новый элемент в коллекцию
     update id {element} : обновить значение элемента коллекции, id которого равен заданному
     remove_by_id id : удалить элемент из коллекции по его id
-    clear : очистить коллекцию
-    save : сохранить коллекцию в файл
+    -clear : очистить коллекцию
+    -save : сохранить коллекцию в файл
     execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
     -exit : завершить программу (без сохранения в файл)
     remove_first : удалить первый элемент из коллекции
@@ -30,34 +30,56 @@ import java.util.Scanner;
 
 */
 
-public class ConsoleManager {
-    private Scanner scanner;
-    private SpaceMarineCollection spaceMarineCollection;
-    private Map<String, Command> commandMap;
+public class AppController {
+    private CommandManager commandManager;
+    private SpaceMarineCollectionManager spaceMarineCollectionManager;
+    private XMLIOManager xmlioManager;
 
-    public ConsoleManager(SpaceMarineCollection spaceMarineCollection) {
-        scanner = new Scanner(System.in);
-        this.spaceMarineCollection = spaceMarineCollection;
-        commandMap = new HashMap<>();
-        commandMap.put("help", new HelpCommand());
-        commandMap.put("exit", new ExitCommand());
-        commandMap.put("show", new ShowCommand(spaceMarineCollection));
-        commandMap.put("info", new InfoCommand(spaceMarineCollection));
+    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, XMLIOManager xmlioManager) {
+        this.commandManager = commandManager;
+        this.spaceMarineCollectionManager = spaceMarineCollectionManager;
+        this.xmlioManager = xmlioManager;
 
-        waitInput();
+        putCommands();
+        loadModel();
+
     }
 
-    public void waitInput() {
+    public CommandManager getCommandManager() {
+        return commandManager;
+    }
+
+    public SpaceMarineCollectionManager getSpaceMarineCollectionManager() {
+        return spaceMarineCollectionManager;
+    }
+
+    public XMLIOManager getXmlioManager() {
+        return xmlioManager;
+    }
+
+    private void loadModel() {
+        spaceMarineCollectionManager = xmlioManager.loadCollectionFromFile();
+    }
+
+    private void putCommands() {
+        commandManager.putCommand("help", new HelpCommand());
+        commandManager.putCommand("exit", new ExitCommand());
+        commandManager.putCommand("show", new ShowCommand());
+        commandManager.putCommand("info", new InfoCommand());
+        commandManager.putCommand("clear", new ClearCommand());
+        commandManager.putCommand("save", new SaveCommand());
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine();
             String[] tokens = input.trim().split(" ");
-            Command command = commandMap.get(tokens[0]);
-            if (command != null) {
-                String[] args = Arrays.copyOfRange(tokens, 1, tokens.length);
-                command.execute(args);
-            } else {
-                System.out.println("Неизвестная команда: " + tokens[0]);
-            }
+            if (tokens.length == 0){
+                System.out.println("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)");
+            } else commandManager.executeCommand(this, tokens);
         }
     }
+
+
 }

@@ -1,4 +1,4 @@
-package collectionObjects;
+package model;
 
 public enum MeleeWeapon {
     CHAIN_SWORD,

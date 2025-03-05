@@ -1,15 +1,12 @@
 package commands;
 
-import collectionManager.SpaceMarineCollection;
+import collection.SpaceMarineCollectionManager;
+import controll.AppController;
 
 public class InfoCommand implements Command {
-    private final SpaceMarineCollection collection;
-    public InfoCommand(SpaceMarineCollection collection) {
-        this.collection = collection;
-    }
-
     @Override
-    public void execute(String[] args) {
-        System.out.println(collection.getInfo());
+    public void execute(AppController app, String[] args) {
+        SpaceMarineCollectionManager collectionManager = app.getSpaceMarineCollectionManager();
+        System.out.println(collectionManager.getInfo());
     }
 }

@@ -1,6 +1,6 @@
-package collectionObjects;
+package model;
 
-import collectionManager.ZonedDateTimeAdapter;
+import storage.ZonedDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

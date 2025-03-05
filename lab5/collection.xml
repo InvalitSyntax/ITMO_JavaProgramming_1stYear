@@ -5,7 +5,7 @@
         <name>Captain Titus</name>
         <coordinates>
             <x>10.5</x>
-            <y>-500.0</y>
+            <y>-500000.0</y>
         </coordinates>
         <creationDate>2025-03-05T15:26:23.5026942+03:00[Europe/Moscow]</creationDate>
         <health>100.0</health>
@@ -27,7 +27,6 @@
         <creationDate>2025-03-05T15:26:23.5026942+03:00[Europe/Moscow]</creationDate>
         <health>95.0</health>
         <loyal>true</loyal>
-        <weaponType>COMBI_PLASMA_GUN</weaponType>
         <meleeWeapon>POWER_SWORD</meleeWeapon>
         <chapter>
             <name>Ultramarines</name>

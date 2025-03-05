@@ -1,5 +1,6 @@
 package commands;
+import controll.AppController;
 
 public interface Command {
-    void execute(String[] args);
+    void execute(AppController app, String[] args);
 }
