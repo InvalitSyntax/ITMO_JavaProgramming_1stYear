@@ -7,7 +7,7 @@
             <x>10.5</x>
             <y>-500.0</y>
         </coordinates>
-        <creationDate>2025-02-25T20:09:55.2821187+03:00[Europe/Moscow]</creationDate>
+        <creationDate>2025-03-05T14:40:45.8955807+03:00[Europe/Moscow]</creationDate>
         <health>100.0</health>
         <loyal>true</loyal>
         <weaponType>BOLT_RIFLE</weaponType>
@@ -24,7 +24,7 @@
             <x>15.0</x>
             <y>-300.0</y>
         </coordinates>
-        <creationDate>2025-02-25T20:09:55.2821187+03:00[Europe/Moscow]</creationDate>
+        <creationDate>2025-03-05T14:40:45.8955807+03:00[Europe/Moscow]</creationDate>
         <health>95.0</health>
         <loyal>true</loyal>
         <weaponType>COMBI_PLASMA_GUN</weaponType>

@@ -3,6 +3,7 @@ import collectionManager.SpaceMarineCollection;
 import collectionManager.XMLUtil;
 import collectionObjects.*;
 
+import javax.xml.bind.Binder;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
