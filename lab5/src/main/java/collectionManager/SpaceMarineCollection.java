@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 
@@ -14,6 +15,8 @@ import java.util.ArrayDeque;
 public class SpaceMarineCollection {
     @XmlElement(name = "marine")
     private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
+    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     private ZonedDateTime creationDate;
 
     // Конструктор
@@ -84,6 +87,7 @@ public class SpaceMarineCollection {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("SpaceMarineCollection {\n");
+        // sb.append("creationDate: ").append(creationDate.toString()).append("\n");
         for (SpaceMarine marine : marines) {
             sb.append("  ").append(marine.toString().replace("\n", "\n  ")).append("\n");
         }
