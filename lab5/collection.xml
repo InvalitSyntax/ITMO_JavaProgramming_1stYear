@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <spaceMarineCollection>
+    <creationDate>2025-03-05T15:26:23.504198+03:00[Europe/Moscow]</creationDate>
     <marine>
-        <id>1</id>
-        <name>Captain Titus</name>
-        <coordinates>
-            <x>10.5</x>
-            <y>-500000.0</y>
-        </coordinates>
-        <creationDate>2025-03-05T15:26:23.5026942+03:00[Europe/Moscow]</creationDate>
-        <health>100.0</health>
-        <loyal>true</loyal>
-        <weaponType>BOLT_RIFLE</weaponType>
-        <meleeWeapon>CHAIN_SWORD</meleeWeapon>
         <chapter>
             <name>Blood Angels</name>
             <world>Baal</world>
         </chapter>
+        <coordinates>
+            <x>10.0</x>
+            <y>-10.0</y>
+        </coordinates>
+        <creationDate>2025-03-05T15:26:23.5026942+03:00[Europe/Moscow]</creationDate>
+        <health>100.0</health>
+        <id>1</id>
+        <loyal>true</loyal>
+        <meleeWeapon>CHAIN_SWORD</meleeWeapon>
+        <name>Captain Titus</name>
+        <weaponType>BOLT_RIFLE</weaponType>
     </marine>
     <marine>
-        <id>2</id>
-        <name>Captain Sicarius</name>
+        <chapter>
+            <name>Ultramarines</name>
+            <world>Macragge</world>
+        </chapter>
         <coordinates>
             <x>15.0</x>
             <y>-300.0</y>
         </coordinates>
         <creationDate>2025-03-05T15:26:23.5026942+03:00[Europe/Moscow]</creationDate>
         <health>95.0</health>
+        <id>2</id>
         <loyal>true</loyal>
         <meleeWeapon>POWER_SWORD</meleeWeapon>
-        <chapter>
-            <name>Ultramarines</name>
-            <world>Macragge</world>
-        </chapter>
+        <name>Captain Sicarius</name>
     </marine>
-    <creationDate>2025-03-05T15:26:23.504198+03:00[Europe/Moscow]</creationDate>
 </spaceMarineCollection>

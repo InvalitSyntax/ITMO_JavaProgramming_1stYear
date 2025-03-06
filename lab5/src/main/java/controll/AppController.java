@@ -28,6 +28,7 @@ import java.util.Scanner;
     count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
     filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
 
+
 */
 
 public class AppController {

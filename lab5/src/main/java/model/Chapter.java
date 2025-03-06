@@ -1,17 +1,14 @@
 package model;
 
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "chapter")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY) // Изменено на PROPERTY
 public class Chapter {
-    @XmlElement(required = true)
     private String name; // Поле не может быть null, строка не может быть пустой
-    @XmlElement(required = true)
     private String world; // Поле не может быть null
 
     // Конструктор
@@ -24,10 +21,12 @@ public class Chapter {
     }
 
     // Геттеры
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public String getName() {
         return name;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public String getWorld() {
         return world;
     }
@@ -35,16 +34,22 @@ public class Chapter {
     // Сеттеры
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
+            throw new IllegalArgumentException("Name не может быть null или пустым");
         }
         this.name = name;
     }
 
     public void setWorld(String world) {
         if (world == null) {
-            throw new IllegalArgumentException("World cannot be null");
+            throw new IllegalArgumentException("World не может быть null");
         }
         this.world = world;
+    }
+
+    void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {
+        // Прогоняем все поля через сеттеры
+        setName(this.name);
+        setWorld(this.world);
     }
 
     @Override

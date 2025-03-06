@@ -10,26 +10,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 
 @XmlRootElement(name = "spaceMarine")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY) // Изменено на PROPERTY
 public class SpaceMarine {
-    @XmlElement(required = true)
     private int id; // Значение поля должно быть больше 0, уникальное, генерируется автоматически
-    @XmlElement(required = true)
     private String name; // Поле не может быть null, строка не может быть пустой
-    @XmlElement(required = true)
     private Coordinates coordinates; // Поле не может быть null
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     private ZonedDateTime creationDate; // Поле не может быть null, генерируется автоматически
-    @XmlElement(required = true)
     private Float health; // Поле не может быть null, значение должно быть больше 0
-    @XmlElement(required = true)
     private boolean loyal;
-    @XmlElement(required = true)
     private Weapon weaponType; // Поле может быть null
-    @XmlElement(required = true)
     private MeleeWeapon meleeWeapon; // Поле может быть null
-    @XmlElement(required = true)
     private Chapter chapter; // Поле может быть null
 
     // Конструктор
@@ -49,38 +39,48 @@ public class SpaceMarine {
     }
 
     // Геттеры
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public int getId() {
         return id;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public String getName() {
         return name;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
+    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     public ZonedDateTime getCreationDate() {
         return creationDate;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public Float getHealth() {
         return health;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public boolean isLoyal() {
         return loyal;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public Weapon getWeaponType() {
         return weaponType;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public MeleeWeapon getMeleeWeapon() {
         return meleeWeapon;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public Chapter getChapter() {
         return chapter;
     }
@@ -88,28 +88,28 @@ public class SpaceMarine {
     // Сеттеры
     public void setId(int id) {
         if (id <= 0) {
-            throw new IllegalArgumentException("ID must be greater than 0");
+            throw new IllegalArgumentException("ID должен быть больше 0");
         }
         this.id = id;
     }
 
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
+            throw new IllegalArgumentException("Name не может быть null или пустым");
         }
         this.name = name;
     }
 
     public void setCoordinates(Coordinates coordinates) {
         if (coordinates == null) {
-            throw new IllegalArgumentException("Coordinates cannot be null");
+            throw new IllegalArgumentException("Coordinates не могут быть null");
         }
         this.coordinates = coordinates;
     }
 
     public void setHealth(Float health) {
         if (health == null || health <= 0) {
-            throw new IllegalArgumentException("Health cannot be null and must be greater than 0");
+            throw new IllegalArgumentException("Health не может быть null и должно быть больше 0");
         }
         this.health = health;
     }
@@ -122,12 +122,28 @@ public class SpaceMarine {
         this.weaponType = weaponType;
     }
 
+    public void setCreationDate(ZonedDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public void setMeleeWeapon(MeleeWeapon meleeWeapon) {
         this.meleeWeapon = meleeWeapon;
     }
 
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
+    }
+
+    void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {
+        setId(this.id);
+        setName(this.name);
+        setCoordinates(this.coordinates);
+        setCreationDate(this.creationDate);
+        setHealth(this.health);
+        setLoyal(this.loyal);
+        setWeaponType(this.weaponType);
+        setMeleeWeapon(this.meleeWeapon);
+        setChapter(this.chapter);
     }
 
     @Override

@@ -11,18 +11,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 
-
-//TODO: время создания будет изменяться при загрузки из файла - пофиксить
-
-
 @XmlRootElement(name = "spaceMarineCollection")
-@XmlAccessorType(XmlAccessType.FIELD) // Указываем, что JAXB должен использовать поля
+@XmlAccessorType(XmlAccessType.PROPERTY) // Используем геттеры и сеттеры
 public class SpaceMarineCollectionManager {
-    @XmlElement(name = "marine")
     private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
-    private ZonedDateTime creationDate;
+    private ZonedDateTime creationDate; // Дата создания коллекции
 
     // Конструктор
     public SpaceMarineCollectionManager() {
@@ -31,19 +24,30 @@ public class SpaceMarineCollectionManager {
     }
 
     // Геттер для коллекции
+    @XmlElement(name = "marine") // Указываем имя элемента в XML
     public ArrayDeque<SpaceMarine> getMarines() {
         return marines;
     }
 
-    public String getCreationDate() {
-        return creationDate.toString();
+    // Сеттер для коллекции
+    public void setMarines(ArrayDeque<SpaceMarine> marines) {
+        this.marines = marines;
     }
 
+    // Геттер для даты создания
+    @XmlElement(required = true) // Поле обязательно
+    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class) // Адаптер для ZonedDateTime
+    public ZonedDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    // Сеттер для даты создания
     public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getInfo () {
+    // Метод для получения информации о коллекции
+    public String getInfo() {
         StringBuilder info = new StringBuilder();
 
         // Тип коллекции
@@ -60,16 +64,11 @@ public class SpaceMarineCollectionManager {
             info.append("Коллекция пуста.");
         } else {
             // Пример вывода информации о первом и последнем элементах коллекции
-            info.append("Первый элемент: ").append(marines.getFirst().toString()).append("\n");
-            info.append("Последний элемент: ").append(marines.getLast().toString()).append("\n");
+            info.append("Первый элемент: ").append(marines.getFirst()).append("\n");
+            info.append("Последний элемент: ").append(marines.getLast()).append("\n");
         }
 
         return info.toString();
-    }
-
-    // Сеттер для коллекции
-    public void setMarines(ArrayDeque<SpaceMarine> marines) {
-        this.marines = marines;
     }
 
     // Добавление элемента в коллекцию
@@ -88,15 +87,21 @@ public class SpaceMarineCollectionManager {
         marines.remove(marine);
     }
 
+    // Очистка коллекции
     public void clearMarines() {
         marines.clear();
     }
 
-    // Красивый toString
+    void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {
+        // Прогоняем все поля через сеттеры
+        setMarines(this.marines);
+        setCreationDate(this.creationDate);
+    }
+
+    // Переопределение метода toString для красивого вывода
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("SpaceMarineCollection {\n");
-        // sb.append("creationDate: ").append(creationDate.toString()).append("\n");
         for (SpaceMarine marine : marines) {
             sb.append("  ").append(marine.toString().replace("\n", "\n  ")).append("\n");
         }

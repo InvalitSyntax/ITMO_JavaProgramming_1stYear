@@ -6,11 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "coordinates")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY) // Изменено на PROPERTY
 public class Coordinates {
-    @XmlElement(required = true)
     private double x;
-    @XmlElement(required = true)
     private Float y; // Значение поля должно быть больше -501, поле не может быть null
 
     // Конструктор
@@ -23,10 +21,12 @@ public class Coordinates {
     }
 
     // Геттеры
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public double getX() {
         return x;
     }
 
+    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
     public Float getY() {
         return y;
     }
@@ -38,9 +38,15 @@ public class Coordinates {
 
     public void setY(Float y) {
         if (y == null || y <= -501) {
-            throw new IllegalArgumentException("Y cannot be null and must be greater than -501");
+            throw new IllegalArgumentException("Поле Y не может быть null и должно быть больше -501");
         }
         this.y = y;
+    }
+
+    void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {
+        // Прогоняем все поля через сеттеры
+        setX(this.x);
+        setY(this.y);
     }
 
     @Override
