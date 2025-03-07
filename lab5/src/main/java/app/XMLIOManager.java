@@ -1,6 +1,4 @@
-package storage;
-
-import collection.SpaceMarineCollectionManager;
+package app;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -54,7 +52,7 @@ public class XMLIOManager {
                 xmlContent.append(scanner.nextLine()).append("\n");
             }
 
-            // Логируем содержимое XML для отладки
+            // Принтим содержимое XML для отладки
             System.out.println("Содержимое XML:\n" + xmlContent);
 
             SpaceMarineCollectionManager out = (SpaceMarineCollectionManager) unmarshaller.unmarshal(new java.io.StringReader(xmlContent.toString()));

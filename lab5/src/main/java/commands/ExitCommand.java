@@ -1,6 +1,6 @@
 package commands;
 
-import controll.AppController;
+import app.AppController;
 
 public class ExitCommand implements Command {
     @Override

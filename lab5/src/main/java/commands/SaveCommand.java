@@ -1,11 +1,8 @@
 package commands;
 
-import collection.SpaceMarineCollectionManager;
-import controll.AppController;
-import storage.XMLIOManager;
-
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
+import app.SpaceMarineCollectionManager;
+import app.AppController;
+import app.XMLIOManager;
 
 public class SaveCommand implements Command{
     @Override

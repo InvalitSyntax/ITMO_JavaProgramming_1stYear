@@ -1,12 +1,7 @@
-package controll;
+package app;
 
-import input.CommandManager;
-import collection.SpaceMarineCollectionManager;
-import storage.XMLIOManager;
 import commands.*;
 
-import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /*TODO:

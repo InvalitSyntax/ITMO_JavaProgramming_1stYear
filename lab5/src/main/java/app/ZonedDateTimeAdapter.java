@@ -1,4 +1,4 @@
-package storage;
+package app;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.ZonedDateTime;

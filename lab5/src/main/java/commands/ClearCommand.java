@@ -1,8 +1,8 @@
 package commands;
 
 
-import collection.SpaceMarineCollectionManager;
-import controll.AppController;
+import app.SpaceMarineCollectionManager;
+import app.AppController;
 
 public class ClearCommand implements Command{
     @Override

@@ -1,7 +1,6 @@
-package input;
+package app;
 
 import commands.*;
-import controll.AppController;
 
 import java.util.Arrays;
 import java.util.HashMap;
