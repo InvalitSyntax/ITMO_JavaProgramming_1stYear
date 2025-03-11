@@ -56,7 +56,7 @@ public class ModelBuilder {
             spaceMarine.setChapter(buildChapter());
         }
 
-        spaceMarine.setId(spaceMarineCollectionManager.getNextFreeId());
+        spaceMarine.setId(SpaceMarine.freeId);
 
         return spaceMarine;
     }

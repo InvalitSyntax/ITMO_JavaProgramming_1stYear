@@ -7,15 +7,22 @@ import java.util.function.Predicate;
 
 public class IOManager {
     private boolean automatedInputNow;
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+    private String automatedOutput = "";
+    private ArrayList<String> executingScripts = new ArrayList<>();
 
     public String getRawStringInput() {
-        this.automatedInputNow = false;
+        String input;
+        automatedInputNow = false;
         writeMessage("> ", false);
 
-        String input = scanner.nextLine();
+        input = scanner.nextLine();
 
         return input.trim();
+    }
+
+    public void setAutomatedInputNow(boolean automatedInputNow) {
+        this.automatedInputNow = automatedInputNow;
     }
 
     public String getValidStringInput(Predicate<String> predicate) {
@@ -84,6 +91,21 @@ public class IOManager {
     public void writeMessage(String message, boolean quiet) {
         if (!automatedInputNow && !quiet) {
             System.out.print(message);
+        } else {
+            automatedOutput += message;
         }
+    }
+
+    public String getAutomatedOutput() {
+        this.automatedOutput = "";
+        return automatedOutput;
+    }
+
+    public void addExecutingScript(String script) {
+        executingScripts.add(script);
+    }
+
+    public ArrayList<String> getExecutingScripts() {
+        return executingScripts;
     }
 }

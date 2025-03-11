@@ -10,7 +10,7 @@ import java.util.Scanner;
 // TODO: сделать еще и проверку на уникальность ID
 
 public class XMLIOManager {
-    private String filePath;
+    private final String filePath;
 
     public XMLIOManager(String filePath) {
         this.filePath = filePath;
@@ -57,6 +57,7 @@ public class XMLIOManager {
 
             SpaceMarineCollectionManager out = (SpaceMarineCollectionManager) unmarshaller.unmarshal(new java.io.StringReader(xmlContent.toString()));
             System.out.println("Коллекция успешно загружена");
+            out.updateFreeId();
             return out;
 
         } catch (FileNotFoundException e) {

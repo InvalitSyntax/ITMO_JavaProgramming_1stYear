@@ -14,6 +14,7 @@ import java.util.Iterator;
 @XmlRootElement(name = "spaceMarineCollection")
 @XmlAccessorType(XmlAccessType.PROPERTY) // Используем геттеры и сеттеры
 public class SpaceMarineCollectionManager {
+    private int id=0;
     private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
     private ZonedDateTime creationDate; // Дата создания коллекции
 
@@ -92,14 +93,14 @@ public class SpaceMarineCollectionManager {
         marines.clear();
     }
 
-    public int getNextFreeId() {
-        int min = 1;
+    public void updateFreeId() {
+        int min = 0;
         for (SpaceMarine marine : marines) {
             if (marine.getId() >= min) {
-                min = marine.getId()+1;
+                min = marine.getId();
             }
         }
-        return min;
+        SpaceMarine.freeId = min;
     }
 
     public void replaceMarineById(int id, SpaceMarine newMarine) {

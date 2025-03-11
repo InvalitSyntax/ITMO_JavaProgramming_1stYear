@@ -9,7 +9,7 @@ import java.util.Map;
 // https://javarush.com/quests/lectures/questsyntaxpro.level02.lecture05
 
 public class CommandManager {
-    private Map<String, Command> commandMap;
+    private final Map<String, Command> commandMap;
 
     public CommandManager() {
         commandMap = new HashMap<>();

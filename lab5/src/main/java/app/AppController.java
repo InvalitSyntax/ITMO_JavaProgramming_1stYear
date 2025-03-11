@@ -12,11 +12,11 @@ import commands.*;
     -remove_by_id id : удалить элемент из коллекции по его id
     -clear : очистить коллекцию
     -save : сохранить коллекцию в файл
-    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+    -execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
     -exit : завершить программу (без сохранения в файл)
     -remove_first : удалить первый элемент из коллекции
     -remove_head : вывести первый элемент коллекции и удалить его
-    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+    -remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
     -group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
     -count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
     -filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
@@ -25,10 +25,10 @@ import commands.*;
 */
 
 public class AppController {
-    private CommandManager commandManager;
+    private final CommandManager commandManager;
     private SpaceMarineCollectionManager spaceMarineCollectionManager;
-    private XMLIOManager xmlioManager;
-    private IOManager ioManager;
+    private final XMLIOManager xmlioManager;
+    private final IOManager ioManager;
 
     public void setTurnOn(boolean turnOn) {
         isTurnOn = turnOn;
@@ -79,6 +79,7 @@ public class AppController {
         commandManager.putCommand("count_less_than_loyal", new CountLessThanLoyalCommand());
         commandManager.putCommand("filter_less_than_chapter", new FilterLesThanChapterCommand());
         commandManager.putCommand("remove_greater", new RemoveGreater());
+        commandManager.putCommand("execute_script", new ExecuteScriptCommand());
     }
 
     public IOManager getIoManager() {
@@ -97,7 +98,11 @@ public class AppController {
                 ioManager.writeMessage("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n", false);
             } else {
                 String[] tokens = input.trim().split(" ");
-                commandManager.executeCommand(this, tokens);
+                try {
+                    commandManager.executeCommand(this, tokens);
+                } catch (Exception e) {
+                    ioManager.writeMessage(e.getMessage(), true);
+                }
             }
         }
     }

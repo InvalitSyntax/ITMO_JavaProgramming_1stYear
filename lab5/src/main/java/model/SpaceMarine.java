@@ -22,6 +22,12 @@ public class SpaceMarine implements Comparable<SpaceMarine>{
     private MeleeWeapon meleeWeapon; // Поле может быть null
     private Chapter chapter; // Поле может быть null
 
+    public static int freeId=0;
+
+    {
+        freeId++;
+    }
+
     // Конструктор
     public SpaceMarine(int id, String name, Coordinates coordinates, Float health, boolean loyal, Weapon weaponType, MeleeWeapon meleeWeapon, Chapter chapter) {
         this.id = id;
