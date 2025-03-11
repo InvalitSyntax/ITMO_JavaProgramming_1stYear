@@ -17,8 +17,8 @@ public class RemoveByIdCommand implements Command {
         else{
             int id = Integer.parseInt(args[0]);
             boolean flag = false;
-            for(SpaceMarine dragon : marineArrayDeque){
-                if (dragon.getId() == id){
+            for(SpaceMarine marine : marineArrayDeque){
+                if (marine.getId() == id){
                     flag = true;
                     app.getSpaceMarineCollectionManager().removeMarineById(id);
                     ioManager.writeMessage("Десантник удален\n", false);

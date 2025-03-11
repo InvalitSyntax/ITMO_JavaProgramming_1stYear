@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 
 @XmlRootElement(name = "spaceMarine")
 @XmlAccessorType(XmlAccessType.PROPERTY) // Изменено на PROPERTY
-public class SpaceMarine {
+public class SpaceMarine implements Comparable<SpaceMarine>{
     private int id; // Значение поля должно быть больше 0, уникальное, генерируется автоматически
     private String name; // Поле не может быть null, строка не может быть пустой
     private Coordinates coordinates; // Поле не может быть null
@@ -66,7 +66,7 @@ public class SpaceMarine {
     }
 
     @XmlElement(required = true) // Добавлено для указания, что поле обязательно
-    public boolean isLoyal() {
+    public boolean getLoyal() {
         return loyal;
     }
 
@@ -159,5 +159,10 @@ public class SpaceMarine {
                 "  meleeWeapon: " + (meleeWeapon != null ? meleeWeapon : "null") + "\n" +
                 "  chapter: " + (chapter != null ? chapter.toString().replace("\n", "\n  ") : "null") + "\n" +
                 "}";
+    }
+
+    @Override
+    public int compareTo(SpaceMarine other) {
+        return Integer.compare(this.id, other.id);
     }
 }

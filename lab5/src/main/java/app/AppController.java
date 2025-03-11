@@ -3,7 +3,7 @@ package app;
 import commands.*;
 
 /*TODO:
-    info - поправить вывод даты
+    -info - поправить вывод даты
     -help : вывести справку по доступным командам
     -info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
     -show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
@@ -17,9 +17,9 @@ import commands.*;
     -remove_first : удалить первый элемент из коллекции
     -remove_head : вывести первый элемент коллекции и удалить его
     remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
-    group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
-    count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
-    filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
+    -group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
+    -count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
+    -filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
 
 
 */
@@ -75,6 +75,10 @@ public class AppController {
         commandManager.putCommand("remove_by_id", new RemoveByIdCommand());
         commandManager.putCommand("remove_first", new RemoveFirstCommand());
         commandManager.putCommand("remove_head", new RemoveHeadCommand());
+        commandManager.putCommand("group_counting_by_weapon_type", new CountByWeaponeTypeCommand());
+        commandManager.putCommand("count_less_than_loyal", new CountLessThanLoyalCommand());
+        commandManager.putCommand("filter_less_than_chapter", new FilterLesThanChapterCommand());
+        commandManager.putCommand("remove_greater", new RemoveGreater());
     }
 
     public IOManager getIoManager() {

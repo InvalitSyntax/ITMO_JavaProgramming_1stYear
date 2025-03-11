@@ -8,18 +8,10 @@ public class ModelBuilder {
     private final IOManager ioManager;
     private boolean inQuietMode = false;
     private final SpaceMarineCollectionManager spaceMarineCollectionManager;
-    private final int id;
 
     public ModelBuilder(AppController appController) {
         this.ioManager = appController.getIoManager();
         this.spaceMarineCollectionManager = appController.getSpaceMarineCollectionManager();
-        this.id = 0;
-    }
-
-    public ModelBuilder(AppController appController, int id) {
-        this.ioManager = appController.getIoManager();
-        this.spaceMarineCollectionManager = appController.getSpaceMarineCollectionManager();
-        this.id = id;
     }
 
     public void setQuietMode(boolean inQuietMode) {
@@ -64,16 +56,12 @@ public class ModelBuilder {
             spaceMarine.setChapter(buildChapter());
         }
 
-        if (id == 0) {
-            spaceMarine.setId(spaceMarineCollectionManager.getNextFreeId());
-        } else {
-            spaceMarine.setId(id);
-        }
+        spaceMarine.setId(spaceMarineCollectionManager.getNextFreeId());
 
         return spaceMarine;
     }
 
-    private Coordinates buildCoordinates() {
+    public Coordinates buildCoordinates() {
         Coordinates coordinates = new Coordinates();
 
         ioManager.writeMessage("Если вы хотите ввести координату x, напишите <да>, иначе же напишите что-либо ино\n", inQuietMode);
@@ -88,7 +76,7 @@ public class ModelBuilder {
         return coordinates;
     }
 
-    private Chapter buildChapter() {
+    public Chapter buildChapter() {
         Chapter chapter = new Chapter();
 
         ioManager.writeMessage("Введите имя (не может быть пустым):\n", inQuietMode);

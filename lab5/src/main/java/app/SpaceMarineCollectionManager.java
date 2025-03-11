@@ -107,10 +107,9 @@ public class SpaceMarineCollectionManager {
         while (iterator.hasNext()) {
             SpaceMarine current = iterator.next();
             if (id == current.getId()) {
-                // Удаляем старый элемент и добавляем новый
                 iterator.remove();
                 marines.add(newMarine);
-                break; // Если нужно заменить только первое вхождение
+                break;
             }
         }
     }
@@ -120,9 +119,8 @@ public class SpaceMarineCollectionManager {
         while (iterator.hasNext()) {
             SpaceMarine current = iterator.next();
             if (id == current.getId()) {
-                // Удаляем старый элемент и добавляем новый
                 iterator.remove();
-                break; // Если нужно заменить только первое вхождение
+                break;
             }
         }
     }

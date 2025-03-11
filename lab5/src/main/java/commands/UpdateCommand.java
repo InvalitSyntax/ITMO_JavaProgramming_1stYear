@@ -3,7 +3,6 @@ package commands;
 import app.AppController;
 import app.IOManager;
 import app.ModelBuilder;
-import app.SpaceMarineCollectionManager;
 import model.SpaceMarine;
 
 import java.util.ArrayDeque;
@@ -17,12 +16,20 @@ public class UpdateCommand implements Command {
             ioManager.writeMessage("Вы не ввели id элемента коллекции!\n", false);
         }
         else{
-            int id = Integer.parseInt(args[0]);
+            int id;
+            try {
+                id = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                ioManager.writeMessage("Вы ввели не число в качестве id\n", false);
+                return;
+            }
+
             boolean flag = false;
-            for(SpaceMarine dragon : marineArrayDeque){
-                if (dragon.getId() == id){
+            for(SpaceMarine marine : marineArrayDeque){
+                if (marine.getId() == id){
                     flag = true;
-                    SpaceMarine sm = new ModelBuilder(app, id).build();
+                    SpaceMarine sm = new ModelBuilder(app).build();
+                    sm.setId(id);
                     app.getSpaceMarineCollectionManager().replaceMarineById(id, sm);
                 }
             }

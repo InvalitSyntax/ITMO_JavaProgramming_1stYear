@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "chapter")
 @XmlAccessorType(XmlAccessType.PROPERTY) // Изменено на PROPERTY
-public class Chapter {
+public class Chapter implements Comparable<Chapter> {
     private String name; // Поле не может быть null, строка не может быть пустой
     private String world; // Поле не может быть null
 
@@ -58,5 +58,16 @@ public class Chapter {
                 "  name: " + name + "\n" +
                 "  world: " + world + "\n" +
                 "}";
+    }
+
+    @Override
+    public int compareTo(Chapter other) {
+        // Сравниваем по полю name
+        int nameComparison = this.name.compareTo(other.name);
+        if (nameComparison != 0) {
+            return nameComparison;
+        }
+        // Если name одинаковые, сравниваем по полю world
+        return this.world.compareTo(other.world);
     }
 }
