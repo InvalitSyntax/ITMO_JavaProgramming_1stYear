@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 
 @XmlRootElement(name = "spaceMarineCollection")
 @XmlAccessorType(XmlAccessType.PROPERTY) // Используем геттеры и сеттеры
@@ -59,14 +60,14 @@ public class SpaceMarineCollectionManager {
         info.append("Количество элементов: ").append(marines.size()).append("\n");
 
         // Дополнительная информация, если коллекция пуста
-        if (marines.isEmpty()) {
-            info.append("Коллекция пуста.");
-        } else {
-            // Пример вывода информации о первом и последнем элементах коллекции
-            info.append("Первый элемент: ").append(marines.getFirst()).append("\n");
-            info.append("Последний элемент: ").append(marines.getLast()).append("\n");
+        switch (marines.size()) {
+            case 0: info.append("Коллекция пуста."); break;
+            case 1: info.append("Единственный элемент: ").append(marines.getFirst()).append("\n"); break;
+            default: {
+                info.append("Первый элемент: ").append(marines.getFirst()).append("\n");
+                info.append("Последний элемент: ").append(marines.getLast()).append("\n");
+            }
         }
-
         return info.toString();
     }
 
@@ -99,6 +100,31 @@ public class SpaceMarineCollectionManager {
             }
         }
         return min;
+    }
+
+    public void replaceMarineById(int id, SpaceMarine newMarine) {
+        Iterator<SpaceMarine> iterator = marines.iterator();
+        while (iterator.hasNext()) {
+            SpaceMarine current = iterator.next();
+            if (id == current.getId()) {
+                // Удаляем старый элемент и добавляем новый
+                iterator.remove();
+                marines.add(newMarine);
+                break; // Если нужно заменить только первое вхождение
+            }
+        }
+    }
+
+    public void removeMarineById(int id) {
+        Iterator<SpaceMarine> iterator = marines.iterator();
+        while (iterator.hasNext()) {
+            SpaceMarine current = iterator.next();
+            if (id == current.getId()) {
+                // Удаляем старый элемент и добавляем новый
+                iterator.remove();
+                break; // Если нужно заменить только первое вхождение
+            }
+        }
     }
 
     void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {

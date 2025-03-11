@@ -8,10 +8,18 @@ public class ModelBuilder {
     private final IOManager ioManager;
     private boolean inQuietMode = false;
     private final SpaceMarineCollectionManager spaceMarineCollectionManager;
+    private final int id;
 
     public ModelBuilder(AppController appController) {
         this.ioManager = appController.getIoManager();
         this.spaceMarineCollectionManager = appController.getSpaceMarineCollectionManager();
+        this.id = 0;
+    }
+
+    public ModelBuilder(AppController appController, int id) {
+        this.ioManager = appController.getIoManager();
+        this.spaceMarineCollectionManager = appController.getSpaceMarineCollectionManager();
+        this.id = id;
     }
 
     public void setQuietMode(boolean inQuietMode) {
@@ -30,7 +38,7 @@ public class ModelBuilder {
         ioManager.writeMessage("Введите здоровье (дробное число, должно быть больше 0)\n", inQuietMode);
         spaceMarine.setHealth(ioManager.getValidNumberInput(Float::parseFloat, a -> (a > 0)));
 
-        ioManager.writeMessage("Введите лояльность (true или false)\n", inQuietMode);
+        ioManager.writeMessage("Введите лояльность (true или что-либо другое, тогда установится false)\n", inQuietMode);
         spaceMarine.setLoyal(ioManager.getBooleanInput(Boolean::parseBoolean));
 
         ioManager.writeMessage("Если вы хотите установить оружие введите <да>, иначе что-либо иное\n", inQuietMode);
@@ -56,7 +64,11 @@ public class ModelBuilder {
             spaceMarine.setChapter(buildChapter());
         }
 
-        spaceMarine.setId(spaceMarineCollectionManager.getNextFreeId());
+        if (id == 0) {
+            spaceMarine.setId(spaceMarineCollectionManager.getNextFreeId());
+        } else {
+            spaceMarine.setId(id);
+        }
 
         return spaceMarine;
     }
