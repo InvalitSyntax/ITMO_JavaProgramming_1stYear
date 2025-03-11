@@ -41,7 +41,7 @@ public class SpaceMarineCollectionManager {
     }
 
     // Сеттер для даты создания
-    public void setCreationDate(ZonedDateTime creationDate) {
+    private void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -89,6 +89,16 @@ public class SpaceMarineCollectionManager {
     // Очистка коллекции
     public void clearMarines() {
         marines.clear();
+    }
+
+    public int getNextFreeId() {
+        int min = 1;
+        for (SpaceMarine marine : marines) {
+            if (marine.getId() >= min) {
+                min = marine.getId()+1;
+            }
+        }
+        return min;
     }
 
     void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {

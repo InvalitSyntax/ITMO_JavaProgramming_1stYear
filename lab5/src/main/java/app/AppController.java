@@ -2,14 +2,12 @@ package app;
 
 import commands.*;
 
-import java.util.Scanner;
-
 /*TODO:
     info - поправить вывод даты
     -help : вывести справку по доступным командам
     -info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
     -show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
-    add {element} : добавить новый элемент в коллекцию
+    -add {element} : добавить новый элемент в коллекцию
     update id {element} : обновить значение элемента коллекции, id которого равен заданному
     remove_by_id id : удалить элемент из коллекции по его id
     -clear : очистить коллекцию
@@ -30,15 +28,23 @@ public class AppController {
     private CommandManager commandManager;
     private SpaceMarineCollectionManager spaceMarineCollectionManager;
     private XMLIOManager xmlioManager;
+    private IOManager ioManager;
 
-    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, XMLIOManager xmlioManager) {
+    public void setTurnOn(boolean turnOn) {
+        isTurnOn = turnOn;
+    }
+
+    private boolean isTurnOn;
+
+    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, XMLIOManager xmlioManager, IOManager ioManager) {
         this.commandManager = commandManager;
         this.spaceMarineCollectionManager = spaceMarineCollectionManager;
         this.xmlioManager = xmlioManager;
+        this.ioManager = ioManager;
 
         putCommands();
         loadModel();
-
+        isTurnOn = true;
     }
 
     public CommandManager getCommandManager() {
@@ -64,18 +70,27 @@ public class AppController {
         commandManager.putCommand("info", new InfoCommand());
         commandManager.putCommand("clear", new ClearCommand());
         commandManager.putCommand("save", new SaveCommand());
+        commandManager.putCommand("add", new AddCommand());
+    }
+
+    public IOManager getIoManager() {
+        return ioManager;
+    }
+
+    public boolean isTurnOn() {
+        return isTurnOn;
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) {
-            String input = scanner.nextLine();
-            String[] tokens = input.trim().split(" ");
-            if (tokens.length == 0){
-                System.out.println("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)");
-            } else commandManager.executeCommand(this, tokens);
+        ioManager.writeMessage("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n", false);
+        while (isTurnOn) {
+            String input = ioManager.getRawStringInput();
+            if (input == null) {
+                ioManager.writeMessage("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n", false);
+            } else {
+                String[] tokens = input.trim().split(" ");
+                commandManager.executeCommand(this, tokens);
+            }
         }
     }
-
-
 }

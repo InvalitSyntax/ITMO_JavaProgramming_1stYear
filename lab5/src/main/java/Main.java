@@ -1,7 +1,4 @@
-import app.SpaceMarineCollectionManager;
-import app.AppController;
-import app.CommandManager;
-import app.XMLIOManager;
+import app.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -11,6 +8,7 @@ import java.io.IOException;
 TODO: переписать/разобраться с адаптером
  сделать коллекцию единичной(приватный генератор), подумать над тем, что загруженная коллекция является новой(ну и ладно)
  генерация id
+ 5408
 
  */
 
@@ -22,8 +20,9 @@ public class Main {
             SpaceMarineCollectionManager spaceMarineCollectionManager = new SpaceMarineCollectionManager();
             XMLIOManager xmlioManager = new XMLIOManager(args[0]);
             CommandManager commandManager = new CommandManager();
+            IOManager ioManager = new IOManager();
 
-            AppController appController = new AppController(commandManager, spaceMarineCollectionManager, xmlioManager);
+            AppController appController = new AppController(commandManager, spaceMarineCollectionManager, xmlioManager, ioManager);
             appController.run();
         }
     }

@@ -7,6 +7,6 @@ public class ShowCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {
         SpaceMarineCollectionManager collectionManager = app.getSpaceMarineCollectionManager();
-        System.out.println(collectionManager);
+        app.getIoManager().writeMessage(collectionManager.toString()+"\n", false);
     }
 }

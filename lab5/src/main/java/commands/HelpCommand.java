@@ -5,7 +5,7 @@ import app.AppController;
 public class HelpCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {
-        System.out.println("""
+        app.getIoManager().writeMessage("""
                 help : вывести справку по доступным командам
                 info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
                 show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
@@ -22,6 +22,6 @@ public class HelpCommand implements Command {
                 group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
                 count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
                 filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
-                """);
+                """+"\n", false);
     }
 }
