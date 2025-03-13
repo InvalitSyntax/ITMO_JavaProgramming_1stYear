@@ -2,23 +2,45 @@ package app;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class IOManager {
     private boolean automatedInputNow;
-    private final Scanner scanner = new Scanner(System.in);
+    private Stack<Pair<String, Scanner>> scannersFromExecute = new Stack<>();
     private String automatedOutput = "";
-    private ArrayList<String> executingScripts = new ArrayList<>();
+    private ArrayList<String> executingScriptsName = new ArrayList<>();
+
+    public IOManager() {
+        scannersFromExecute.add(new Pair<>("Default", new Scanner(System.in)));
+    }
 
     public String getRawStringInput() {
-        String input;
-        automatedInputNow = false;
+        String input = null;
         writeMessage("> ", false);
 
-        input = scanner.nextLine();
+        do {
+            Pair<String, Scanner> pair = scannersFromExecute.peek();
+            String name = pair.getFirst();
+            Scanner scanner = pair.getSecond();
+            if (scanner.hasNextLine()) {
+                input = scanner.nextLine();
+                if (!name.equals("Default")) {
+                    writeMessage(input + "\n", false);
+                }
+            } else {
+                pair = scannersFromExecute.pop();
+                executingScriptsName.remove(name);
+                scanner.close();
+            }
+        } while (input == null);
 
         return input.trim();
+    }
+
+    public void addExecutingScanner(String name, Scanner scanner) {
+        this.scannersFromExecute.push(new Pair<>(name, scanner));
     }
 
     public void setAutomatedInputNow(boolean automatedInputNow) {
@@ -101,11 +123,11 @@ public class IOManager {
         return automatedOutput;
     }
 
-    public void addExecutingScript(String script) {
-        executingScripts.add(script);
+    public void addExecutingScriptName(String script) {
+        executingScriptsName.add(script);
     }
 
-    public ArrayList<String> getExecutingScripts() {
-        return executingScripts;
+    public ArrayList<String> getExecutingScriptsName() {
+        return executingScriptsName;
     }
 }
