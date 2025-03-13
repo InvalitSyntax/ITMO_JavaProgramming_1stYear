@@ -22,15 +22,15 @@ public class IOManager {
 
         do {
             Pair<String, Scanner> pair = scannersFromExecute.peek();
-            String name = pair.getFirst();
-            Scanner scanner = pair.getSecond();
+            String name = pair.first();
+            Scanner scanner = pair.second();
             if (scanner.hasNextLine()) {
                 input = scanner.nextLine();
                 if (!name.equals("Default")) {
                     writeMessage(input + "\n", false);
                 }
             } else {
-                pair = scannersFromExecute.pop();
+                scannersFromExecute.pop();
                 executingScriptsName.remove(name);
                 scanner.close();
             }
@@ -118,8 +118,7 @@ public class IOManager {
         }
     }
 
-    public String getAutomatedOutput() {
-        this.automatedOutput = "";
+    public String getAutomatedOutput() {        this.automatedOutput = "";
         return automatedOutput;
     }
 
