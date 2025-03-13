@@ -19,7 +19,7 @@ public class ExecuteScriptCommand implements Command {
             return;
         }
         if (ioManager.getExecutingScriptsName().contains(args[0].trim())) {
-            System.out.println("Обнаружена рекурсия в скриптах!");
+            System.out.printf("Обнаружена рекурсия в скриптах! Файл %s уже выполняется\n", args[0].trim());
             throw new RuntimeException();
         }
         ioManager.addExecutingScriptName(args[0].trim());
