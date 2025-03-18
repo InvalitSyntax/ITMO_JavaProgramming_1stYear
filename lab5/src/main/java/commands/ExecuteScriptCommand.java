@@ -7,8 +7,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-//TODO: чуть пофиксить экзикут
-
+/**
+ * Команда для выполнения скрипта из файла.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class ExecuteScriptCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {

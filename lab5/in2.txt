@@ -1,0 +1,17 @@
+help
+execute_script in2.txt
+add
+nah
+123
+123
+123
+123
+123
+123
+123
+123
+123
+123
+123
+123
+execute_script in.txt

@@ -7,15 +7,31 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.util.Scanner;
 
-// TODO: сделать еще и проверку на уникальность ID
-
+/**
+ * Менеджер для работы с XML-файлами, обеспечивающий сохранение и загрузку коллекции.
+ * Использует JAXB для сериализации и десериализации объектов.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class XMLIOManager {
     private final String filePath;
 
+    /**
+     * Конструктор XMLIOManager.
+     *
+     * @param filePath путь к файлу, с которым будет работать менеджер
+     */
     public XMLIOManager(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Сохраняет коллекцию космических десантников в XML-файл.
+     *
+     * @param collection коллекция для сохранения
+     * @throws RuntimeException если произошла ошибка при сериализации или записи в файл
+     */
     public void saveCollectionToFile(SpaceMarineCollectionManager collection) {
         String xmlContent = null;
         try {
@@ -37,6 +53,12 @@ public class XMLIOManager {
         }
     }
 
+    /**
+     * Загружает коллекцию космических десантников из XML-файла.
+     *
+     * @return загруженная коллекция
+     * @throws RuntimeException если произошла ошибка при десериализации или чтении файла
+     */
     public SpaceMarineCollectionManager loadCollectionFromFile() {
         Unmarshaller unmarshaller = null;
         try {
@@ -52,9 +74,6 @@ public class XMLIOManager {
                 xmlContent.append(scanner.nextLine()).append("\n");
             }
 
-            // Принтим содержимое XML для отладки
-            System.out.println("Содержимое XML:\n" + xmlContent);
-
             SpaceMarineCollectionManager out = (SpaceMarineCollectionManager) unmarshaller.unmarshal(new java.io.StringReader(xmlContent.toString()));
             System.out.println("Коллекция успешно загружена");
             out.updateFreeId();
@@ -68,14 +87,13 @@ public class XMLIOManager {
             Throwable cause = e.getCause();
             while (cause != null) {
                 if (cause instanceof IllegalArgumentException) {
-                    // Выводим только сообщение об ошибке
                     System.out.println(cause.getMessage());
                     break;
                 }
                 cause = cause.getCause();
             }
             System.out.println("\nИсправьте ошибку в файле и запустите программу заново, а пока что загружена пустая коллекция");
-            System.out.println("Для выхода из программы можете использовать команду exit");
+            System.out.println("Для выхода из программы можете использовать команду exit\n");
             return new SpaceMarineCollectionManager();
         }
     }

@@ -6,6 +6,12 @@ import model.SpaceMarine;
 
 import java.util.ArrayDeque;
 
+/**
+ * Команда для подсчета элементов, значение поля loyal которых меньше заданного.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class CountLessThanLoyalCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {
@@ -13,8 +19,7 @@ public class CountLessThanLoyalCommand implements Command {
         ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
         if (args.length == 0) {
             ioManager.writeMessage("Вы не ввели loyal, по которому сравнивать!\n", false);
-        }
-        else{
+        } else {
             boolean loyal;
             switch (args[0].toLowerCase()) {
                 case "true": loyal = true; break;
@@ -22,12 +27,12 @@ public class CountLessThanLoyalCommand implements Command {
                 default: ioManager.writeMessage("Вы ввели не boolean значение!\n", false); return;
             }
             int count = 0;
-            for(SpaceMarine marine : marineArrayDeque){
-                if (marine.getLoyal() != loyal){
+            for (SpaceMarine marine : marineArrayDeque) {
+                if (marine.getLoyal() != loyal) {
                     count++;
                 }
             }
-            ioManager.writeMessage("Колличество элементов: "+ count +"\n", false);
+            ioManager.writeMessage("Количество элементов: " + count + "\n", false);
         }
     }
 }

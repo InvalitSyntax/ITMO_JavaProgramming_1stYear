@@ -5,33 +5,50 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Класс, представляющий главу.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 @XmlRootElement(name = "chapter")
-@XmlAccessorType(XmlAccessType.PROPERTY) // Изменено на PROPERTY
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Chapter implements Comparable<Chapter> {
-    private String name; // Поле не может быть null, строка не может быть пустой
-    private String world; // Поле не может быть null
+    private String name;
+    private String world;
 
-    // Конструктор
+    /**
+     * Конструктор главы.
+     *
+     * @param name  имя главы
+     * @param world мир главы
+     */
     public Chapter(String name, String world) {
-        setName(name); // Используем сеттер для проверки ограничений
-        setWorld(world); // Используем сеттер для проверки ограничений
+        setName(name);
+        setWorld(world);
     }
 
+    /**
+     * Конструктор по умолчанию.
+     */
     public Chapter() {
     }
 
-    // Геттеры
-    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
+    /**
+     * Возвращает имя главы.
+     *
+     * @return имя главы
+     */
+    @XmlElement(required = true)
     public String getName() {
         return name;
     }
 
-    @XmlElement(required = true) // Добавлено для указания, что поле обязательно
-    public String getWorld() {
-        return world;
-    }
-
-    // Сеттеры
+    /**
+     * Устанавливает имя главы.
+     *
+     * @param name имя главы
+     */
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name не может быть null или пустым");
@@ -39,6 +56,21 @@ public class Chapter implements Comparable<Chapter> {
         this.name = name;
     }
 
+    /**
+     * Возвращает мир главы.
+     *
+     * @return мир главы
+     */
+    @XmlElement(required = true)
+    public String getWorld() {
+        return world;
+    }
+
+    /**
+     * Устанавливает мир главы.
+     *
+     * @param world мир главы
+     */
     public void setWorld(String world) {
         if (world == null) {
             throw new IllegalArgumentException("World не может быть null");
@@ -46,8 +78,13 @@ public class Chapter implements Comparable<Chapter> {
         this.world = world;
     }
 
+    /**
+     * Метод, вызываемый после десериализации.
+     *
+     * @param unmarshaller десериализатор
+     * @param parent       родительский объект
+     */
     void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {
-        // Прогоняем все поля через сеттеры
         setName(this.name);
         setWorld(this.world);
     }
@@ -62,12 +99,10 @@ public class Chapter implements Comparable<Chapter> {
 
     @Override
     public int compareTo(Chapter other) {
-        // Сравниваем по полю name
         int nameComparison = this.name.compareTo(other.name);
         if (nameComparison != 0) {
             return nameComparison;
         }
-        // Если name одинаковые, сравниваем по полю world
         return this.world.compareTo(other.world);
     }
 }

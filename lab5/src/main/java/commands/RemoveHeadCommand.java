@@ -2,6 +2,12 @@ package commands;
 
 import app.AppController;
 
+/**
+ * Команда для вывода и удаления первого элемента коллекции.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class RemoveHeadCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {

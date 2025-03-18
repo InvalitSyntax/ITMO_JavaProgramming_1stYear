@@ -9,58 +9,80 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Менеджер коллекции космических десантников.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 @XmlRootElement(name = "spaceMarineCollection")
-@XmlAccessorType(XmlAccessType.PROPERTY) // Используем геттеры и сеттеры
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class SpaceMarineCollectionManager {
-    private int id=0;
-    private ArrayDeque<SpaceMarine> marines; // Коллекция для хранения SpaceMarine
-    private ZonedDateTime creationDate; // Дата создания коллекции
+    private ArrayDeque<SpaceMarine> marines;
+    private ZonedDateTime creationDate;
 
-    // Конструктор
+    /**
+     * Конструктор менеджера коллекции.
+     */
     public SpaceMarineCollectionManager() {
         this.marines = new ArrayDeque<>();
         this.creationDate = ZonedDateTime.now();
     }
 
-    // Геттер для коллекции
-    @XmlElement(name = "marine") // Указываем имя элемента в XML
+    /**
+     * Возвращает коллекцию космических десантников.
+     *
+     * @return коллекция космических десантников
+     */
+    @XmlElement(name = "marine")
     public ArrayDeque<SpaceMarine> getMarines() {
         return marines;
     }
 
-    // Сеттер для коллекции
+    /**
+     * Устанавливает коллекцию космических десантников.
+     *
+     * @param marines коллекция космических десантников
+     */
     public void setMarines(ArrayDeque<SpaceMarine> marines) {
         this.marines = marines;
     }
 
-    // Геттер для даты создания
-    @XmlElement(required = true) // Поле обязательно
-    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class) // Адаптер для ZonedDateTime
+    /**
+     * Возвращает дату создания коллекции.
+     *
+     * @return дата создания коллекции
+     */
+    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     public ZonedDateTime getCreationDate() {
         return creationDate;
     }
 
-    // Сеттер для даты создания
+    /**
+     * Устанавливает дату создания коллекции.
+     *
+     * @param creationDate дата создания коллекции
+     */
     private void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    // Метод для получения информации о коллекции
+    /**
+     * Возвращает информацию о коллекции.
+     *
+     * @return информация о коллекции
+     */
     public String getInfo() {
         StringBuilder info = new StringBuilder();
 
-        // Тип коллекции
         info.append("Тип коллекции: ").append(marines.getClass().getSimpleName()).append("\n");
-
-        // Дата инициализации коллекции
         info.append("Дата инициализации: ").append(creationDate.toString()).append("\n");
-
-        // Количество элементов в коллекции
         info.append("Количество элементов: ").append(marines.size()).append("\n");
 
-        // Дополнительная информация, если коллекция пуста
         switch (marines.size()) {
             case 0: info.append("Коллекция пуста."); break;
             case 1: info.append("Единственный элемент: ").append(marines.getFirst()).append("\n"); break;
@@ -72,7 +94,11 @@ public class SpaceMarineCollectionManager {
         return info.toString();
     }
 
-    // Добавление элемента в коллекцию
+    /**
+     * Добавляет космического десантника в коллекцию.
+     *
+     * @param marine космический десантник
+     */
     public void addMarine(SpaceMarine marine) {
         if (marine == null) {
             throw new IllegalArgumentException("Marine cannot be null");
@@ -80,7 +106,11 @@ public class SpaceMarineCollectionManager {
         marines.add(marine);
     }
 
-    // Удаление элемента из коллекции
+    /**
+     * Удаляет космического десантника из коллекции.
+     *
+     * @param marine космический десантник
+     */
     public void removeMarine(SpaceMarine marine) {
         if (marine == null) {
             throw new IllegalArgumentException("Marine cannot be null");
@@ -88,11 +118,16 @@ public class SpaceMarineCollectionManager {
         marines.remove(marine);
     }
 
-    // Очистка коллекции
+    /**
+     * Очищает коллекцию.
+     */
     public void clearMarines() {
         marines.clear();
     }
 
+    /**
+     * Обновляет свободный ID.
+     */
     public void updateFreeId() {
         int min = 0;
         for (SpaceMarine marine : marines) {
@@ -103,6 +138,25 @@ public class SpaceMarineCollectionManager {
         SpaceMarine.freeId = min;
     }
 
+    /**
+     * Проверяет уникальность ID в коллекции.
+     */
+    private void checkIds() {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (SpaceMarine marine : marines) {
+            if (ids.contains(marine.getId())) {
+                throw new IllegalArgumentException("Коллекция содержит повторяющиеся ID!");
+            }
+            ids.add(marine.getId());
+        }
+    }
+
+    /**
+     * Заменяет космического десантника по ID.
+     *
+     * @param id       ID десантника
+     * @param newMarine новый десантник
+     */
     public void replaceMarineById(int id, SpaceMarine newMarine) {
         Iterator<SpaceMarine> iterator = marines.iterator();
         while (iterator.hasNext()) {
@@ -115,6 +169,11 @@ public class SpaceMarineCollectionManager {
         }
     }
 
+    /**
+     * Удаляет космического десантника по ID.
+     *
+     * @param id ID десантника
+     */
     public void removeMarineById(int id) {
         Iterator<SpaceMarine> iterator = marines.iterator();
         while (iterator.hasNext()) {
@@ -126,13 +185,18 @@ public class SpaceMarineCollectionManager {
         }
     }
 
+    /**
+     * Метод, вызываемый после десериализации.
+     *
+     * @param unmarshaller десериализатор
+     * @param parent       родительский объект
+     */
     void afterUnmarshal(javax.xml.bind.Unmarshaller unmarshaller, Object parent) {
-        // Прогоняем все поля через сеттеры
         setMarines(this.marines);
         setCreationDate(this.creationDate);
+        checkIds();
     }
 
-    // Переопределение метода toString для красивого вывода
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("SpaceMarineCollection {\n");

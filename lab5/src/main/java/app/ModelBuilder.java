@@ -2,22 +2,41 @@ package app;
 
 import model.*;
 
-import java.util.function.Predicate;
-
+/**
+ * Класс для построения объектов модели.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class ModelBuilder {
     private final IOManager ioManager;
     private boolean inQuietMode = false;
     private final SpaceMarineCollectionManager spaceMarineCollectionManager;
 
+    /**
+     * Конструктор ModelBuilder.
+     *
+     * @param appController контроллер приложения
+     */
     public ModelBuilder(AppController appController) {
         this.ioManager = appController.getIoManager();
         this.spaceMarineCollectionManager = appController.getSpaceMarineCollectionManager();
     }
 
+    /**
+     * Устанавливает режим тихого ввода.
+     *
+     * @param inQuietMode флаг тихого режима
+     */
     public void setQuietMode(boolean inQuietMode) {
         this.inQuietMode = inQuietMode;
     }
 
+    /**
+     * Создает объект SpaceMarine.
+     *
+     * @return объект SpaceMarine
+     */
     public SpaceMarine build() {
         SpaceMarine spaceMarine = new SpaceMarine();
 
@@ -34,7 +53,7 @@ public class ModelBuilder {
         spaceMarine.setLoyal(ioManager.getBooleanInput(Boolean::parseBoolean));
 
         ioManager.writeMessage("Если вы хотите установить оружие введите <да>, иначе что-либо иное\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")){
+        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
             ioManager.writeMessage("Введите оружие из списка:\n", inQuietMode);
             for (Weapon c : Weapon.values()) {
                 ioManager.writeMessage(c + "\n", inQuietMode);
@@ -43,7 +62,7 @@ public class ModelBuilder {
         }
 
         ioManager.writeMessage("Если вы хотите установить оружие ближнего боя введите <да>, иначе что-либо иное\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")){
+        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
             ioManager.writeMessage("Введите оружие ближнего боя из списка:\n", inQuietMode);
             for (MeleeWeapon c : MeleeWeapon.values()) {
                 ioManager.writeMessage(c + "\n", inQuietMode);
@@ -52,7 +71,7 @@ public class ModelBuilder {
         }
 
         ioManager.writeMessage("Если вы хотите установить главу ведите <да>, иначе что-либо иное\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")){
+        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
             spaceMarine.setChapter(buildChapter());
         }
 
@@ -61,11 +80,16 @@ public class ModelBuilder {
         return spaceMarine;
     }
 
+    /**
+     * Создает объект Coordinates.
+     *
+     * @return объект Coordinates
+     */
     public Coordinates buildCoordinates() {
         Coordinates coordinates = new Coordinates();
 
         ioManager.writeMessage("Если вы хотите ввести координату x, напишите <да>, иначе же напишите что-либо ино\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")){
+        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
             ioManager.writeMessage("Введите координату x (дробное число)\n", inQuietMode);
             coordinates.setX(ioManager.getNumberInput(Double::parseDouble));
         }
@@ -76,6 +100,11 @@ public class ModelBuilder {
         return coordinates;
     }
 
+    /**
+     * Создает объект Chapter.
+     *
+     * @return объект Chapter
+     */
     public Chapter buildChapter() {
         Chapter chapter = new Chapter();
 

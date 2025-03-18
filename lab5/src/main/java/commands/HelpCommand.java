@@ -2,6 +2,12 @@ package commands;
 
 import app.AppController;
 
+/**
+ * Команда для вывода справки по доступным командам.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class HelpCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {

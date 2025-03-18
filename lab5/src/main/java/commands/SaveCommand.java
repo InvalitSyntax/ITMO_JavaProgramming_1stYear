@@ -1,10 +1,16 @@
 package commands;
 
-import app.SpaceMarineCollectionManager;
 import app.AppController;
+import app.SpaceMarineCollectionManager;
 import app.XMLIOManager;
 
-public class SaveCommand implements Command{
+/**
+ * Команда для сохранения коллекции в файл.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
+public class SaveCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {
         XMLIOManager xmlioManager = app.getXmlioManager();

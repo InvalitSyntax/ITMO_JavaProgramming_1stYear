@@ -6,6 +6,12 @@ import model.SpaceMarine;
 
 import java.util.ArrayDeque;
 
+/**
+ * Команда для удаления элемента из коллекции по его ID.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
 public class RemoveByIdCommand implements Command {
     @Override
     public void execute(AppController app, String[] args) {
@@ -13,25 +19,23 @@ public class RemoveByIdCommand implements Command {
         ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
         if (args.length == 0) {
             ioManager.writeMessage("Вы не ввели id элемента коллекции!\n", false);
-        }
-        else{
+        } else {
             int id = Integer.parseInt(args[0]);
             boolean flag = false;
-            for(SpaceMarine marine : marineArrayDeque){
-                if (marine.getId() == id){
+            for (SpaceMarine marine : marineArrayDeque) {
+                if (marine.getId() == id) {
                     flag = true;
                     app.getSpaceMarineCollectionManager().removeMarineById(id);
                     ioManager.writeMessage("Десантник удален\n", false);
                     break;
                 }
             }
-            if (!flag){
+            if (!flag) {
                 ioManager.writeMessage("""
                         Элемент коллекции с таким id не найден!\s
                         Введите show, чтобы вывести список доступных элементов.
                         \n""", false);
             }
-
         }
     }
 }

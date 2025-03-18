@@ -1,0 +1,4 @@
+help
+execute_script in2.txt
+show
+remove_by_id 1
