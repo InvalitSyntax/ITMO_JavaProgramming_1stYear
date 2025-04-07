@@ -283,6 +283,6 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
 
     @Override
     public int compareTo(SpaceMarine other) {
-        return Integer.compare(this.id, other.id);
+        return this.name.compareTo(other.getName());
     }
 }

@@ -22,6 +22,7 @@ public class RemoveGreater implements Command {
         for (SpaceMarine marine : marineArrayDeque) {
             if (newMarine.compareTo(marine) < 0) {
                 app.getSpaceMarineCollectionManager().removeMarine(marine);
+                ioManager.writeMessage("Удален десантник: \n"+marine.toString()+"\n", false);
             }
         }
     }

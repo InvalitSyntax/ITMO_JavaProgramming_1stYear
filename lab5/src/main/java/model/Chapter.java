@@ -99,10 +99,13 @@ public class Chapter implements Comparable<Chapter> {
 
     @Override
     public int compareTo(Chapter other) {
-        int nameComparison = this.name.compareTo(other.name);
+        if (other == null) {
+            return 1;
+        }
+        int nameComparison = this.name.compareTo(other.getName());
         if (nameComparison != 0) {
             return nameComparison;
         }
-        return this.world.compareTo(other.world);
+        return this.world.compareTo(other.getName());
     }
 }
