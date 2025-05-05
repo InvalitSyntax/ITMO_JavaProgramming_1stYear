@@ -14,7 +14,11 @@ import java.util.HashMap;
  * @author ISyntax
  * @version 1.0
  */
-public class CountByWeaponeTypeCommand implements Command {
+public class CountByWeaponeTypeCommand extends ICommand {
+    public CountByWeaponeTypeCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();

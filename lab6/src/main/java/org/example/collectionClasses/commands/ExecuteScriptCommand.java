@@ -13,7 +13,11 @@ import java.util.Scanner;
  * @author ISyntax
  * @version 1.0
  */
-public class ExecuteScriptCommand implements Command {
+public class ExecuteScriptCommand extends ICommand {
+    public ExecuteScriptCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();

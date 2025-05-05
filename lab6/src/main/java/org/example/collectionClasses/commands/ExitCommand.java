@@ -8,7 +8,11 @@ import org.example.collectionClasses.app.AppController;
  * @author ISyntax
  * @version 1.0
  */
-public class ExitCommand implements Command {
+public class ExitCommand extends ICommand {
+    public ExitCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         app.setTurnOn(false);

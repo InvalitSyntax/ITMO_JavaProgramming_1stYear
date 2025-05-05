@@ -8,7 +8,11 @@ import org.example.collectionClasses.app.AppController;
  * @author ISyntax
  * @version 1.0
  */
-public class RemoveHeadCommand implements Command {
+public class RemoveHeadCommand extends ICommand {
+    public RemoveHeadCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         if (!app.getSpaceMarineCollectionManager().getMarines().isEmpty()) {

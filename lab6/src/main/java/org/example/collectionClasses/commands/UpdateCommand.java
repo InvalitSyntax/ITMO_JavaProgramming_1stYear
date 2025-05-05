@@ -13,7 +13,10 @@ import java.util.ArrayDeque;
  * @author ISyntax
  * @version 1.0
  */
-public class UpdateCommand implements Command {
+public class UpdateCommand extends ICommand {
+    public UpdateCommand() {
+        super();
+    }
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();

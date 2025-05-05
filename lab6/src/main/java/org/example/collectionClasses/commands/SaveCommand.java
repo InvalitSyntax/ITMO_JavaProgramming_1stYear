@@ -10,7 +10,10 @@ import org.example.collectionClasses.app.XMLIOManager;
  * @author ISyntax
  * @version 1.0
  */
-public class SaveCommand implements Command {
+public class SaveCommand extends ICommand {
+    public SaveCommand() {
+        super();
+    }
     @Override
     public void execute(AppController app, String[] args) {
         XMLIOManager xmlioManager = app.getXmlioManager();

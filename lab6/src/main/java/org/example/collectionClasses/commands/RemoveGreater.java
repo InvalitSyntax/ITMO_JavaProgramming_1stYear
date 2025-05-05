@@ -13,7 +13,10 @@ import java.util.ArrayDeque;
  * @author ISyntax
  * @version 1.0
  */
-public class RemoveGreater implements Command {
+public class RemoveGreater extends ICommand {
+    public RemoveGreater() {
+        super();
+    }
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
@@ -22,7 +25,7 @@ public class RemoveGreater implements Command {
         for (SpaceMarine marine : marineArrayDeque) {
             if (newMarine.compareTo(marine) < 0) {
                 app.getSpaceMarineCollectionManager().removeMarine(marine);
-                ioManager.writeMessage("Удален десантник: \n" + marine.toString() + "\n", false);
+                ioManager.writeMessage("Удален десантник: \n" + marine + "\n", false);
             }
         }
     }

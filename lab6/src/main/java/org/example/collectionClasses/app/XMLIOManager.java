@@ -48,6 +48,7 @@ public class XMLIOManager {
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filePath))) {
             bufferedWriter.write(xmlContent);
+            System.out.println("Коллекция успешно сохранена");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

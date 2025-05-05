@@ -1,6 +1,7 @@
 package org.example.collectionClasses.commands;
 
 import org.example.collectionClasses.app.AppController;
+import java.io.Serializable;
 
 /**
  * Интерфейс для выполнения команд.
@@ -8,7 +9,7 @@ import org.example.collectionClasses.app.AppController;
  * @author ISyntax
  * @version 1.0
  */
-public interface Command {
+public interface Command extends Serializable {
     /**
      * Выполняет команду.
      *

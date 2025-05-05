@@ -8,7 +8,10 @@ import org.example.collectionClasses.app.AppController;
  * @author ISyntax
  * @version 1.0
  */
-public class RemoveFirstCommand implements Command {
+public class RemoveFirstCommand extends ICommand {
+    public RemoveFirstCommand() {
+        super();
+    }
     @Override
     public void execute(AppController app, String[] args) {
         if (!app.getSpaceMarineCollectionManager().getMarines().isEmpty()) {

@@ -10,7 +10,10 @@ import org.example.collectionClasses.model.SpaceMarine;
  * @author ISyntax
  * @version 1.0
  */
-public class AddCommand implements Command {
+public class AddCommand extends ICommand{
+    public AddCommand() {
+        super();
+    }
     @Override
     public void execute(AppController app, String[] args) {
         ModelBuilder modelBuilder = new ModelBuilder(app);

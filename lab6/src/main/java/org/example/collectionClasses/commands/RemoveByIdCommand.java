@@ -12,7 +12,11 @@ import java.util.ArrayDeque;
  * @author ISyntax
  * @version 1.0
  */
-public class RemoveByIdCommand implements Command {
+public class RemoveByIdCommand extends ICommand {
+    public RemoveByIdCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();

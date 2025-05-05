@@ -14,7 +14,11 @@ import java.util.ArrayDeque;
  * @author ISyntax
  * @version 1.0
  */
-public class FilterLesThanChapterCommand implements Command {
+public class FilterLesThanChapterCommand extends ICommand {
+    public FilterLesThanChapterCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();

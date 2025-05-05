@@ -45,22 +45,9 @@ public class AppController {
      * Регистрирует команды в менеджере команд.
      */
     private void putCommands() {
-        commandManager.putCommand("help", new HelpCommand());
-        commandManager.putCommand("exit", new ExitCommand());
-        commandManager.putCommand("show", new ShowCommand());
-        commandManager.putCommand("info", new InfoCommand());
-        commandManager.putCommand("clear", new ClearCommand());
-        commandManager.putCommand("save", new SaveCommand());
-        commandManager.putCommand("add", new AddCommand());
-        commandManager.putCommand("update", new UpdateCommand());
-        commandManager.putCommand("remove_by_id", new RemoveByIdCommand());
-        commandManager.putCommand("remove_first", new RemoveFirstCommand());
-        commandManager.putCommand("remove_head", new RemoveHeadCommand());
-        commandManager.putCommand("group_counting_by_weapon_type", new CountByWeaponeTypeCommand());
-        commandManager.putCommand("count_less_than_loyal", new CountLessThanLoyalCommand());
-        commandManager.putCommand("filter_less_than_chapter", new FilterLesThanChapterCommand());
-        commandManager.putCommand("remove_greater", new RemoveGreater());
-        commandManager.putCommand("execute_script", new ExecuteScriptCommand());
+        commandManager.putCommand("save", SaveCommand::new);
+        commandManager.putCommand("help", HelpCommandServer::new);
+        commandManager.putCommand("show", ShowCommand::new);
     }
 
     /**

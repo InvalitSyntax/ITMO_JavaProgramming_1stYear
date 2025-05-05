@@ -9,7 +9,11 @@ import org.example.collectionClasses.app.SpaceMarineCollectionManager;
  * @author ISyntax
  * @version 1.0
  */
-public class ClearCommand implements Command {
+public class ClearCommand extends ICommand {
+    public ClearCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         SpaceMarineCollectionManager collectionManager = app.getSpaceMarineCollectionManager();

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<spaceMarineCollection>
+    <creationDate>2025-03-11T14:27:23.3205988+03:00[Europe/Moscow]</creationDate>
+    <marine>
+        <coordinates>
+            <x>0.0</x>
+            <y>123.0</y>
+        </coordinates>
+        <health>123.0</health>
+        <id>3</id>
+        <loyal>false</loyal>
+        <name>123</name>
+    </marine>
+    <marine>
+        <coordinates>
+            <x>0.0</x>
+            <y>2.0</y>
+        </coordinates>
+        <health>2.0</health>
+        <id>4</id>
+        <loyal>false</loyal>
+        <name>~</name>
+    </marine>
+    <marine>
+        <coordinates>
+            <x>0.0</x>
+            <y>123.0</y>
+        </coordinates>
+        <health>123.0</health>
+        <id>6</id>
+        <loyal>false</loyal>
+        <name>nah</name>
+    </marine>
+    <marine>
+        <coordinates>
+            <x>0.0</x>
+            <y>123.0</y>
+        </coordinates>
+        <health>123.0</health>
+        <id>7</id>
+        <loyal>false</loyal>
+        <name>nah</name>
+    </marine>
+</spaceMarineCollection>

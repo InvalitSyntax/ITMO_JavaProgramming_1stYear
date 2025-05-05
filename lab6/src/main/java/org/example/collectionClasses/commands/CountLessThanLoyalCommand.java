@@ -12,7 +12,10 @@ import java.util.ArrayDeque;
  * @author ISyntax
  * @version 1.0
  */
-public class CountLessThanLoyalCommand implements Command {
+public class CountLessThanLoyalCommand extends ICommand {
+    public CountLessThanLoyalCommand() {
+        super();
+    }
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();

@@ -9,7 +9,11 @@ import org.example.collectionClasses.app.SpaceMarineCollectionManager;
  * @author ISyntax
  * @version 1.0
  */
-public class InfoCommand implements Command {
+public class InfoCommand extends ICommand {
+    public InfoCommand() {
+        super();
+    }
+
     @Override
     public void execute(AppController app, String[] args) {
         SpaceMarineCollectionManager collectionManager = app.getSpaceMarineCollectionManager();
