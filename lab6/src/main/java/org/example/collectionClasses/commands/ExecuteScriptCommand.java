@@ -16,12 +16,13 @@ import java.util.Scanner;
 public class ExecuteScriptCommand extends ICommand {
     public ExecuteScriptCommand() {
         super();
+        this.needToExecutePartOnClient = true;
     }
+    
 
     @Override
-    public void execute(AppController app, String[] args) {
-        IOManager ioManager = app.getIoManager();
-
+    public void partlyExecute(IOManager ioManager) {
+        String[] args = this.getArgs();
         if (args.length == 0) {
             ioManager.writeMessage("Введите название файла со скриптом!\n", false);
             return;

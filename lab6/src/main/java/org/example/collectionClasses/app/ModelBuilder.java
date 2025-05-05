@@ -10,7 +10,6 @@ import org.example.collectionClasses.model.*;
  */
 public class ModelBuilder {
     private final IOManager ioManager;
-    private final SpaceMarineCollectionManager spaceMarineCollectionManager;
     private boolean inQuietMode = false;
 
     /**
@@ -20,7 +19,10 @@ public class ModelBuilder {
      */
     public ModelBuilder(AppController appController) {
         this.ioManager = appController.getIoManager();
-        this.spaceMarineCollectionManager = appController.getSpaceMarineCollectionManager();
+    }
+
+    public ModelBuilder(IOManager ioManager) {
+        this.ioManager = ioManager;
     }
 
     /**

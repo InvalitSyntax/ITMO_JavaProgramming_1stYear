@@ -23,6 +23,7 @@ import java.util.Iterator;
 public class SpaceMarineCollectionManager {
     private ArrayDeque<SpaceMarine> marines;
     private ZonedDateTime creationDate;
+    private int freeId;
 
     /**
      * Конструктор менеджера коллекции.
@@ -139,7 +140,11 @@ public class SpaceMarineCollectionManager {
                 min = marine.getId();
             }
         }
-        SpaceMarine.freeId = min;
+        this.freeId = min;
+    }
+
+    public int getFreeId() {
+        return(++this.freeId);
     }
 
     /**

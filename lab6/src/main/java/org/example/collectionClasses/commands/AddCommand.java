@@ -1,6 +1,7 @@
 package org.example.collectionClasses.commands;
 
 import org.example.collectionClasses.app.AppController;
+import org.example.collectionClasses.app.IOManager;
 import org.example.collectionClasses.app.ModelBuilder;
 import org.example.collectionClasses.model.SpaceMarine;
 
@@ -15,10 +16,14 @@ public class AddCommand extends ICommand{
         super();
     }
     @Override
+    public void setElement(IOManager ioManager){
+        ModelBuilder modelBuilder = new ModelBuilder(ioManager);
+        this.spaceMarine = modelBuilder.build();
+    }
+    @Override
     public void execute(AppController app, String[] args) {
-        ModelBuilder modelBuilder = new ModelBuilder(app);
-        SpaceMarine sm = modelBuilder.build();
-        app.getIoManager().writeMessage("Ваш созданный и добавленный десантник:\n" + sm.toString() + "\n", false);
-        app.getSpaceMarineCollectionManager().addMarine(sm);
+        this.spaceMarine.setId(app.getSpaceMarineCollectionManager().getFreeId());
+        app.getIoManager().writeMessage("Ваш созданный и добавленный десантник:\n" + this.spaceMarine.toString() + "\n", false);
+        app.getSpaceMarineCollectionManager().addMarine(this.spaceMarine);
     }
 }

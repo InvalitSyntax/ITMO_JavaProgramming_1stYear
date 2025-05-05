@@ -1,5 +1,7 @@
 package org.example.collectionClasses.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,7 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "chapter")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Chapter implements Comparable<Chapter> {
+public class Chapter implements Comparable<Chapter>, Serializable {
+    public static final long serialVersionUID = 5L;
     private String name;
     private String world;
 

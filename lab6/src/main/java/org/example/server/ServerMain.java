@@ -58,7 +58,7 @@ public class ServerMain {
                         if (writedMessages.length() != 0) {
                             result = writedMessages;
                         } else {
-                            result = "Команда успешно выполнена";
+                            result = "Команда выполнена";
                         }
                         Answer answer = new Answer(result);
                         

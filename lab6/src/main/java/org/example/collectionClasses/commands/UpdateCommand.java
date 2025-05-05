@@ -18,6 +18,11 @@ public class UpdateCommand extends ICommand {
         super();
     }
     @Override
+    public void setElement(IOManager ioManager){
+        ModelBuilder modelBuilder = new ModelBuilder(ioManager);
+        this.spaceMarine = modelBuilder.build();
+    }
+    @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
         ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
@@ -36,7 +41,7 @@ public class UpdateCommand extends ICommand {
             for (SpaceMarine marine : marineArrayDeque) {
                 if (marine.getId() == id) {
                     flag = true;
-                    SpaceMarine sm = new ModelBuilder(app).build();
+                    SpaceMarine sm = this.spaceMarine;
                     sm.setId(id);
                     app.getSpaceMarineCollectionManager().replaceMarineById(id, sm);
                 }

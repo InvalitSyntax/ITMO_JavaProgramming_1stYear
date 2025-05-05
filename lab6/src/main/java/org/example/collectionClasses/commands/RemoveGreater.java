@@ -18,9 +18,14 @@ public class RemoveGreater extends ICommand {
         super();
     }
     @Override
+    public void setElement(IOManager ioManager){
+        ModelBuilder modelBuilder = new ModelBuilder(ioManager);
+        this.spaceMarine = modelBuilder.build();
+    }
+    @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        SpaceMarine newMarine = new ModelBuilder(app).build();
+        SpaceMarine newMarine = this.spaceMarine;
         ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
         for (SpaceMarine marine : marineArrayDeque) {
             if (newMarine.compareTo(marine) < 0) {

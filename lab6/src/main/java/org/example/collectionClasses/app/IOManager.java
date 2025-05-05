@@ -18,12 +18,17 @@ public class IOManager {
     private String automatedOutput = "";
     private final ArrayList<String> executingScriptsName = new ArrayList<>();
     private StringBuilder writedMessagesStringBuilder = new StringBuilder();
+    private boolean isCliet = false;
 
     /**
      * Конструктор менеджера ввода/вывода.
      */
     public IOManager() {
         scannersFromExecute.add(new Pair<>("Default", new Scanner(System.in)));
+    }
+
+    public void setIsClient(boolean isCliet) {
+        this.isCliet = isCliet;
     }
 
     /**
@@ -176,11 +181,15 @@ public class IOManager {
      * @param quiet   флаг тихого режима
      */
     public void writeMessage(String message, boolean quiet) {
-        if (!automatedInputNow && !quiet) {
-            // System.out.print(message);
-            this.writedMessagesStringBuilder.append(message);
-        } else {
-            automatedOutput += message;
+        if (isCliet == true) {
+            System.out.print(message);
+        } else{
+            if (!automatedInputNow && !quiet) {
+                // System.out.print(message);
+                this.writedMessagesStringBuilder.append(message);
+            } else {
+                automatedOutput += message;
+            }
         }
     }
 

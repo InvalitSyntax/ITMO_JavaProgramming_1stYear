@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 /**
@@ -17,7 +19,8 @@ import java.time.ZonedDateTime;
  */
 @XmlRootElement(name = "spaceMarine")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class SpaceMarine implements Comparable<SpaceMarine> {
+public class SpaceMarine implements Comparable<SpaceMarine>, Serializable{
+    public static final long serialVersionUID = 3L;
     public static int freeId = 0;
     private int id;
     private String name;

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <spaceMarineCollection>
     <creationDate>2025-05-05T14:44:46.8891074+03:00[Europe/Moscow]</creationDate>
+    <marine>
+        <coordinates>
+            <x>0.0</x>
+            <y>123.0</y>
+        </coordinates>
+        <health>123.0</health>
+        <id>1</id>
+        <loyal>false</loyal>
+        <name>123</name>
+    </marine>
 </spaceMarineCollection>
