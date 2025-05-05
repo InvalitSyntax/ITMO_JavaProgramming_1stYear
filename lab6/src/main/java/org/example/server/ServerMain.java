@@ -49,11 +49,17 @@ public class ServerMain {
                     try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(receivedData))) {
                         ICommand receivedCommand = (ICommand) objIn.readObject();
                         System.out.println("Получено: " + receivedCommand.toString());
-
-                        receivedCommand.execute(appController, receivedCommand.getArgs());
                         
                         // Обработка команды и формирование ответа
-                        Object result = receivedCommand.toString();
+                        receivedCommand.execute(appController, receivedCommand.getArgs());
+
+                        String writedMessages = ioManager.popWritedMessages();
+                        String result;
+                        if (writedMessages.length() != 0) {
+                            result = writedMessages;
+                        } else {
+                            result = "Команда успешно выполнена";
+                        }
                         Answer answer = new Answer(result);
                         
                         // Сериализация и отправка ответа
@@ -72,19 +78,27 @@ public class ServerMain {
                 if (reader.ready()) {
                     String input = reader.readLine();
                     if (input == null) {
-                        ioManager.writeMessage("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n", false);
+                        System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
                     } else {
                         String[] tokens = input.trim().split(" ");
                         // System.out.println(Arrays.toString(tokens));
                         if (tokens[0].equals("exit")) {
                             commandManager.executeCommand(appController, new String[] {"save"});
+                            String writedMessages = ioManager.popWritedMessages();
+                            if (writedMessages.length() != 0) {
+                                System.out.println(writedMessages);
+                            }
                             System.out.println("Выход из программы...");
                             break;
                         } else {
                             try {
                                 commandManager.executeCommand(appController, tokens);
+                                String writedMessages = ioManager.popWritedMessages();
+                                if (writedMessages.length() != 0) {
+                                    System.out.println(writedMessages);
+                                }
                             } catch (Exception e) {
-                                ioManager.writeMessage(e.getMessage(), true);
+                                System.out.println(e.getMessage());
                             }
                         }
                     }

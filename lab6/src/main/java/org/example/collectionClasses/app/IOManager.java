@@ -17,6 +17,7 @@ public class IOManager {
     private final Stack<Pair<String, Scanner>> scannersFromExecute = new Stack<>();
     private String automatedOutput = "";
     private final ArrayList<String> executingScriptsName = new ArrayList<>();
+    private StringBuilder writedMessagesStringBuilder = new StringBuilder();
 
     /**
      * Конструктор менеджера ввода/вывода.
@@ -176,10 +177,17 @@ public class IOManager {
      */
     public void writeMessage(String message, boolean quiet) {
         if (!automatedInputNow && !quiet) {
-            System.out.print(message);
+            // System.out.print(message);
+            this.writedMessagesStringBuilder.append(message);
         } else {
             automatedOutput += message;
         }
+    }
+
+    public String popWritedMessages(){
+        String out = this.writedMessagesStringBuilder.toString();
+        this.writedMessagesStringBuilder = new StringBuilder();
+        return out;
     }
 
     /**
