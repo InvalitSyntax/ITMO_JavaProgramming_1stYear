@@ -1,112 +1,22 @@
 package org.example.server;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.example.collectionClasses.app.AppController;
-import org.example.collectionClasses.app.CommandManager;
-import org.example.collectionClasses.app.IOManager;
-import org.example.collectionClasses.app.SpaceMarineCollectionManager;
-import org.example.collectionClasses.app.XMLIOManager;
-import org.example.collectionClasses.commands.Answer;
-import org.example.collectionClasses.commands.ICommand;
+import java.io.IOException;
 
 public class ServerMain {
+    private static final Logger logger = LogManager.getLogger(ServerMain.class);
+
     public static void main(String[] args) throws IOException, InterruptedException {
         if (args.length == 0) {
+            logger.error("Для работы приложения напишите названия файла в виде: <name.xml>");
             System.out.println("Для работы приложения напишите названия файла в виде:\n<name.xml>, где name - ваше желаемое название файла");
-        } else {
-            SpaceMarineCollectionManager spaceMarineCollectionManager = new SpaceMarineCollectionManager();
-            XMLIOManager xmlioManager = new XMLIOManager(args[0]);
-            CommandManager commandManager = new CommandManager();
-            IOManager ioManager = new IOManager();
-
-            AppController appController = new AppController(commandManager, spaceMarineCollectionManager, xmlioManager, ioManager);
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            InetSocketAddress address = new InetSocketAddress(8000);
-            DatagramChannel channel = DatagramChannel.open();
-            channel.bind(address);
-            channel.configureBlocking(false);
-            ByteBuffer buffer = ByteBuffer.allocate(4096);
-
-            System.out.println("Вы можете ввести команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
-
-            while (true) {
-                buffer.clear();
-                InetSocketAddress clientAddress = (InetSocketAddress) channel.receive(buffer);
-                
-                if (clientAddress != null) {
-                    System.out.println("Данные пришли!");
-                    buffer.flip();
-                    byte[] receivedData = new byte[buffer.remaining()];
-                    buffer.get(receivedData);
-                    
-                    try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(receivedData))) {
-                        ICommand receivedCommand = (ICommand) objIn.readObject();
-                        System.out.println("Получено: " + receivedCommand.toString());
-                        
-                        // Обработка команды и формирование ответа
-                        receivedCommand.execute(appController, receivedCommand.getArgs());
-
-                        String writedMessages = ioManager.popWritedMessages();
-                        String result;
-                        if (writedMessages.length() != 0) {
-                            result = writedMessages;
-                        } else {
-                            result = "Команда выполнена";
-                        }
-                        Answer answer = new Answer(result);
-                        
-                        // Сериализация и отправка ответа
-                        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                        ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
-                        objOut.writeObject(answer);
-                        byte[] responseData = byteOut.toByteArray();
-                        
-                        ByteBuffer responseBuffer = ByteBuffer.wrap(responseData);
-                        channel.send(responseBuffer, clientAddress);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (reader.ready()) {
-                    String input = reader.readLine();
-                    if (input == null) {
-                        System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
-                    } else {
-                        String[] tokens = input.trim().split(" ");
-                        // System.out.println(Arrays.toString(tokens));
-                        if (tokens[0].equals("exit")) {
-                            commandManager.executeCommand(appController, new String[] {"save"});
-                            String writedMessages = ioManager.popWritedMessages();
-                            if (writedMessages.length() != 0) {
-                                System.out.println(writedMessages);
-                            }
-                            System.out.println("Выход из программы...");
-                            break;
-                        } else {
-                            try {
-                                commandManager.executeCommand(appController, tokens);
-                                String writedMessages = ioManager.popWritedMessages();
-                                if (writedMessages.length() != 0) {
-                                    System.out.println(writedMessages);
-                                }
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
-                            }
-                        }
-                    }
-                    // System.out.println("Вы ввели: " + input);
-                }
-
-                Thread.yield();
-            }
+            return;
         }
+
+        logger.info("Запуск сервера...");
+        Server server = new Server(5252, args[0]);
+        server.start();
     }
 }

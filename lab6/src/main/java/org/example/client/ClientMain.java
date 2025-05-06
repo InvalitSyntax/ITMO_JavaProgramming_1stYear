@@ -13,7 +13,7 @@ public class ClientMain {
         CommandManager commandManager = new CommandManager();
         registerCommands(commandManager);
         
-        ClientNetworkManager networkManager = new ClientNetworkManager("localhost", 8000);
+        ClientNetworkManager networkManager = new ClientNetworkManager("localhost", 5252);
         
         // Создание и запуск клиентского приложения
         ClientApp clientApp = new ClientApp(ioManager, commandManager, networkManager);
