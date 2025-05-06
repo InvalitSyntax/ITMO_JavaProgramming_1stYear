@@ -233,3 +233,348 @@ SpaceMarine {
 }
 
 04:50:20.691 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:51297
+05:15:05.416 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+05:15:05.577 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+05:15:05.577 [main] INFO  org.example.server.Server - Сервер запущен на порту 5252
+05:15:23.417 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:64816
+05:15:23.438 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@10a9d961
+05:15:23.451 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:15:23.455 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:64816
+05:15:41.051 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+05:15:41.190 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+05:15:41.197 [main] INFO  org.example.server.Server - Сервер запущен на порту 5252
+05:15:48.650 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:49665
+05:15:48.663 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@10a9d961
+05:15:48.676 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:15:48.680 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:49665
+05:16:01.664 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: show
+05:16:03.403 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: show
+05:16:13.443 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+05:24:24.037 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+05:24:24.183 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+05:24:24.191 [main] INFO  org.example.server.Server - Сервер запущен на порту 5252
+05:24:34.223 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56449
+05:24:34.254 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@10a9d961
+05:24:34.291 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:24:34.303 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56449
+05:26:59.432 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:61378
+05:26:59.433 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@36328d33
+05:26:59.434 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:26:59.435 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:61378
+05:27:01.965 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:52341
+05:27:01.965 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@545b995e
+05:27:01.965 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:27:01.965 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:52341
+05:29:06.657 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+05:29:06.864 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+05:29:06.871 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+05:29:10.508 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63974
+05:29:10.553 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@10a9d961
+05:29:10.590 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:29:10.598 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63974
+05:29:13.945 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56594
+05:29:13.946 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@36328d33
+05:29:13.947 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:29:13.948 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56594
+05:29:15.417 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:62520
+05:29:15.419 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@545b995e
+05:29:15.421 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:29:15.423 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:62520
+05:29:16.221 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:62521
+05:29:16.227 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@41e68d87
+05:29:16.228 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:29:16.230 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:62521
+05:29:17.028 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:57411
+05:29:17.029 [main] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@2ef14fe
+05:29:17.029 [main] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+05:29:17.030 [main] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:57411

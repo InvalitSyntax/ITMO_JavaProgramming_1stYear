@@ -18,7 +18,7 @@ public class ClientNetworkManager {
         this.port = port;
     }
     
-    public void sendCommand(ICommand command) throws Exception {
+    public String sendCommandAndGetResponse(ICommand command) throws Exception {
         try (DatagramChannel channel = DatagramChannel.open()) {
             channel.configureBlocking(false);
             
@@ -42,15 +42,9 @@ public class ClientNetworkManager {
             if (!sent) {
                 System.out.println("Сервер недоступен для отправки команды");
             }
-        }
-    }
-    
-    public String receiveResponse() throws Exception {
-        try (DatagramChannel channel = DatagramChannel.open()) {
-            channel.configureBlocking(false);
-            
+
             ByteBuffer responseBuffer = ByteBuffer.allocate(4096);
-            long startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
             
             while ((System.currentTimeMillis() - startTime) < SERVER_TIMEOUT_MS) {
                 try {

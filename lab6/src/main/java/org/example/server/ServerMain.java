@@ -16,7 +16,7 @@ public class ServerMain {
         }
 
         logger.info("Запуск сервера...");
-        Server server = new Server(5252, args[0]);
+        Server server = new Server(57486, args[0]);
         server.start();
     }
 }

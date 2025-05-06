@@ -4,6 +4,7 @@ import org.example.collectionClasses.app.CommandManager;
 import org.example.collectionClasses.app.IOManager;
 import org.example.collectionClasses.commands.ICommand;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Supplier;
@@ -58,8 +59,7 @@ public class ClientApp {
             command.partlyExecute(ioManager);
         }
         
-        networkManager.sendCommand(command);
-        String response = networkManager.receiveResponse();
+        String response = networkManager.sendCommandAndGetResponse(command);
         if (!response.equals("")){
             System.out.println("Ответ от сервера: \n" + response);
         }
