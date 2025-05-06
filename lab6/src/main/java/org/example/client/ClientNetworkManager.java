@@ -43,7 +43,7 @@ public class ClientNetworkManager {
                 System.out.println("Сервер недоступен для отправки команды");
             }
 
-            ByteBuffer responseBuffer = ByteBuffer.allocate(4096);
+            ByteBuffer responseBuffer = ByteBuffer.allocate(16384);
             startTime = System.currentTimeMillis();
             
             while ((System.currentTimeMillis() - startTime) < SERVER_TIMEOUT_MS) {

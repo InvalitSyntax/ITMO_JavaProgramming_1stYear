@@ -6,7 +6,6 @@ import org.example.collectionClasses.commands.*;
 
 public class ClientMain {
     public static void main(String[] args) {
-        // Конфигурационные настройки
         IOManager ioManager = new IOManager();
         ioManager.setIsClient(true);
         
@@ -15,7 +14,6 @@ public class ClientMain {
         
         ClientNetworkManager networkManager = new ClientNetworkManager("127.0.0.1", 57486);
         
-        // Создание и запуск клиентского приложения
         ClientApp clientApp = new ClientApp(ioManager, commandManager, networkManager);
         clientApp.run();
     }
