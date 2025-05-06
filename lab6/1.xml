@@ -11,4 +11,14 @@
         <loyal>false</loyal>
         <name>123</name>
     </marine>
+    <marine>
+        <coordinates>
+            <x>0.0</x>
+            <y>123.0</y>
+        </coordinates>
+        <health>123.0</health>
+        <id>2</id>
+        <loyal>false</loyal>
+        <name>123</name>
+    </marine>
 </spaceMarineCollection>

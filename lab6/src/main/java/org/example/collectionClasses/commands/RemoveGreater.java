@@ -6,6 +6,8 @@ import org.example.collectionClasses.app.ModelBuilder;
 import org.example.collectionClasses.model.SpaceMarine;
 
 import java.util.ArrayDeque;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Команда для удаления всех элементов, превышающих заданный.
@@ -17,21 +19,25 @@ public class RemoveGreater extends ICommand {
     public RemoveGreater() {
         super();
     }
+    
     @Override
-    public void setElement(IOManager ioManager){
+    public void setElement(IOManager ioManager) {
         ModelBuilder modelBuilder = new ModelBuilder(ioManager);
         this.spaceMarine = modelBuilder.build();
     }
+    
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
         SpaceMarine newMarine = this.spaceMarine;
-        ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
-        for (SpaceMarine marine : marineArrayDeque) {
-            if (newMarine.compareTo(marine) < 0) {
-                app.getSpaceMarineCollectionManager().removeMarine(marine);
-                ioManager.writeMessage("Удален десантник: \n" + marine + "\n", false);
-            }
-        }
+        
+        List<SpaceMarine> toRemove = app.getSpaceMarineCollectionManager().getMarines().stream()
+            .filter(marine -> newMarine.compareTo(marine) < 0)
+            .collect(Collectors.toList());
+        
+        toRemove.forEach(marine -> {
+            app.getSpaceMarineCollectionManager().removeMarine(marine);
+            ioManager.writeMessage("Удален десантник: \n" + marine + "\n", false);
+        });
     }
 }

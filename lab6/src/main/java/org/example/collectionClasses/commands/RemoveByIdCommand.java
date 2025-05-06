@@ -20,26 +20,27 @@ public class RemoveByIdCommand extends ICommand {
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
+        
         if (args.length == 0) {
             ioManager.writeMessage("Вы не ввели id элемента коллекции!\n", false);
-        } else {
+            return;
+        }
+        
+        try {
             int id = Integer.parseInt(args[0]);
-            boolean flag = false;
-            for (SpaceMarine marine : marineArrayDeque) {
-                if (marine.getId() == id) {
-                    flag = true;
-                    app.getSpaceMarineCollectionManager().removeMarineById(id);
-                    ioManager.writeMessage("Десантник удален\n", false);
-                    break;
-                }
-            }
-            if (!flag) {
+            boolean removed = app.getSpaceMarineCollectionManager().getMarines()
+                .removeIf(marine -> marine.getId() == id);
+            
+            if (removed) {
+                ioManager.writeMessage("Десантник удален\n", false);
+            } else {
                 ioManager.writeMessage("""
-                        Элемент коллекции с таким id не найден!\s
-                        Введите show, чтобы вывести список доступных элементов.
-                        \n""", false);
+                    Элемент коллекции с таким id не найден!\s
+                    Введите show, чтобы вывести список доступных элементов.
+                    \n""", false);
             }
+        } catch (NumberFormatException e) {
+            ioManager.writeMessage("Неверный формат ID\n", false);
         }
     }
 }

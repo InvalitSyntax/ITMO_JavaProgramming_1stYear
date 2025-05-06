@@ -7,6 +7,9 @@ import org.example.collectionClasses.model.Weapon;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Команда для группировки элементов коллекции по типу оружия.
@@ -22,17 +25,15 @@ public class CountByWeaponeTypeCommand extends ICommand {
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        HashMap<Weapon, Integer> counter = new HashMap<>();
-        for (Weapon weapon : Weapon.values()) {
-            counter.put(weapon, 0);
-        }
-        ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
-        for (SpaceMarine marine : marineArrayDeque) {
-            Weapon weapon = marine.getWeaponType();
-            if (weapon != null) {
-                counter.put(weapon, counter.get(weapon) + 1);
-            }
-        }
+        
+        var counter = app.getSpaceMarineCollectionManager().getMarines().stream()
+            .map(SpaceMarine::getWeaponType)
+            .filter(Objects::nonNull)
+            .collect(Collectors.groupingBy(
+                Function.identity(),
+                Collectors.counting()
+            ));
+        
         ioManager.writeMessage(counter + "\n", false);
     }
 }

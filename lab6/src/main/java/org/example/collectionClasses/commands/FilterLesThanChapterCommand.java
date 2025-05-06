@@ -23,12 +23,9 @@ public class FilterLesThanChapterCommand extends ICommand {
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
         Chapter newChapter = new ModelBuilder(app).buildChapter();
-        ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
-        for (SpaceMarine marine : marineArrayDeque) {
-            Chapter sMChapter = marine.getChapter();
-            if (newChapter.compareTo(sMChapter) > 0) {
-                ioManager.writeMessage(marine + "\n", false);
-            }
-        }
+        
+        app.getSpaceMarineCollectionManager().getMarines().stream()
+            .filter(marine -> newChapter.compareTo(marine.getChapter()) > 0)
+            .forEach(marine -> ioManager.writeMessage(marine + "\n", false));
     }
 }

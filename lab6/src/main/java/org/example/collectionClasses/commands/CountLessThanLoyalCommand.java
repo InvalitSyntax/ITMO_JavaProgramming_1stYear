@@ -16,32 +16,25 @@ public class CountLessThanLoyalCommand extends ICommand {
     public CountLessThanLoyalCommand() {
         super();
     }
+    
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
+        
         if (args.length == 0) {
             ioManager.writeMessage("Вы не ввели loyal, по которому сравнивать!\n", false);
-        } else {
-            boolean loyal;
-            switch (args[0].toLowerCase()) {
-                case "true":
-                    loyal = true;
-                    break;
-                case "false":
-                    loyal = false;
-                    break;
-                default:
-                    ioManager.writeMessage("Вы ввели не boolean значение!\n", false);
-                    return;
-            }
-            int count = 0;
-            for (SpaceMarine marine : marineArrayDeque) {
-                if (marine.getLoyal() != loyal) {
-                    count++;
-                }
-            }
+            return;
+        }
+        
+        try {
+            boolean loyal = Boolean.parseBoolean(args[0]);
+            long count = app.getSpaceMarineCollectionManager().getMarines().stream()
+                .filter(marine -> marine.getLoyal() != loyal)
+                .count();
+            
             ioManager.writeMessage("Количество элементов: " + count + "\n", false);
+        } catch (IllegalArgumentException e) {
+            ioManager.writeMessage("Вы ввели не boolean значение!\n", false);
         }
     }
 }

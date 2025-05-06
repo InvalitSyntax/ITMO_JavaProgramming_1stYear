@@ -134,13 +134,10 @@ public class SpaceMarineCollectionManager {
      * Обновляет свободный ID.
      */
     public void updateFreeId() {
-        int min = 0;
-        for (SpaceMarine marine : marines) {
-            if (marine.getId() >= min) {
-                min = marine.getId();
-            }
-        }
-        this.freeId = min;
+        this.freeId = marines.stream()
+            .mapToInt(SpaceMarine::getId)
+            .max()
+            .orElse(0);
     }
 
     public int getFreeId() {

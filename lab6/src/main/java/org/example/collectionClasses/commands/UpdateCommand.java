@@ -17,41 +17,45 @@ public class UpdateCommand extends ICommand {
     public UpdateCommand() {
         super();
     }
+    
     @Override
-    public void setElement(IOManager ioManager){
+    public void setElement(IOManager ioManager) {
         ModelBuilder modelBuilder = new ModelBuilder(ioManager);
         this.spaceMarine = modelBuilder.build();
     }
+    
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        ArrayDeque<SpaceMarine> marineArrayDeque = app.getSpaceMarineCollectionManager().getMarines();
+        
         if (args.length == 0) {
             ioManager.writeMessage("Вы не ввели id элемента коллекции!\n", false);
-        } else {
-            int id;
-            try {
-                id = Integer.parseInt(args[0]);
-            } catch (NumberFormatException e) {
-                ioManager.writeMessage("Вы ввели не число в качестве id\n", false);
+            return;
+        }
+        
+        try {
+            int id = Integer.parseInt(args[0]);
+            if (id < 1){
+                ioManager.writeMessage("Вы ввели недопустимый ID!", false);
                 return;
             }
-
-            boolean flag = false;
-            for (SpaceMarine marine : marineArrayDeque) {
-                if (marine.getId() == id) {
-                    flag = true;
-                    SpaceMarine sm = this.spaceMarine;
-                    sm.setId(id);
-                    app.getSpaceMarineCollectionManager().replaceMarineById(id, sm);
-                }
-            }
-            if (!flag) {
+            SpaceMarine sm = this.spaceMarine;
+            sm.setId(id);
+            
+            boolean updated = app.getSpaceMarineCollectionManager().getMarines().stream()
+                .anyMatch(marine -> marine.getId() == id);
+            
+            if (updated) {
+                app.getSpaceMarineCollectionManager().replaceMarineById(id, sm);
+                ioManager.writeMessage("Элемент обновлен\n", false);
+            } else {
                 ioManager.writeMessage("""
-                        Элемент коллекции с таким id не найден!\s
-                        Введите show, чтобы вывести список доступных элементов.
-                        \n""", false);
+                    Элемент коллекции с таким id не найден!\s
+                    Введите show, чтобы вывести список доступных элементов.
+                    \n""", false);
             }
+        } catch (NumberFormatException e) {
+            ioManager.writeMessage("Вы ввели не число в качестве id\n", false);
         }
     }
 }

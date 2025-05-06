@@ -64,6 +64,9 @@ public class ClientMain {
                     System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
                 } else {
                     String[] tokens = input.trim().split(" ");
+                    if (tokens[0].equals("exit")){
+                        break;
+                    }
                     try {
                         Supplier<ICommand> commandSupplier = commandManager.getCommand(tokens[0]);
                         if (commandSupplier != null) {
@@ -100,7 +103,7 @@ public class ClientMain {
                             System.out.println("Неизвестная команда: " + tokens[0]);
                         }
                     } catch (Exception e) {
-                        System.out.print("Ошибка: 324789" + e);
+                        System.out.print("Ошибка:" + e);
                     }
                 }
             }
