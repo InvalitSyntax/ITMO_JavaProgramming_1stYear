@@ -1,4 +1,4 @@
-package org.example.server;
+package org.example.client;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.Arrays;
@@ -35,6 +36,8 @@ import org.example.collectionClasses.commands.ShowCommand;
 import org.example.collectionClasses.commands.UpdateCommand;
 
 public class ClientMain {
+    private static final int SERVER_TIMEOUT_MS = 3000; // Таймаут ожидания ответа от сервера
+    
     public static void main(String[] args) throws IOException {
         try (Scanner scanner = new Scanner(System.in)) {
             IOManager ioManager = new IOManager();
@@ -56,7 +59,6 @@ public class ClientMain {
             commandManager.putCommand("remove_greater", RemoveGreater::new);
             commandManager.putCommand("execute_script", ExecuteScriptCommand::new);
 
-
             System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
             while (true) {
                 String input = ioManager.getRawStringInput();
@@ -77,26 +79,63 @@ public class ClientMain {
                             if (command.needToExecutePartOnClient){
                                 command.partlyExecute(ioManager);
                             }
-                            // Отправка команды
-                            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                            ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
-                            objOut.writeObject(command);
-                            byte[] data = byteOut.toByteArray();
-
-                            DatagramChannel channel = DatagramChannel.open();
-                            channel.send(ByteBuffer.wrap(data), new InetSocketAddress("localhost", 8000));
-
-                            // Получение ответа
-                            ByteBuffer responseBuffer = ByteBuffer.allocate(4096);
-                            InetSocketAddress serverAddress = (InetSocketAddress) channel.receive(responseBuffer);
-                            if (serverAddress != null) {
-                                responseBuffer.flip();
-                                byte[] responseData = new byte[responseBuffer.remaining()];
-                                responseBuffer.get(responseData);
+                            
+                            // Отправка команды с обработкой недоступности сервера
+                            try (DatagramChannel channel = DatagramChannel.open()) {
+                                channel.configureBlocking(false);
                                 
-                                try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(responseData))) {
-                                    Answer answer = (Answer) objIn.readObject();
-                                    System.out.println("Ответ от сервера: \n" + answer.toString());
+                                // Сериализация команды
+                                ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                                ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
+                                objOut.writeObject(command);
+                                byte[] data = byteOut.toByteArray();
+                                
+                                // Попытка отправки с таймаутом
+                                long startTime = System.currentTimeMillis();
+                                boolean sent = false;
+                                
+                                while (!sent && (System.currentTimeMillis() - startTime) < SERVER_TIMEOUT_MS) {
+                                    try {
+                                        channel.send(ByteBuffer.wrap(data), new InetSocketAddress("localhost", 8000));
+                                        sent = true;
+                                    } catch (IOException e) {
+                                        // Сервер недоступен для отправки
+                                        Thread.sleep(100); // Небольшая пауза перед повторной попыткой
+                                    }
+                                }
+                                
+                                if (!sent) {
+                                    System.out.println("Сервер недоступен для отправки команды");
+                                    continue;
+                                }
+                                
+                                // Получение ответа с таймаутом
+                                ByteBuffer responseBuffer = ByteBuffer.allocate(4096);
+                                startTime = System.currentTimeMillis();
+                                boolean received = false;
+                                
+                                while (!received && (System.currentTimeMillis() - startTime) < SERVER_TIMEOUT_MS) {
+                                    try {
+                                        InetSocketAddress serverAddress = (InetSocketAddress) channel.receive(responseBuffer);
+                                        if (serverAddress != null) {
+                                            responseBuffer.flip();
+                                            byte[] responseData = new byte[responseBuffer.remaining()];
+                                            responseBuffer.get(responseData);
+                                            
+                                            try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(responseData))) {
+                                                Answer answer = (Answer) objIn.readObject();
+                                                System.out.println("Ответ от сервера: \n" + answer.toString());
+                                                received = true;
+                                            }
+                                        }
+                                    } catch (IOException e) {
+                                        // Сервер недоступен для получения
+                                        Thread.sleep(100); // Небольшая пауза перед повторной попыткой
+                                    }
+                                }
+                                
+                                if (!received) {
+                                    System.out.println("Сервер недоступен для получения ответа");
                                 }
                             }
                         } else {
