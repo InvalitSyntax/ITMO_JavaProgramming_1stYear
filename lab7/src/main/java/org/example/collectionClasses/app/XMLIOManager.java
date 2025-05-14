@@ -84,7 +84,8 @@ public class XMLIOManager {
             System.out.println("Файл коллекции не найден, загружена пустая коллекция");
             return new SpaceMarineCollectionManager();
         } catch (JAXBException e) {
-            System.out.println("Ошибка при загрузке коллекции из XML:");
+            System.out.println("Ошибка при загрузке коллекции из XML:" + e);
+            
             Throwable cause = e.getCause();
             while (cause != null) {
                 if (cause instanceof IllegalArgumentException) {

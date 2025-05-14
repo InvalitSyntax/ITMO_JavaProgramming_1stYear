@@ -1268,3 +1268,331 @@ SpaceMarine {
     filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
 
 00:38:19.160 [Thread-98518] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56410
+01:49:42.222 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+01:49:42.405 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+01:49:42.413 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+01:49:49.557 [Thread-51108] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:57625
+01:49:49.601 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@33d92550
+01:49:49.609 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: 
+
+01:49:49.618 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:57625
+01:49:51.546 [Thread-65295] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:60109
+01:49:51.547 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@625a69b3
+01:49:51.548 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: 
+
+01:49:51.550 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:60109
+01:50:58.767 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+01:50:58.961 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+01:50:58.969 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+01:51:08.197 [Thread-59703] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:64093
+01:51:08.244 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@7b713244
+01:51:08.250 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: 
+
+01:51:08.263 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:64093
+01:51:11.417 [Thread-83672] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:62820
+01:51:11.417 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.InfoCommand@cedfe98
+01:51:11.417 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Тип коллекции: ConcurrentLinkedDeque
+Дата инициализации: 2025-05-15T01:50:58.961749500+03:00[Europe/Moscow]
+Количество элементов: 0
+Коллекция пуста.
+
+01:51:11.427 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:62820
+01:51:19.179 [Thread-138181] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:57812
+01:51:19.194 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@2eb50ce1
+01:51:19.212 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 1
+  name: asd
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:51:19.220 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:57812
+01:51:21.607 [Thread-156080] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:57813
+01:51:21.607 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@2448af3a
+01:51:21.607 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: asd
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:51:21.607 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:57813
+01:51:22.609 [Thread-162512] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:51105
+01:51:22.609 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@4453589c
+01:51:22.609 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: asd
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:51:22.609 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:51105
+01:51:28.891 [main] INFO  org.example.server.ConsoleInputHandler - Завершение работы сервера...
+01:51:35.844 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+01:51:36.105 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+01:51:36.114 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+01:51:45.164 [Thread-65563] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:59328
+01:51:45.229 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@4cc81f16
+01:51:45.229 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: 
+
+01:51:45.238 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:59328
+01:52:15.940 [Thread-277714] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56099
+01:52:15.948 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ExecuteScriptCommand@3e99542a
+01:52:15.949 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Команда выполнена
+01:52:15.952 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56099
+01:52:15.960 [Thread-277775] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56100
+01:52:15.969 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@7f9fd109
+01:52:15.998 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:52:15.998 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56100
+01:52:16.005 [Thread-277936] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56101
+01:52:16.007 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@57e48497
+01:52:16.009 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:52:16.010 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56101
+01:52:18.002 [Thread-292287] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56102
+01:52:18.002 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@10d7dd47
+01:52:18.007 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:52:18.009 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56102
+01:52:30.428 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+01:52:33.860 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+01:52:35.378 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+01:52:36.957 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+01:52:45.112 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: show
+01:53:09.586 [Thread-661588] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:65427
+01:53:09.586 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@28cf1e0f
+01:53:09.586 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 2
+  name: qwe
+  coordinates: Coordinates {
+    x: 0.0
+    y: 9.5607955E10
+  }
+  creationDate: null
+  health: 567.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:53:09.590 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:65427
+01:53:12.559 [Thread-684916] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:65428
+01:53:12.562 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@19531f6
+01:53:12.562 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: qwe
+  coordinates: Coordinates {
+    x: 0.0
+    y: 9.5607955E10
+  }
+  creationDate: null
+  health: 567.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:53:12.566 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:65428
+01:53:42.651 [Thread-901254] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:58660
+01:53:42.651 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@7226cd6f
+01:53:42.651 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 3
+  name: qwe
+  coordinates: Coordinates {
+    x: 0.0
+    y: 5.6756758E11
+  }
+  creationDate: null
+  health: 456.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+01:53:42.662 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:58660
+01:53:50.448 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+01:56:15.837 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+01:56:16.035 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+01:56:16.049 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+02:02:40.275 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+02:02:40.561 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+02:02:40.572 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+02:02:57.446 [Thread-89308] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:52499
+02:02:57.495 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ExecuteScriptCommand@339f4a1f
+02:02:57.496 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Команда выполнена
+02:02:57.508 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:52499
+02:02:57.515 [Thread-89546] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:52500
+02:02:57.525 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@6f58191c
+02:02:57.552 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+02:02:57.555 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:52500
+02:02:57.561 [Thread-89687] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:52501
+02:02:57.563 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@2bfbbac4
+02:02:57.573 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+02:02:57.574 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:52501
+02:03:02.972 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+02:03:19.417 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+02:03:19.725 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+02:03:19.737 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+02:03:40.374 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+02:03:40.610 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+02:03:40.620 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+02:03:45.018 [Thread-24264] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:61908
+02:03:45.073 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ExecuteScriptCommand@6fe15356
+02:03:45.075 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Команда выполнена
+02:03:45.086 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:61908
+02:03:45.093 [Thread-24517] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:61909
+02:03:45.099 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@1076e701
+02:03:45.120 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+02:03:45.122 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:61909
+02:03:45.128 [Thread-24655] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:61910
+02:03:45.131 [ForkJoinPool-1-worker-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@5df1532a
+02:03:45.161 [ForkJoinPool-1-worker-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+02:03:45.162 [ForkJoinPool-2-worker-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:61910
+02:03:48.451 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: save
+02:04:03.418 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+02:04:03.720 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+02:04:03.739 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
