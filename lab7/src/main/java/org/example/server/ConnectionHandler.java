@@ -5,9 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.example.collectionClasses.app.AppController;
 import org.example.collectionClasses.commands.ICommand;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -18,21 +16,34 @@ public class ConnectionHandler {
     private final CommandProcessor commandProcessor = new CommandProcessor();
     private final ResponseSender responseSender = new ResponseSender();
 
-    public void processIncomingData(DatagramChannel channel, ByteBuffer buffer, AppController appController) throws IOException {
-        buffer.clear();
-        InetSocketAddress clientAddress = (InetSocketAddress) channel.receive(buffer);
+    public void processIncomingData(DatagramChannel channel, AppController appController) throws IOException {
+        Runnable task = () -> {
+            try {
+                ByteBuffer buffer = ByteBuffer.allocate(4096);
+                InetSocketAddress clientAddress = (InetSocketAddress) channel.receive(buffer);
 
-        if (clientAddress != null) {
-            logger.info("Получены данные от клиента: {}", clientAddress);
-            buffer.flip();
-            byte[] receivedData = new byte[buffer.remaining()];
-            buffer.get(receivedData);
+                if (clientAddress != null) {
+                    buffer.flip();
+                    byte[] receivedData = new byte[buffer.remaining()];
+                    buffer.get(receivedData);
+                    
+                    logger.info("Получены данные от клиента: {}", clientAddress);
 
-            ICommand receivedCommand = requestReader.readRequest(receivedData);
-            if (receivedCommand != null) {
-                String response = commandProcessor.processCommand(receivedCommand, appController);
-                responseSender.sendResponse(response, clientAddress, channel);
+                    ICommand receivedCommand = requestReader.readRequest(receivedData);
+                    if (receivedCommand != null) {
+                        String response = commandProcessor.processCommand(receivedCommand, appController);
+                        try {
+                            responseSender.sendResponse(response, clientAddress, channel);
+                        } catch (IOException e) {
+                            logger.error("Не удалось отправить ответ клиенту {}", clientAddress);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                logger.error("Ошибка в потоке обработки запроса", e);
             }
-        }
+        };
+
+        new Thread(task).start();
     }
 }

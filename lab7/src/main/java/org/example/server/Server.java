@@ -57,11 +57,10 @@ public class Server {
     }
 
     private void runServerLoop() throws IOException, InterruptedException {
-        ByteBuffer buffer = ByteBuffer.allocate(4096);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
-            connectionHandler.processIncomingData(channel, buffer, appController);
+            connectionHandler.processIncomingData(channel, appController);
             consoleInputHandler.processConsoleInput(reader, appController);
             Thread.yield();
         }

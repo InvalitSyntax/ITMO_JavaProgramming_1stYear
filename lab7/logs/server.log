@@ -623,3 +623,648 @@ SpaceMarine {
 16:46:21.870 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
 16:46:21.889 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
 16:46:22.582 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: show
+23:36:39.809 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+23:36:40.011 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+23:36:40.018 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+23:37:05.058 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:49665
+23:37:05.063 [Thread-0] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-0 для обработки запроса клиента /127.0.0.1:49665
+23:37:05.072 [Thread-0] ERROR org.example.server.RequestReader - Ошибка при десериализации команды
+java.io.EOFException: null
+	at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2926) ~[?:?]
+	at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:3421) ~[?:?]
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:959) ~[?:?]
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:397) ~[?:?]
+	at org.example.server.RequestReader.readRequest(RequestReader.java:15) ~[classes/:?]
+	at org.example.server.ConnectionHandler.lambda$0(ConnectionHandler.java:33) ~[classes/:?]
+	at java.lang.Thread.run(Thread.java:842) [?:?]
+23:37:10.083 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+23:37:10.325 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+23:37:10.335 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+23:37:15.913 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56825
+23:37:15.922 [Thread-0] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-0 для обработки запроса клиента /127.0.0.1:56825
+23:37:15.922 [Thread-0] ERROR org.example.server.RequestReader - Ошибка при десериализации команды
+java.io.EOFException: null
+	at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2926) ~[?:?]
+	at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:3421) ~[?:?]
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:959) ~[?:?]
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:397) ~[?:?]
+	at org.example.server.RequestReader.readRequest(RequestReader.java:15) ~[classes/:?]
+	at org.example.server.ConnectionHandler.lambda$0(ConnectionHandler.java:33) ~[classes/:?]
+	at java.lang.Thread.run(Thread.java:842) [?:?]
+23:37:35.605 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:58855
+23:37:35.605 [Thread-1] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-1 для обработки запроса клиента /127.0.0.1:58855
+23:37:35.605 [Thread-1] ERROR org.example.server.RequestReader - Ошибка при десериализации команды
+java.io.EOFException: null
+	at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2926) ~[?:?]
+	at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:3421) ~[?:?]
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:959) ~[?:?]
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:397) ~[?:?]
+	at org.example.server.RequestReader.readRequest(RequestReader.java:15) ~[classes/:?]
+	at org.example.server.ConnectionHandler.lambda$0(ConnectionHandler.java:33) ~[classes/:?]
+	at java.lang.Thread.run(Thread.java:842) [?:?]
+23:37:54.938 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+23:37:55.161 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+23:37:55.169 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+23:38:00.178 [main] INFO  org.example.server.ConsoleInputHandler - Консольная команда выполнена: show
+23:38:12.297 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:50061
+23:38:12.297 [Thread-0] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-0 для обработки запроса клиента /127.0.0.1:50061
+23:38:12.314 [Thread-0] ERROR org.example.server.RequestReader - Ошибка при десериализации команды
+java.io.EOFException: null
+	at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2926) ~[?:?]
+	at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:3421) ~[?:?]
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:959) ~[?:?]
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:397) ~[?:?]
+	at org.example.server.RequestReader.readRequest(RequestReader.java:15) ~[classes/:?]
+	at org.example.server.ConnectionHandler.lambda$0(ConnectionHandler.java:33) ~[classes/:?]
+	at java.lang.Thread.run(Thread.java:842) [?:?]
+23:38:57.268 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:51223
+23:38:57.271 [Thread-1] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-1 для обработки запроса клиента /127.0.0.1:51223
+23:38:57.273 [Thread-1] ERROR org.example.server.RequestReader - Ошибка при десериализации команды
+java.io.EOFException: null
+	at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2926) ~[?:?]
+	at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:3421) ~[?:?]
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:959) ~[?:?]
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:397) ~[?:?]
+	at org.example.server.RequestReader.readRequest(RequestReader.java:15) ~[classes/:?]
+	at org.example.server.ConnectionHandler.lambda$0(ConnectionHandler.java:33) ~[classes/:?]
+	at java.lang.Thread.run(Thread.java:842) [?:?]
+23:55:53.768 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+23:55:53.958 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+23:55:53.969 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+23:56:03.322 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:61106
+23:56:03.325 [Thread-0] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-0 для обработки запроса клиента /127.0.0.1:61106
+23:56:03.356 [Thread-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@558b7655
+23:56:03.377 [Thread-0] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:03.386 [Thread-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:61106
+23:56:14.901 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:50524
+23:56:14.904 [Thread-1] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-1 для обработки запроса клиента /127.0.0.1:50524
+23:56:14.906 [Thread-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@5d5a9b12
+23:56:14.907 [Thread-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:14.908 [Thread-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:50524
+23:56:15.500 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:50525
+23:56:15.516 [Thread-2] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-2 для обработки запроса клиента /127.0.0.1:50525
+23:56:15.519 [Thread-2] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@dd4084b
+23:56:15.520 [Thread-2] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:15.525 [Thread-2] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:50525
+23:56:16.151 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:50526
+23:56:16.153 [Thread-3] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-3 для обработки запроса клиента /127.0.0.1:50526
+23:56:16.156 [Thread-3] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@4ba11722
+23:56:16.157 [Thread-3] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:16.158 [Thread-3] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:50526
+23:56:16.795 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:50527
+23:56:16.797 [Thread-4] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-4 для обработки запроса клиента /127.0.0.1:50527
+23:56:16.799 [Thread-4] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@368b9426
+23:56:16.800 [Thread-4] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:16.802 [Thread-4] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:50527
+23:56:17.406 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:60607
+23:56:17.408 [Thread-5] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-5 для обработки запроса клиента /127.0.0.1:60607
+23:56:17.410 [Thread-5] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@cb24a9
+23:56:17.412 [Thread-5] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:17.414 [Thread-5] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:60607
+23:56:18.022 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:60608
+23:56:18.027 [Thread-6] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-6 для обработки запроса клиента /127.0.0.1:60608
+23:56:18.030 [Thread-6] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@78733411
+23:56:18.032 [Thread-6] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:18.033 [Thread-6] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:60608
+23:56:18.654 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:60609
+23:56:18.658 [Thread-7] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-7 для обработки запроса клиента /127.0.0.1:60609
+23:56:18.660 [Thread-7] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@11db6519
+23:56:18.661 [Thread-7] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:18.663 [Thread-7] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:60609
+23:56:19.303 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63293
+23:56:19.304 [Thread-8] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-8 для обработки запроса клиента /127.0.0.1:63293
+23:56:19.306 [Thread-8] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@44854320
+23:56:19.306 [Thread-8] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:19.308 [Thread-8] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63293
+23:56:20.086 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63294
+23:56:20.088 [Thread-9] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-9 для обработки запроса клиента /127.0.0.1:63294
+23:56:20.090 [Thread-9] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@2ba799c7
+23:56:20.090 [Thread-9] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:20.091 [Thread-9] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63294
+23:56:20.814 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63295
+23:56:20.816 [Thread-10] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-10 для обработки запроса клиента /127.0.0.1:63295
+23:56:20.818 [Thread-10] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@2f3cd8fd
+23:56:20.820 [Thread-10] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:20.821 [Thread-10] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63295
+23:56:21.557 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:53509
+23:56:21.559 [Thread-11] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-11 для обработки запроса клиента /127.0.0.1:53509
+23:56:21.560 [Thread-11] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@21d6e147
+23:56:21.561 [Thread-11] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:21.562 [Thread-11] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:53509
+23:56:22.207 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:53510
+23:56:22.212 [Thread-12] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-12 для обработки запроса клиента /127.0.0.1:53510
+23:56:22.213 [Thread-12] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@76121818
+23:56:22.214 [Thread-12] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:22.215 [Thread-12] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:53510
+23:56:22.860 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:53511
+23:56:22.862 [Thread-13] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-13 для обработки запроса клиента /127.0.0.1:53511
+23:56:22.864 [Thread-13] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@325abb26
+23:56:22.865 [Thread-13] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:22.866 [Thread-13] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:53511
+23:56:23.534 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:53512
+23:56:23.538 [Thread-14] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-14 для обработки запроса клиента /127.0.0.1:53512
+23:56:23.540 [Thread-14] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@1e8bdc8b
+23:56:23.540 [Thread-14] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:23.542 [Thread-14] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:53512
+23:56:28.534 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:49835
+23:56:28.537 [Thread-15] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-15 для обработки запроса клиента /127.0.0.1:49835
+23:56:28.547 [Thread-15] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.HelpCommand@3ccf1fc5
+23:56:28.548 [Thread-15] INFO  org.example.server.CommandProcessor - Команда обработана, результат:     help : вывести справку по доступным командам
+    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+    add {element} : добавить новый элемент в коллекцию
+    update id {element} : обновить значение элемента коллекции, id которого равен заданному
+    remove_by_id id : удалить элемент из коллекции по его id
+    clear : очистить коллекцию
+    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+    exit : выйти из программы
+    remove_first : удалить первый элемент из коллекции
+    remove_head : вывести первый элемент коллекции и удалить его
+    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+    group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
+    count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
+    filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
+
+23:56:28.551 [Thread-15] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:49835
+23:56:31.143 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:54983
+23:56:31.154 [Thread-16] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-16 для обработки запроса клиента /127.0.0.1:54983
+23:56:31.154 [Thread-16] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.HelpCommand@d82c7c3
+23:56:31.158 [Thread-16] INFO  org.example.server.CommandProcessor - Команда обработана, результат:     help : вывести справку по доступным командам
+    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+    add {element} : добавить новый элемент в коллекцию
+    update id {element} : обновить значение элемента коллекции, id которого равен заданному
+    remove_by_id id : удалить элемент из коллекции по его id
+    clear : очистить коллекцию
+    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+    exit : выйти из программы
+    remove_first : удалить первый элемент из коллекции
+    remove_head : вывести первый элемент коллекции и удалить его
+    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+    group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
+    count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
+    filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
+
+23:56:31.161 [Thread-16] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:54983
+23:56:40.038 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:55644
+23:56:40.038 [Thread-17] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-17 для обработки запроса клиента /127.0.0.1:55644
+23:56:40.048 [Thread-17] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AddCommand@400ab136
+23:56:40.050 [Thread-17] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Ваш созданный и добавленный десантник:
+SpaceMarine {
+  id: 2
+  name: qwe
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:40.050 [Thread-17] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:55644
+23:56:42.809 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:50061
+23:56:42.809 [Thread-18] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-18 для обработки запроса клиента /127.0.0.1:50061
+23:56:42.825 [Thread-18] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@5355c292
+23:56:42.827 [Thread-18] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+SpaceMarine {
+  id: 2
+  name: qwe
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+23:56:42.828 [Thread-18] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:50061
+00:29:34.059 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+00:29:34.270 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+00:29:34.285 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+00:29:39.342 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:51602
+00:29:39.352 [Thread-0] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-0 для обработки запроса клиента /127.0.0.1:51602
+00:29:39.393 [Thread-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.HelpCommand@697f7963
+00:29:39.393 [Thread-0] INFO  org.example.server.CommandProcessor - Команда обработана, результат:     help : вывести справку по доступным командам
+    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+    add {element} : добавить новый элемент в коллекцию
+    update id {element} : обновить значение элемента коллекции, id которого равен заданному
+    remove_by_id id : удалить элемент из коллекции по его id
+    clear : очистить коллекцию
+    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+    exit : выйти из программы
+    remove_first : удалить первый элемент из коллекции
+    remove_head : вывести первый элемент коллекции и удалить его
+    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+    group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
+    count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
+    filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
+
+00:29:39.399 [Thread-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:51602
+00:31:23.934 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+00:31:24.169 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+00:31:24.181 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+00:31:26.537 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:65245
+00:31:26.544 [Thread-0] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-0 для обработки запроса клиента /127.0.0.1:65245
+00:31:26.571 [Thread-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@7a37d65b
+00:31:26.602 [Thread-0] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:31:26.604 [Thread-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:65245
+00:31:27.896 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63881
+00:31:27.896 [Thread-1] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-1 для обработки запроса клиента /127.0.0.1:63881
+00:31:27.903 [Thread-1] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@4ba11722
+00:31:27.903 [Thread-1] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:31:27.903 [Thread-1] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63881
+00:31:28.766 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63882
+00:31:28.766 [Thread-2] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-2 для обработки запроса клиента /127.0.0.1:63882
+00:31:28.766 [Thread-2] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@368b9426
+00:31:28.766 [Thread-2] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:31:28.784 [Thread-2] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63882
+00:31:29.361 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63883
+00:31:29.373 [Thread-3] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-3 для обработки запроса клиента /127.0.0.1:63883
+00:31:29.373 [Thread-3] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@cb24a9
+00:31:29.375 [Thread-3] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:31:29.377 [Thread-3] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63883
+00:31:29.965 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63884
+00:31:29.965 [Thread-4] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-4 для обработки запроса клиента /127.0.0.1:63884
+00:31:29.965 [Thread-4] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@78733411
+00:31:29.965 [Thread-4] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:31:29.972 [Thread-4] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63884
+00:31:30.565 [main] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63885
+00:31:30.571 [Thread-5] INFO  org.example.server.ConnectionHandler - Запущен поток Thread-5 для обработки запроса клиента /127.0.0.1:63885
+00:31:30.573 [Thread-5] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@11db6519
+00:31:30.576 [Thread-5] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:31:30.576 [Thread-5] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63885
+00:38:05.913 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+00:38:06.111 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+00:38:06.119 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+00:38:10.519 [Thread-33231] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:59683
+00:38:10.558 [Thread-33231] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@5dd6cbff
+00:38:10.580 [Thread-33231] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:38:10.586 [Thread-33231] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:59683
+00:38:11.925 [Thread-43687] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:59684
+00:38:11.926 [Thread-43687] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.ShowCommand@3e1c65d8
+00:38:11.927 [Thread-43687] INFO  org.example.server.CommandProcessor - Команда обработана, результат: SpaceMarine {
+  id: 1
+  name: 123
+  coordinates: Coordinates {
+    x: 0.0
+    y: 123.0
+  }
+  creationDate: null
+  health: 123.0
+  loyal: false
+  weaponType: null
+  meleeWeapon: null
+  chapter: null
+}
+
+00:38:11.928 [Thread-43687] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:59684
+00:38:19.153 [Thread-98518] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:56410
+00:38:19.157 [Thread-98518] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.HelpCommand@10ad8b45
+00:38:19.158 [Thread-98518] INFO  org.example.server.CommandProcessor - Команда обработана, результат:     help : вывести справку по доступным командам
+    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+    add {element} : добавить новый элемент в коллекцию
+    update id {element} : обновить значение элемента коллекции, id которого равен заданному
+    remove_by_id id : удалить элемент из коллекции по его id
+    clear : очистить коллекцию
+    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+    exit : выйти из программы
+    remove_first : удалить первый элемент из коллекции
+    remove_head : вывести первый элемент коллекции и удалить его
+    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+    group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
+    count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
+    filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
+
+00:38:19.160 [Thread-98518] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:56410
