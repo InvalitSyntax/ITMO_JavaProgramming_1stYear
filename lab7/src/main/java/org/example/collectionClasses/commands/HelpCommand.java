@@ -1,0 +1,35 @@
+package org.example.collectionClasses.commands;
+
+import org.example.collectionClasses.app.AppController;
+
+/**
+ * Команда для вывода справки по доступным командам.
+ *
+ * @author ISyntax
+ * @version 1.0
+ */
+public class HelpCommand extends ICommand {
+    public HelpCommand() {
+        super();
+    }
+    @Override
+    public void execute(AppController app, String[] args) {
+        app.getIoManager().writeMessage("""
+                    help : вывести справку по доступным командам
+                    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+                    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+                    add {element} : добавить новый элемент в коллекцию
+                    update id {element} : обновить значение элемента коллекции, id которого равен заданному
+                    remove_by_id id : удалить элемент из коллекции по его id
+                    clear : очистить коллекцию
+                    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+                    exit : выйти из программы
+                    remove_first : удалить первый элемент из коллекции
+                    remove_head : вывести первый элемент коллекции и удалить его
+                    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+                    group_counting_by_weapon_type : сгруппировать элементы коллекции по значению поля weaponType, вывести количество элементов в каждой группе
+                    count_less_than_loyal loyal : вывести количество элементов, значение поля loyal которых меньше заданного
+                    filter_less_than_chapter chapter : вывести элементы, значение поля chapter которых меньше заданного
+                """, false);
+    }
+}
