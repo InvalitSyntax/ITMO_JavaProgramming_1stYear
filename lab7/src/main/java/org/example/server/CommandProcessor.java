@@ -8,7 +8,7 @@ import org.example.collectionClasses.commands.ICommand;
 public class CommandProcessor {
     private static final Logger logger = LogManager.getLogger(CommandProcessor.class);
 
-    public String processCommand(ICommand receivedCommand, AppController appController) {
+    public synchronized String processCommand(ICommand receivedCommand, AppController appController) {
         receivedCommand.execute(appController, receivedCommand.getArgs());
         String writedMessages = appController.getIoManager().popWritedMessages();
         String result = writedMessages.length() != 0 ? writedMessages : "Команда выполнена";

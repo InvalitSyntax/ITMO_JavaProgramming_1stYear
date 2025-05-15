@@ -74,7 +74,7 @@ public class AppController {
         return commandManager;
     }
 
-    public SpaceMarineCollectionManager getSpaceMarineCollectionManager() {
+    public synchronized SpaceMarineCollectionManager getSpaceMarineCollectionManager() {
         return spaceMarineCollectionManager;
     }
 

@@ -52,7 +52,7 @@ public class ConnectionHandler {
                 logger.error("Ошибка при чтении запроса", e);
             }
         });
-        
+        readingThread.setDaemon(true);
         readingThread.start();
     }
 }

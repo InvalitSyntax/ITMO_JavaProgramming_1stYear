@@ -5,6 +5,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+
+/*
+TODO:
+
+что - то придумать с одновременным исполнением команд(а точнее тупо с выводом результатов исполнения!!!!!!)
+*/ 
+
 public class ServerMain {
     private static final Logger logger = LogManager.getLogger(ServerMain.class);
 
