@@ -10,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinWorkerThread;
 
 public class ConnectionHandler {
     private static final Logger logger = LogManager.getLogger(ConnectionHandler.class);
@@ -17,13 +18,42 @@ public class ConnectionHandler {
     private final CommandProcessor commandProcessor = new CommandProcessor();
     private final ResponseSender responseSender = new ResponseSender();
     
-    private static final ForkJoinPool requestProcessingPool = new ForkJoinPool();
-    private static final ForkJoinPool responseSendingPool = new ForkJoinPool();
+    //private static final ForkJoinPool requestProcessingPool = new ForkJoinPool();
+    //private static final ForkJoinPool responseSendingPool = new ForkJoinPool();
+
+    private static final ForkJoinPool requestProcessingPool = new ForkJoinPool(
+        Runtime.getRuntime().availableProcessors(),
+        pool -> {
+            ForkJoinWorkerThread worker = ForkJoinPool.defaultForkJoinWorkerThreadFactory.newThread(pool);
+            worker.setName("request-worker-" + worker.getPoolIndex());
+            return worker;
+        },
+        null,
+        true // async mode
+    );
+
+    private static final ForkJoinPool responseSendingPool = new ForkJoinPool(
+        Math.max(2, Runtime.getRuntime().availableProcessors() / 2),
+        pool -> {
+            ForkJoinWorkerThread worker = ForkJoinPool.defaultForkJoinWorkerThreadFactory.newThread(pool);
+            worker.setName("response-worker-" + worker.getPoolIndex());
+            return worker;
+        },
+        null,
+        true
+    );
+
+    private static final ThreadLocal<ByteBuffer> threadLocalBuffer = ThreadLocal.withInitial(
+        () -> ByteBuffer.allocateDirect(4096) // Direct buffer для сети
+    );
+
 
     public void processIncomingData(DatagramChannel channel, AppController appController) throws IOException {
         Thread readingThread = new Thread(() -> {
             try {
-                ByteBuffer buffer = ByteBuffer.allocate(4096);
+                ByteBuffer buffer = threadLocalBuffer.get();
+                buffer.clear();
+                //ByteBuffer buffer = ByteBuffer.allocate(4096);
                 InetSocketAddress clientAddress = (InetSocketAddress) channel.receive(buffer);
 
                 if (clientAddress != null) {
