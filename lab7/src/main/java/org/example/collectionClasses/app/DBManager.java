@@ -28,16 +28,13 @@ public class DBManager implements AutoCloseable {
             originalAutoCommit = connection.getAutoCommit();
             connection.setAutoCommit(false);
 
-            // 1. Проверяем существование элемента
             if (!marineExists(id)) {
                 return false;
             }
 
-            // 2. Обновляем координаты
             int coordId = getMarineCoordinateId(id);
             updateCoordinates(coordId, updatedMarine.getCoordinates());
 
-            // 3. Обновляем главу (если есть)
             Integer chapterId = getMarineChapterId(id);
             if (updatedMarine.getChapter() != null) {
                 if (chapterId != null) {
@@ -50,7 +47,6 @@ public class DBManager implements AutoCloseable {
                 chapterId = null;
             }
 
-            // 4. Обновляем самого десантника
             boolean result = updateMarine(id, updatedMarine, coordId, chapterId);
 
             if (result) {
@@ -357,7 +353,6 @@ public class DBManager implements AutoCloseable {
         }
     }
 
-    // ========== Helper Methods ==========
     private SpaceMarine mapRowToSpaceMarine(ResultSet rs) throws SQLException {
         SpaceMarine marine = new SpaceMarine();
         marine.setId(rs.getInt("id"));
@@ -509,7 +504,6 @@ public class DBManager implements AutoCloseable {
         throw new SQLException("Не удалось сохранить главу");
     }
 
-    // ========== Connection Management ==========
     private void connect() throws SQLException {
         this.connection = DriverManager.getConnection(
             "jdbc:postgresql://localhost:5432/studs",
@@ -530,7 +524,6 @@ public class DBManager implements AutoCloseable {
         }
     }
 
-    // ========== Utility Methods ==========
     private boolean validateCredentials(AppController app, String login, String password) {
         if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
             app.getIoManager().writeMessage("Логин и пароль не могут быть пустыми", false);
