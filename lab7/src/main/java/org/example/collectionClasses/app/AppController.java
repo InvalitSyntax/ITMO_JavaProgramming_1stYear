@@ -40,14 +40,13 @@ public class AppController {
      * Загружает модель коллекции из файла.
      */
     private void loadModel() {
-        spaceMarineCollectionManager = xmlioManager.loadCollectionFromFile();
+        this.spaceMarineCollectionManager = dbManager.loadCollection();
     }
 
     /**
      * Регистрирует команды в менеджере команд.
      */
     private void putCommands() {
-        commandManager.putCommand("save", SaveCommand::new);
         commandManager.putCommand("help", HelpCommandServer::new);
         commandManager.putCommand("show", ShowCommand::new);
     }

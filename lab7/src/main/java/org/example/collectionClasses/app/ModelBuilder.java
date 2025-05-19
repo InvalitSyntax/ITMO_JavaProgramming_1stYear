@@ -54,8 +54,8 @@ public class ModelBuilder {
         ioManager.writeMessage("Введите лояльность (true или что-либо другое, тогда установится false)\n", inQuietMode);
         spaceMarine.setLoyal(ioManager.getBooleanInput(Boolean::parseBoolean));
 
-        ioManager.writeMessage("Если вы хотите установить оружие введите <да>, иначе что-либо иное\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
+        ioManager.writeMessage("Если вы хотите установить оружие введите <yes>, иначе что-либо иное\n", inQuietMode);
+        if (ioManager.getRawStringInput().equalsIgnoreCase("yes")) {
             ioManager.writeMessage("Введите оружие из списка:\n", inQuietMode);
             for (Weapon c : Weapon.values()) {
                 ioManager.writeMessage(c + "\n", inQuietMode);
@@ -63,8 +63,8 @@ public class ModelBuilder {
             spaceMarine.setWeaponType(ioManager.getEnumInput(Weapon.class));
         }
 
-        ioManager.writeMessage("Если вы хотите установить оружие ближнего боя введите <да>, иначе что-либо иное\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
+        ioManager.writeMessage("Если вы хотите установить оружие ближнего боя введите <yes>, иначе что-либо иное\n", inQuietMode);
+        if (ioManager.getRawStringInput().equalsIgnoreCase("yes")) {
             ioManager.writeMessage("Введите оружие ближнего боя из списка:\n", inQuietMode);
             for (MeleeWeapon c : MeleeWeapon.values()) {
                 ioManager.writeMessage(c + "\n", inQuietMode);
@@ -72,8 +72,8 @@ public class ModelBuilder {
             spaceMarine.setMeleeWeapon(ioManager.getEnumInput(MeleeWeapon.class));
         }
 
-        ioManager.writeMessage("Если вы хотите установить главу ведите <да>, иначе что-либо иное\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
+        ioManager.writeMessage("Если вы хотите установить главу ведите <yes>, иначе что-либо иное\n", inQuietMode);
+        if (ioManager.getRawStringInput().equalsIgnoreCase("yes")) {
             spaceMarine.setChapter(buildChapter());
         }
 
@@ -90,8 +90,8 @@ public class ModelBuilder {
     public Coordinates buildCoordinates() {
         Coordinates coordinates = new Coordinates();
 
-        ioManager.writeMessage("Если вы хотите ввести координату x, напишите <да>, иначе же напишите что-либо ино\n", inQuietMode);
-        if (ioManager.getRawStringInput().equalsIgnoreCase("да")) {
+        ioManager.writeMessage("Если вы хотите ввести координату x, напишите <yes>, иначе же напишите что-либо ино\n", inQuietMode);
+        if (ioManager.getRawStringInput().equalsIgnoreCase("yes")) {
             ioManager.writeMessage("Введите координату x (дробное число)\n", inQuietMode);
             coordinates.setX(ioManager.getNumberInput(Double::parseDouble));
         }

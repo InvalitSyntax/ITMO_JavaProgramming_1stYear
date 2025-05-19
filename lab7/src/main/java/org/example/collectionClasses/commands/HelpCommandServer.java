@@ -16,7 +16,7 @@ public class HelpCommandServer extends ICommand {
     public void execute(AppController app, String[] args) {
         app.getIoManager().writeMessage("""
                 Доступны следующие команды:
-                    save - что бы сохранить коллекцию прямо сейчас
+                    save - уже не работает - всё в бд
                     exit - завершить работу сервера, сохранив коллекцию
                     show - показать коллекцию
                     help - просмотреть доступные команды

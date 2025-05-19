@@ -23,8 +23,12 @@ public class AddCommand extends ICommand{
     }
     @Override
     public void execute(AppController app, String[] args) {
-        this.spaceMarine.setId(app.getSpaceMarineCollectionManager().getFreeId());
-        app.getIoManager().writeMessage("Ваш созданный и добавленный десантник:\n" + this.spaceMarine.toString() + "\n", false);
-        app.getSpaceMarineCollectionManager().addMarine(this.spaceMarine);
+        boolean result = app.getDbManager().addElement(this.spaceMarine);
+        if (result == true){
+            app.getIoManager().writeMessage("Ваш созданный и добавленный десантник:\n" + this.spaceMarine.toString() + "\n", false);
+            app.getSpaceMarineCollectionManager().addMarine(this.spaceMarine);
+        } else{
+            app.getIoManager().writeMessage("Не удалось сохранить десантника\n", false);
+        }
     }
 }

@@ -87,6 +87,10 @@ public class ClientApp {
     }
     
     private boolean processCommand(ICommand command, String[] tokens) throws Exception {
+        if (this.authorized == true){
+            command.login = this.login;
+            command.password = this.password;
+        }
         String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length);
         command.setArgs(commandArgs);
         command.setElement(ioManager);

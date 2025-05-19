@@ -65,6 +65,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable{
      * Конструктор по умолчанию.
      */
     public SpaceMarine() {
+        this.creationDate = ZonedDateTime.now();
     }
 
     /**
@@ -289,6 +290,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable{
                 "  weaponType: " + (weaponType != null ? weaponType : "null") + "\n" +
                 "  meleeWeapon: " + (meleeWeapon != null ? meleeWeapon : "null") + "\n" +
                 "  chapter: " + (chapter != null ? chapter.toString().replace("\n", "\n  ") : "null") + "\n" +
+                "  creator: " + userLogin + "\n" + 
                 "}";
     }
 
