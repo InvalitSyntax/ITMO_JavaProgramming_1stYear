@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.collectionClasses.app.AppController;
 import org.example.collectionClasses.app.CommandManager;
+import org.example.collectionClasses.app.DBManager;
 import org.example.collectionClasses.app.IOManager;
 import org.example.collectionClasses.app.SpaceMarineCollectionManager;
 import org.example.collectionClasses.app.XMLIOManager;
@@ -41,8 +42,9 @@ public class Server {
         XMLIOManager xmlioManager = new XMLIOManager(fileName);
         CommandManager commandManager = new CommandManager();
         IOManager ioManager = new IOManager();
+        DBManager dbManager = new DBManager();
 
-        this.appController = new AppController(commandManager, collectionManager, xmlioManager, ioManager);
+        this.appController = new AppController(commandManager, collectionManager, xmlioManager, ioManager, dbManager);
         logger.info("Компоненты приложения инициализированы");
     }
 

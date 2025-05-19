@@ -31,6 +31,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable{
     private Weapon weaponType;
     private MeleeWeapon meleeWeapon;
     private Chapter chapter;
+    private String userLogin;
 
     {
         freeId++;
@@ -96,6 +97,14 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable{
     @XmlElement(required = true)
     public String getName() {
         return name;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getUserLogin() {
+        return this.userLogin;
     }
 
     /**

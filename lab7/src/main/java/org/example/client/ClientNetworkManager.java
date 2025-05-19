@@ -18,7 +18,7 @@ public class ClientNetworkManager {
         this.port = port;
     }
     
-    public String sendCommandAndGetResponse(ICommand command) throws Exception {
+    public Answer sendCommandAndGetResponse(ICommand command) throws Exception {
         try (DatagramChannel channel = DatagramChannel.open()) {
             channel.configureBlocking(false);
             
@@ -56,7 +56,7 @@ public class ClientNetworkManager {
                         
                         try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(responseData))) {
                             Answer answer = (Answer) objIn.readObject();
-                            return answer.toString();
+                            return answer;
                         }
                     }
                 } catch (IOException e) {
@@ -65,7 +65,7 @@ public class ClientNetworkManager {
             }
             
             System.out.println("Сервер недоступен для получения ответа");
-            return "";
+            return new Answer("", false);
         }
     }
 }

@@ -14,8 +14,7 @@ import java.nio.channels.DatagramChannel;
 public class ResponseSender {
     private static final Logger logger = LogManager.getLogger(ResponseSender.class);
 
-    public void sendResponse(String response, InetSocketAddress clientAddress, DatagramChannel channel) throws IOException {
-        Answer answer = new Answer(response);
+    public void sendResponse(Answer answer, InetSocketAddress clientAddress, DatagramChannel channel) throws IOException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
         objOut.writeObject(answer);

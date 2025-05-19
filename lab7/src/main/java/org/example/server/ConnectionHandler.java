@@ -3,6 +3,7 @@ package org.example.server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.collectionClasses.app.AppController;
+import org.example.collectionClasses.commands.Answer;
 import org.example.collectionClasses.commands.ICommand;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ConnectionHandler {
             return worker;
         },
         null,
-        true // async mode
+        true //async
     );
 
     private static final ForkJoinPool responseSendingPool = new ForkJoinPool(
@@ -44,7 +45,7 @@ public class ConnectionHandler {
     );
 
     private static final ThreadLocal<ByteBuffer> threadLocalBuffer = ThreadLocal.withInitial(
-        () -> ByteBuffer.allocateDirect(4096) // Direct buffer для сети
+        () -> ByteBuffer.allocateDirect(4096)
     );
 
 
@@ -66,11 +67,11 @@ public class ConnectionHandler {
                     requestProcessingPool.execute(() -> {
                         ICommand receivedCommand = requestReader.readRequest(receivedData);
                         if (receivedCommand != null) {
-                            String response = commandProcessor.processCommand(receivedCommand, appController);
+                            Answer answer = commandProcessor.processCommand(receivedCommand, appController);
                             
                             responseSendingPool.execute(() -> {
                                 try {
-                                    responseSender.sendResponse(response, clientAddress, channel);
+                                    responseSender.sendResponse(answer, clientAddress, channel);
                                 } catch (IOException e) {
                                     logger.error("Не удалось отправить ответ клиенту {}", clientAddress);
                                 }

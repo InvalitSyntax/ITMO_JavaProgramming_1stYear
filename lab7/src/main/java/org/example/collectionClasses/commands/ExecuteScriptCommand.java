@@ -18,7 +18,6 @@ public class ExecuteScriptCommand extends ICommand {
         super();
         this.needToExecutePartOnClient = true;
     }
-    
 
     @Override
     public void partlyExecute(IOManager ioManager) {

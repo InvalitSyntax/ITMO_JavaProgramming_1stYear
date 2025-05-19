@@ -9,6 +9,8 @@ public class ICommand implements Command {
     private String[] args;
     protected SpaceMarine spaceMarine;
     public boolean needToExecutePartOnClient = false;
+    public boolean condition = false;
+    public String login, password;
     public void setArgs(String[] args) {
         this.args = args;
     }

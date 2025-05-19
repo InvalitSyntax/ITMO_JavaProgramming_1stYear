@@ -19,6 +19,7 @@ public class AddCommand extends ICommand{
     public void setElement(IOManager ioManager){
         ModelBuilder modelBuilder = new ModelBuilder(ioManager);
         this.spaceMarine = modelBuilder.build();
+        this.spaceMarine.setUserLogin(login);
     }
     @Override
     public void execute(AppController app, String[] args) {

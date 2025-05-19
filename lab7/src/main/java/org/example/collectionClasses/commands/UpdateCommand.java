@@ -22,6 +22,7 @@ public class UpdateCommand extends ICommand {
     public void setElement(IOManager ioManager) {
         ModelBuilder modelBuilder = new ModelBuilder(ioManager);
         this.spaceMarine = modelBuilder.build();
+        this.spaceMarine.setUserLogin(login);
     }
     
     @Override

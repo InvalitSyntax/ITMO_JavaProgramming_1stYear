@@ -12,6 +12,7 @@ public class AppController {
     private final CommandManager commandManager;
     private final XMLIOManager xmlioManager;
     private final IOManager ioManager;
+    private final DBManager dbManager;
     private SpaceMarineCollectionManager spaceMarineCollectionManager;
     private boolean isTurnOn;
 
@@ -23,11 +24,12 @@ public class AppController {
      * @param xmlioManager                 менеджер ввода/вывода XML
      * @param ioManager                    менеджер ввода/вывода
      */
-    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, XMLIOManager xmlioManager, IOManager ioManager) {
+    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, XMLIOManager xmlioManager, IOManager ioManager, DBManager dbManager) {
         this.commandManager = commandManager;
         this.spaceMarineCollectionManager = spaceMarineCollectionManager;
         this.xmlioManager = xmlioManager;
         this.ioManager = ioManager;
+        this.dbManager = dbManager;
 
         putCommands();
         loadModel();
@@ -72,6 +74,10 @@ public class AppController {
 
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    public DBManager getDbManager() {
+        return dbManager;
     }
 
     public synchronized SpaceMarineCollectionManager getSpaceMarineCollectionManager() {

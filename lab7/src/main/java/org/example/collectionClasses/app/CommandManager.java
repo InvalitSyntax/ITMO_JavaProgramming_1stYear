@@ -36,6 +36,10 @@ public class CommandManager {
         commandMap.put(commandName, command);
     }
 
+    public void clearCommands(){
+        commandMap.clear();
+    }
+
     /**
      * Выполняет команду.
      *
