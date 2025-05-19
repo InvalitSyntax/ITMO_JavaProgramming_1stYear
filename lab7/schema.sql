@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS chapters (
 
 CREATE TABLE IF NOT EXISTS space_marines (
     id SERIAL PRIMARY KEY,
-    login VARCHAR(50) NOT NULL REFERENCES users(login) ON DELETE CASCADE,
+    login VARCHAR(50) NOT NULL REFERENCES users ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL CHECK (name <> ''),
-    coord_id INTEGER NOT NULL REFERENCES coordinates(coord_id) ON DELETE CASCADE,
+    coord_id INTEGER NOT NULL REFERENCES coordinates ON DELETE CASCADE,
     creation_date TIMESTAMP WITH TIME ZONE NOT NULL,
     health Real,
     loyal BOOLEAN NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS space_marines (
     melee_weapon VARCHAR(20) CHECK (melee_weapon IN (
         'CHAIN_SWORD', 'POWER_SWORD', 'CHAIN_AXE', 'LIGHTING_CLAW', 'POWER_FIST'
     )),
-    chapter_id INTEGER REFERENCES chapters(chapter_id) ON DELETE CASCADE
+    chapter_id INTEGER REFERENCES chapters ON DELETE CASCADE
 );
 
 CREATE INDEX idx_marines_login ON space_marines(login);

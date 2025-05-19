@@ -2,7 +2,6 @@ package org.example.collectionClasses.commands;
 
 import org.example.collectionClasses.app.AppController;
 import org.example.collectionClasses.app.DBManager;
-import org.example.collectionClasses.app.SpaceMarineCollectionManager;
 
 /**
  * Команда для очистки коллекции.
@@ -17,9 +16,8 @@ public class ClearCommand extends ICommand {
 
     @Override
     public void execute(AppController app, String[] args) {
-        SpaceMarineCollectionManager collectionManager = app.getSpaceMarineCollectionManager();
         DBManager dbManager = app.getDbManager();
-        dbManager.clearCollection();
-        collectionManager.clearMarines();
+        dbManager.clearCollection(login);
+        app.loadModel();
     }
 }

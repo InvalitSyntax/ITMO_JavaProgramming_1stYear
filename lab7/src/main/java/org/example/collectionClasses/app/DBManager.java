@@ -1,9 +1,12 @@
 package org.example.collectionClasses.app;
 
+import java.net.ConnectException;
 import java.sql.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.example.collectionClasses.model.*;
@@ -18,7 +21,7 @@ public class DBManager implements AutoCloseable {
             this.originalAutoCommit = connection.getAutoCommit();
         } catch (SQLException e) {
             handleDatabaseError(e, "Не удалось подключиться к базе данных");
-            throw new RuntimeException("Database connection failed", e);
+            //throw new RuntimeException("Database connection failed", e);
         }
     }
 
@@ -193,19 +196,77 @@ public class DBManager implements AutoCloseable {
     }
 
     public synchronized boolean removeElementById(int id) {
+        boolean originalAutoCommit = true;
         try {
             ensureConnection();
-            String sql = "DELETE FROM space_marines WHERE id = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            originalAutoCommit = connection.getAutoCommit();
+            connection.setAutoCommit(false);
+
+            // 1. Получаем зависимости
+            Integer coordId = getMarineCoordinateId(id);
+            Integer chapterId = getMarineChapterId(id);
+
+            // 2. Удаляем самого десантника
+            String deleteMarineSql = "DELETE FROM space_marines WHERE id = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(deleteMarineSql)) {
                 stmt.setInt(1, id);
-                return stmt.executeUpdate() > 0;
+                int affectedRows = stmt.executeUpdate();
+                if (affectedRows == 0) {
+                    connection.rollback();
+                    return false;
+                }
             }
+
+            // 3. Удаляем координаты
+            if (coordId != null) {
+                String deleteCoordSql = "DELETE FROM coordinates WHERE coord_id = ?";
+                try (PreparedStatement stmt = connection.prepareStatement(deleteCoordSql)) {
+                    stmt.setInt(1, coordId);
+                    stmt.executeUpdate();
+                }
+            }
+
+            // 4. Удаляем главу (если есть и больше не используется)
+            if (chapterId != null && !isChapterUsedElsewhere(chapterId, id)) {
+                String deleteChapterSql = "DELETE FROM chapters WHERE chapter_id = ?";
+                try (PreparedStatement stmt = connection.prepareStatement(deleteChapterSql)) {
+                    stmt.setInt(1, chapterId);
+                    stmt.executeUpdate();
+                }
+            }
+
+            connection.commit();
+            return true;
         } catch (SQLException e) {
+            try {
+                if (connection != null && !connection.getAutoCommit()) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Ошибка при откате транзакции: " + ex.getMessage());
+            }
             handleDatabaseError(e, "Ошибка при удалении элемента");
             return false;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(originalAutoCommit);
+                }
+            } catch (SQLException e) {
+                System.err.println("Ошибка восстановления autoCommit: " + e.getMessage());
+            }
         }
     }
-
+    private boolean isChapterUsedElsewhere(int chapterId, int excludeMarineId) throws SQLException {
+        String sql = "SELECT 1 FROM space_marines WHERE chapter_id = ? AND id != ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, chapterId);
+            stmt.setInt(2, excludeMarineId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
     public boolean authorize(String login, String password) {
         if (!validateCredentials(login, password)) {
             return false;
@@ -285,7 +346,7 @@ public class DBManager implements AutoCloseable {
         }
     }
 
-    public SpaceMarineCollectionManager loadCollection() {
+    public synchronized SpaceMarineCollectionManager loadCollection() {
         Deque<SpaceMarine> collection = new ConcurrentLinkedDeque<>();
         SpaceMarineCollectionManager collectionManager = new SpaceMarineCollectionManager();
 
@@ -398,11 +459,53 @@ public class DBManager implements AutoCloseable {
         }
     }
     
-    public void clearCollection() {
-        try (Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate("DELETE FROM space_marines");
+    public synchronized boolean clearCollection(String login) {
+        boolean originalAutoCommit = true;
+        try {
+            ensureConnection();
+            originalAutoCommit = connection.getAutoCommit();
+            connection.setAutoCommit(false);
+
+            // 1. Получаем все ID десантников пользователя
+            List<Integer> marineIds = new ArrayList<>();
+            String selectSql = "SELECT id, coord_id, chapter_id FROM space_marines WHERE login = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(selectSql)) {
+                stmt.setString(1, login);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        marineIds.add(rs.getInt("id"));
+                    }
+                }
+            }
+
+            // 2. Удаляем каждого десантника с зависимостями
+            for (int id : marineIds) {
+                if (!removeElementById(id)) {
+                    connection.rollback();
+                    return false;
+                }
+            }
+
+            connection.commit();
+            return true;
         } catch (SQLException e) {
-            handleDatabaseError(e, "Ошибка при добавлении элемента");
+            try {
+                if (connection != null && !connection.getAutoCommit()) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Ошибка при откате транзакции: " + ex.getMessage());
+            }
+            handleDatabaseError(e, "Ошибка при очистке коллекции");
+            return false;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(originalAutoCommit);
+                }
+            } catch (SQLException e) {
+                System.err.println("Ошибка восстановления autoCommit: " + e.getMessage());
+            }
         }
     }
     
@@ -506,9 +609,9 @@ public class DBManager implements AutoCloseable {
 
     private void connect() throws SQLException {
         this.connection = DriverManager.getConnection(
-            "jdbc:postgresql://localhost:5432/studs",
-            "s467433",
-            "gtsNAsET0QoUHh3Q");
+        "jdbc:postgresql://localhost:5432/studs",
+        "s467433",
+        "gtsNAsET0QoUHh3Q");
     }
 
     private void ensureConnection() throws SQLException {
@@ -557,12 +660,12 @@ public class DBManager implements AutoCloseable {
         }
     }
 
-    private void handleDatabaseError(AppController app, SQLException e, String message) {
+    private void handleDatabaseError(AppController app, Exception e, String message) {
         e.printStackTrace();
         app.getIoManager().writeMessage(message + ": " + e.getMessage(), false);
     }
 
-    private void handleDatabaseError(SQLException e, String message) {
+    private void handleDatabaseError(Exception e, String message) {
         e.printStackTrace();
         System.err.println(message + ": " + e.getMessage());
     }
