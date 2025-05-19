@@ -10,7 +10,6 @@ import org.example.collectionClasses.commands.*;
  */
 public class AppController {
     private final CommandManager commandManager;
-    private final XMLIOManager xmlioManager;
     private final IOManager ioManager;
     private final DBManager dbManager;
     private SpaceMarineCollectionManager spaceMarineCollectionManager;
@@ -24,10 +23,9 @@ public class AppController {
      * @param xmlioManager                 менеджер ввода/вывода XML
      * @param ioManager                    менеджер ввода/вывода
      */
-    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, XMLIOManager xmlioManager, IOManager ioManager, DBManager dbManager) {
+    public AppController(CommandManager commandManager, SpaceMarineCollectionManager spaceMarineCollectionManager, IOManager ioManager, DBManager dbManager) {
         this.commandManager = commandManager;
         this.spaceMarineCollectionManager = spaceMarineCollectionManager;
-        this.xmlioManager = xmlioManager;
         this.ioManager = ioManager;
         this.dbManager = dbManager;
 
@@ -39,7 +37,7 @@ public class AppController {
     /**
      * Загружает модель коллекции из файла.
      */
-    private void loadModel() {
+    public void loadModel() {
         this.spaceMarineCollectionManager = dbManager.loadCollection();
     }
 
@@ -81,10 +79,6 @@ public class AppController {
 
     public synchronized SpaceMarineCollectionManager getSpaceMarineCollectionManager() {
         return spaceMarineCollectionManager;
-    }
-
-    public XMLIOManager getXmlioManager() {
-        return xmlioManager;
     }
 
     public IOManager getIoManager() {

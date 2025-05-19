@@ -37,8 +37,13 @@ public class RemoveGreater extends ICommand {
             .collect(Collectors.toList());
         
         toRemove.forEach(marine -> {
-            app.getSpaceMarineCollectionManager().removeMarine(marine);
-            ioManager.writeMessage("Удален десантник: \n" + marine + "\n", false);
+            if (app.getSpaceMarineCollectionManager().checkLogin(marine.getId(), login)) {
+                app.getDbManager().removeElementById(marine.getId());
+                app.loadModel();
+                ioManager.writeMessage("Удален десантник: \n" + marine + "\n", false);
+            } else{
+                app.getIoManager().writeMessage("Элемент коллекции под id " + marine.getId() + " пренадлежит не вам! и он не будет удалён\n", false);
+            }
         });
     }
 }

@@ -47,8 +47,20 @@ public class UpdateCommand extends ICommand {
                 .anyMatch(marine -> marine.getId() == id);
             
             if (updated) {
-                app.getSpaceMarineCollectionManager().replaceMarineById(id, sm);
-                ioManager.writeMessage("Элемент обновлен\n", false);
+                if (app.getSpaceMarineCollectionManager().checkLogin(id, login)) {
+                    if (app.getDbManager().updateElement(id, sm)) {
+                        app.loadModel();
+                        ioManager.writeMessage("Элемент обновлен\n", false);
+                    } else {
+                        ioManager.writeMessage("Не удалось обновить элемент\n", false);
+                    }
+                } else {
+                    ioManager.writeMessage("""
+                    Этот элемент коллекции пренадлежит не вам!\s
+                    Введите show, чтобы вывести список доступных для вас элементов.
+                    \n""", false);
+                    return;
+                }
             } else {
                 ioManager.writeMessage("""
                     Элемент коллекции с таким id не найден!\s

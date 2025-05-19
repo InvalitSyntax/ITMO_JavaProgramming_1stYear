@@ -150,6 +150,17 @@ public class SpaceMarineCollectionManager {
         }
     }
 
+    public synchronized boolean checkLogin(int id, String login) {
+        Iterator<SpaceMarine> iterator = marines.iterator();
+        while (iterator.hasNext()) {
+            SpaceMarine current = iterator.next();
+            if (id == current.getId()) {
+                return (current.getUserLogin().equals(login));
+            }
+        }
+        return false;
+    }
+
     /**
      * Удаляет космического десантника по указанному ID.
      * 

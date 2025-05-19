@@ -39,12 +39,11 @@ public class Server {
 
     private void initializeComponents() {
         SpaceMarineCollectionManager collectionManager = new SpaceMarineCollectionManager();
-        XMLIOManager xmlioManager = new XMLIOManager(fileName);
         CommandManager commandManager = new CommandManager();
         IOManager ioManager = new IOManager();
         DBManager dbManager = new DBManager();
 
-        this.appController = new AppController(commandManager, collectionManager, xmlioManager, ioManager, dbManager);
+        this.appController = new AppController(commandManager, collectionManager, ioManager, dbManager);
         logger.info("Компоненты приложения инициализированы");
     }
 

@@ -115,7 +115,6 @@ public class ClientApp {
         commandManager.putCommand("exit", ExitCommand::new);
         commandManager.putCommand("show", ShowCommand::new);
         commandManager.putCommand("info", InfoCommand::new);
-        commandManager.putCommand("clear", ClearCommand::new);
         commandManager.putCommand("add", AddCommand::new);
         commandManager.putCommand("update", UpdateCommand::new);
         commandManager.putCommand("remove_by_id", RemoveByIdCommand::new);

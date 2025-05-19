@@ -11,7 +11,7 @@ public class ClientMain {
         
         CommandManager commandManager = new CommandManager();
         
-        ClientNetworkManager networkManager = new ClientNetworkManager("localhost", 57486);
+        ClientNetworkManager networkManager = new ClientNetworkManager("127.0.0.1", 57486);
         
         ClientApp clientApp = new ClientApp(ioManager, commandManager, networkManager);
         clientApp.run();

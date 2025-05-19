@@ -22,7 +22,194 @@ public class DBManager implements AutoCloseable {
         }
     }
 
-    // ========== Authorization Methods ==========
+    public synchronized boolean updateElement(int id, SpaceMarine updatedMarine) {
+        try {
+            ensureConnection();
+            originalAutoCommit = connection.getAutoCommit();
+            connection.setAutoCommit(false);
+
+            // 1. Проверяем существование элемента
+            if (!marineExists(id)) {
+                return false;
+            }
+
+            // 2. Обновляем координаты
+            int coordId = getMarineCoordinateId(id);
+            updateCoordinates(coordId, updatedMarine.getCoordinates());
+
+            // 3. Обновляем главу (если есть)
+            Integer chapterId = getMarineChapterId(id);
+            if (updatedMarine.getChapter() != null) {
+                if (chapterId != null) {
+                    updateChapter(chapterId, updatedMarine.getChapter());
+                } else {
+                    chapterId = saveChapter(updatedMarine.getChapter());
+                }
+            } else if (chapterId != null) {
+                deleteChapter(chapterId);
+                chapterId = null;
+            }
+
+            // 4. Обновляем самого десантника
+            boolean result = updateMarine(id, updatedMarine, coordId, chapterId);
+
+            if (result) {
+                connection.commit();
+            } else {
+                connection.rollback();
+            }
+
+            return result;
+        } catch (SQLException e) {
+            try {
+                if (connection != null && !connection.getAutoCommit()) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Ошибка отката транзакции: " + ex.getMessage());
+            }
+            handleDatabaseError(e, "Ошибка при обновлении элемента");
+            return false;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(originalAutoCommit);
+                }
+            } catch (SQLException e) {
+                System.err.println("Ошибка восстановления autoCommit: " + e.getMessage());
+            }
+        }
+    }
+
+
+    private boolean marineExists(int id) throws SQLException {
+        String sql = "SELECT 1 FROM space_marines WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    private int getMarineCoordinateId(int marineId) throws SQLException {
+        String sql = "SELECT coord_id FROM space_marines WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, marineId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("coord_id");
+                }
+            }
+        }
+        throw new SQLException("Координаты не найдены для десантника с ID: " + marineId);
+    }
+
+    private Integer getMarineChapterId(int marineId) throws SQLException {
+        String sql = "SELECT chapter_id FROM space_marines WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, marineId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? rs.getObject("chapter_id", Integer.class) : null;
+            }
+        }
+    }
+
+    private void updateCoordinates(int coordId, Coordinates coord) throws SQLException {
+        String sql = "UPDATE coordinates SET x = ?, y = ? WHERE coord_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDouble(1, coord.getX());
+            if (coord.getY() != null) {
+                stmt.setFloat(2, coord.getY());
+            } else {
+                stmt.setNull(2, Types.FLOAT);
+            }
+            stmt.setInt(3, coordId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void updateChapter(int chapterId, Chapter chapter) throws SQLException {
+        String sql = "UPDATE chapters SET name = ?, world = ? WHERE chapter_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, chapter.getName());
+            stmt.setString(2, chapter.getWorld());
+            stmt.setInt(3, chapterId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void deleteChapter(int chapterId) throws SQLException {
+        String sql = "DELETE FROM chapters WHERE chapter_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, chapterId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private boolean updateMarine(int id, SpaceMarine marine, int coordId, Integer chapterId) throws SQLException {
+        String sql = "UPDATE space_marines SET " +
+                    "name = ?, " +
+                    "creation_date = ?, " +
+                    "health = ?, " +
+                    "loyal = ?, " +
+                    "weapon_type = ?, " +
+                    "melee_weapon = ?, " +
+                    "chapter_id = ?, " +
+                    "coord_id = ? " +
+                    "WHERE id = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, marine.getName());
+            stmt.setTimestamp(2, Timestamp.from(marine.getCreationDate().toInstant()));
+            
+            if (marine.getHealth() != null) {
+                stmt.setFloat(3, marine.getHealth());
+            } else {
+                stmt.setNull(3, Types.FLOAT);
+            }
+            
+            stmt.setBoolean(4, marine.getLoyal());
+            
+            if (marine.getWeaponType() != null) {
+                stmt.setString(5, marine.getWeaponType().name());
+            } else {
+                stmt.setNull(5, Types.VARCHAR);
+            }
+            
+            if (marine.getMeleeWeapon() != null) {
+                stmt.setString(6, marine.getMeleeWeapon().name());
+            } else {
+                stmt.setNull(6, Types.VARCHAR);
+            }
+            
+            if (chapterId != null) {
+                stmt.setInt(7, chapterId);
+            } else {
+                stmt.setNull(7, Types.INTEGER);
+            }
+            
+            stmt.setInt(8, coordId);
+            stmt.setInt(9, id);
+            
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public synchronized boolean removeElementById(int id) {
+        try {
+            ensureConnection();
+            String sql = "DELETE FROM space_marines WHERE id = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, id);
+                return stmt.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            handleDatabaseError(e, "Ошибка при удалении элемента");
+            return false;
+        }
+    }
+
     public boolean authorize(String login, String password) {
         if (!validateCredentials(login, password)) {
             return false;
@@ -102,7 +289,6 @@ public class DBManager implements AutoCloseable {
         }
     }
 
-    // ========== Collection Methods ==========
     public SpaceMarineCollectionManager loadCollection() {
         Deque<SpaceMarine> collection = new ConcurrentLinkedDeque<>();
         SpaceMarineCollectionManager collectionManager = new SpaceMarineCollectionManager();

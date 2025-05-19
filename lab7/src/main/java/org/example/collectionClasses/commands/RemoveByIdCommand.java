@@ -28,16 +28,24 @@ public class RemoveByIdCommand extends ICommand {
         
         try {
             int id = Integer.parseInt(args[0]);
-            boolean removed = app.getSpaceMarineCollectionManager().getMarines()
-                .removeIf(marine -> marine.getId() == id);
-            
-            if (removed) {
-                ioManager.writeMessage("Десантник удален\n", false);
-            } else {
-                ioManager.writeMessage("""
-                    Элемент коллекции с таким id не найден!\s
-                    Введите show, чтобы вывести список доступных элементов.
-                    \n""", false);
+            if (app.getSpaceMarineCollectionManager().checkLogin(id, login)) {
+                if (app.getDbManager().removeElementById(id)) {
+                    boolean removed = app.getSpaceMarineCollectionManager().getMarines()
+                        .removeIf(marine -> marine.getId() == id);
+                    
+                    if (removed) {
+                        app.loadModel();
+                        ioManager.writeMessage("Десантник удален\n", false);
+                    } else {
+                        ioManager.writeMessage("""
+                            Элемент коллекции с таким id не найден!\s
+                            Введите show, чтобы вывести список доступных элементов.
+                            \n""", false);
+                    }
+                } else {
+                    ioManager.writeMessage("Не удалось удалить элемент\n", false);
+                }
+                
             }
         } catch (NumberFormatException e) {
             ioManager.writeMessage("Неверный формат ID\n", false);

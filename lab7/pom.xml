@@ -97,7 +97,7 @@
                         </descriptorRefs>
                         <archive>
                             <manifest>
-                                <mainClass>org.example.client.\lientMain</mainClass>
+                                <mainClass>org.example.client.ClientMain</mainClass>
                             </manifest>
                         </archive>
                         <finalName>client-with-dependencies</finalName>
