@@ -77,7 +77,7 @@ public class AppController {
         return dbManager;
     }
 
-    public synchronized SpaceMarineCollectionManager getSpaceMarineCollectionManager() {
+    public SpaceMarineCollectionManager getSpaceMarineCollectionManager() {
         return spaceMarineCollectionManager;
     }
 

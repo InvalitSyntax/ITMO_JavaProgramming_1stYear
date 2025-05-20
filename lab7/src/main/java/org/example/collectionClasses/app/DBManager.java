@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.example.collectionClasses.model.*;
+import org.postgresql.util.PSQLException;
 
 public class DBManager implements AutoCloseable {
     private Connection connection;
@@ -661,12 +662,12 @@ public class DBManager implements AutoCloseable {
     }
 
     private void handleDatabaseError(AppController app, Exception e, String message) {
-        e.printStackTrace();
+        //e.printStackTrace();
         app.getIoManager().writeMessage(message + ": " + e.getMessage(), false);
     }
 
     private void handleDatabaseError(Exception e, String message) {
-        e.printStackTrace();
+        //e.printStackTrace();
         System.err.println(message + ": " + e.getMessage());
     }
 }

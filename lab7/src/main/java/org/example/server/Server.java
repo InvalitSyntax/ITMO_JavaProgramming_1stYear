@@ -18,15 +18,13 @@ import java.nio.channels.DatagramChannel;
 public class Server {
     private static final Logger logger = LogManager.getLogger(Server.class);
     private final int port;
-    private final String fileName;
     private AppController appController;
     private DatagramChannel channel;
     private final ConnectionHandler connectionHandler;
     private final ConsoleInputHandler consoleInputHandler;
 
-    public Server(int port, String fileName) {
+    public Server(int port) {
         this.port = port;
-        this.fileName = fileName;
         this.connectionHandler = new ConnectionHandler();
         this.consoleInputHandler = new ConsoleInputHandler();
     }
