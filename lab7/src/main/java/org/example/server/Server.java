@@ -55,11 +55,12 @@ public class Server {
     }
 
     private void runServerLoop() throws IOException, InterruptedException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+        Thread consolThread = new Thread(() -> {
+            consoleInputHandler.processConsoleInput(appController);
+        });
+        consolThread.start();
         while (true) {
             connectionHandler.processIncomingData(channel, appController);
-            consoleInputHandler.processConsoleInput(reader, appController);
             Thread.yield();
         }
     }

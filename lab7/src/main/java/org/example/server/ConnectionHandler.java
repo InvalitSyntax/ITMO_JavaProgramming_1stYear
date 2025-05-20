@@ -50,18 +50,17 @@ public class ConnectionHandler {
 
 
     public void processIncomingData(DatagramChannel channel, AppController appController) throws IOException {
-        Thread readingThread = new Thread(() -> {
-            try {
-                ByteBuffer buffer = threadLocalBuffer.get();
-                buffer.clear();
-                //ByteBuffer buffer = ByteBuffer.allocate(4096);
-                InetSocketAddress clientAddress = (InetSocketAddress) channel.receive(buffer);
+        //ByteBuffer buffer = threadLocalBuffer.get();
+        ByteBuffer buffer = ByteBuffer.allocate(4096);
+        buffer.clear();
+        InetSocketAddress clientAddress = (InetSocketAddress) channel.receive(buffer);
 
-                if (clientAddress != null) {
-                    buffer.flip();
-                    byte[] receivedData = new byte[buffer.remaining()];
-                    buffer.get(receivedData);
-                    
+        if (clientAddress != null) {
+            buffer.flip();
+            byte[] receivedData = new byte[buffer.remaining()];
+            buffer.get(receivedData);
+            Thread readingThread = new Thread(() -> {
+                try {
                     logger.info("Получены данные от клиента: {}", clientAddress);
 
                     requestProcessingPool.execute(() -> {
@@ -78,12 +77,12 @@ public class ConnectionHandler {
                             });
                         }
                     });
-                }
-            } catch (Exception e) {
+                } catch (Exception e) {
                 logger.error("Ошибка при чтении запроса", e);
-            }
-        });
-        readingThread.setDaemon(true);
-        readingThread.start();
+                }
+            });
+            readingThread.setDaemon(true);
+            readingThread.start();
+        }
     }
 }

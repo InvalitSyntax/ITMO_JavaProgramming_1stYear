@@ -6,17 +6,20 @@ import org.example.collectionClasses.app.AppController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ConsoleInputHandler {
     private static final Logger logger = LogManager.getLogger(ConsoleInputHandler.class);
 
-    public void processConsoleInput(BufferedReader reader, AppController appController) throws IOException {
-        if (reader.ready()) {
-            String input = reader.readLine();
-            if (input == null) {
-                System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
-            } else {
-                handleConsoleCommand(input, appController);
+    public void processConsoleInput(AppController appController) {
+        try (Scanner scanner = new Scanner(System.in)){
+            while (scanner.hasNext()) {
+                    String input = scanner.nextLine();
+                    if (input == null) {
+                        System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
+                    } else {
+                        handleConsoleCommand(input, appController);
+                }
             }
         }
     }

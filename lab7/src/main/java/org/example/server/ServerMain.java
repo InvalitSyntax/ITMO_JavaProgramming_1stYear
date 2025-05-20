@@ -7,6 +7,8 @@ import java.io.IOException;
 
 // FevL&5227
 // pkill -u $USER java
+// прикольный сайт: https://metanit.com/java/tutorial/8.10.php
+// обаледенное описание классов-синхронизаторов https://habr.com/ru/articles/277669/    
 
 public class ServerMain {
     private static final Logger logger = LogManager.getLogger(ServerMain.class);

@@ -1,12 +1,10 @@
 package org.example.client;
 
 import org.example.collectionClasses.commands.Answer;
-import org.example.collectionClasses.commands.ExecuteScriptCommand;
 import org.example.collectionClasses.commands.ICommand;
 import org.example.collectionClasses.commands.InfoCommand;
-import org.example.collectionClasses.commands.ShowCommand;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -14,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConcurrentClientTester {
     private static final int THREAD_COUNT = 30;
-    private static final int REQUESTS_PER_CLIENT = 100;
-    private static final CountDownLatch startLatch = new CountDownLatch(1);
+    private static final int REQUESTS_PER_CLIENT = 30;
+    private static final CyclicBarrier startBarrier = new CyclicBarrier(THREAD_COUNT);
     private static final AtomicInteger completedRequests = new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException {
@@ -28,13 +26,15 @@ public class ConcurrentClientTester {
                 try {
                     ClientNetworkManager networkManager = new ClientNetworkManager("localhost", 57486);
                     
-                    startLatch.await();
+                    // Ждем, пока все клиенты будут готовы
+                    startBarrier.await();
                     
                     for (int j = 0; j < REQUESTS_PER_CLIENT; j++) {
                         ICommand command = new InfoCommand();
                         Answer response = networkManager.sendCommandAndGetResponse(command);
                         completedRequests.incrementAndGet();
-                        System.out.printf("[Client-%d][Req-%d] Response: %s%n", clientId, j, response);
+                        System.out.printf("[Client-%d][Req-%d] Response: %s%n", 
+                            clientId, j, response);
                     }
                 } catch (Exception e) {
                     System.err.printf("[Client-%d] Error: %s%n", clientId, e.getMessage());
@@ -42,10 +42,7 @@ public class ConcurrentClientTester {
             });
         }
 
-
-        Thread.sleep(1000);
         System.out.println("=== STARTING TEST ===");
-        startLatch.countDown();
 
         executor.shutdown();
         executor.awaitTermination(2, TimeUnit.MINUTES);
