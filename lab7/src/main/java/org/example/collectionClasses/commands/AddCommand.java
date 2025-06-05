@@ -26,7 +26,7 @@ public class AddCommand extends ICommand{
         boolean result = app.getDbManager().addElement(this.spaceMarine);
         if (result == true){
             app.getIoManager().writeMessage("Ваш созданный и добавленный десантник:\n" + this.spaceMarine.toString() + "\n", false);
-            app.getSpaceMarineCollectionManager().addMarine(this.spaceMarine);
+            app.loadModel();
         } else{
             app.getIoManager().writeMessage("Не удалось сохранить десантника\n", false);
         }

@@ -51,36 +51,33 @@ public class ClientApp {
 
                 вместо <> вставьте необходимое соответственно
             """);
-        
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                String input = ioManager.getRawStringInput();
-                if (input == null) {
-                    System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
-                } else {
-                    String[] tokens = input.trim().split(" ");
-                    if (tokens[0].equals("exit")) {
-                        break;
-                    }
-                    
-                    try {
-                        Supplier<ICommand> command = commandManager.getCommand(tokens[0]);
-                        if (command != null) {
-                            boolean condition = processCommand(command.get(), tokens);
-                            if (this.authorized == false){
-                                this.authorized = condition;
-                                if (this.authorized == true){
-                                    this.login = tokens[1];
-                                    this.password = tokens[2];
-                                }
-                                registerCommandsWhenAutorized();
+        while (true) {
+            String input = ioManager.getRawStringInput();
+            if (input == null) {
+                System.out.print("Введите команду (список команд вы можете посмотреть, написав <help> и нажав Enter)\n");
+            } else {
+                String[] tokens = input.trim().split(" ");
+                if (tokens[0].equals("exit")) {
+                    break;
+                }
+                
+                try {
+                    Supplier<ICommand> command = commandManager.getCommand(tokens[0]);
+                    if (command != null) {
+                        boolean condition = processCommand(command.get(), tokens);
+                        if (this.authorized == false){
+                            this.authorized = condition;
+                            if (this.authorized == true){
+                                this.login = tokens[1];
+                                this.password = tokens[2];
                             }
-                        } else {
-                            System.out.println("Неизвестная команда: " + tokens[0]);
+                            registerCommandsWhenAutorized();
                         }
-                    } catch (Exception e) {
-                        System.out.print("Ошибка:" + e);
+                    } else {
+                        System.out.println("Неизвестная команда: " + tokens[0]);
                     }
+                } catch (Exception e) {
+                    System.out.print("Ошибка:" + e);
                 }
             }
         }

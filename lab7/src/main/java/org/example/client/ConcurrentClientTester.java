@@ -15,10 +15,11 @@ public class ConcurrentClientTester {
     private static final int REQUESTS_PER_CLIENT = 30;
     private static final CyclicBarrier startBarrier = new CyclicBarrier(THREAD_COUNT);
     private static final AtomicInteger completedRequests = new AtomicInteger(0);
+    private static final AtomicInteger atomicInteger = new AtomicInteger();
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
-        long testStartTime = System.currentTimeMillis();
+        
 
         for (int i = 0; i < THREAD_COUNT; i++) {
             final int clientId = i;
@@ -33,8 +34,10 @@ public class ConcurrentClientTester {
                         ICommand command = new InfoCommand();
                         Answer response = networkManager.sendCommandAndGetResponse(command);
                         completedRequests.incrementAndGet();
-                        System.out.printf("[Client-%d][Req-%d] Response: %s%n", 
-                            clientId, j, response);
+                        System.out.printf("[Client-%d][Req-%d] Response: %s%n", clientId, j, response);
+                        if (response.toString().equals("Сервер недоступен для получения ответа")) {
+                            atomicInteger.incrementAndGet();
+                        }
                     }
                 } catch (Exception e) {
                     System.err.printf("[Client-%d] Error: %s%n", clientId, e.getMessage());
@@ -43,6 +46,7 @@ public class ConcurrentClientTester {
         }
 
         System.out.println("=== STARTING TEST ===");
+        long testStartTime = System.currentTimeMillis();
 
         executor.shutdown();
         executor.awaitTermination(2, TimeUnit.MINUTES);
@@ -60,5 +64,6 @@ public class ConcurrentClientTester {
             testDuration,
             (THREAD_COUNT * REQUESTS_PER_CLIENT * 1000.0) / testDuration
         );
+        System.out.println(atomicInteger);
     }
 }
