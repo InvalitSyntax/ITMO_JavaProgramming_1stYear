@@ -1,0 +1,1 @@
+SELECT * from space_marines;
