@@ -90,6 +90,9 @@ public class Controller implements Initializable {
             Answer answer = ClientApp.loginWithAnswer(login, password);
             String answerText = answer.toString();
             if (answer.condition()) {
+                // Сохраняем логин и пароль в ClientApp
+                ClientApp.setGuiLogin(login);
+                ClientApp.setGuiPassword(password);
                 login_info_text.setText(AppResources.getCurrentLanguage().getLoginInfo() + ": " + answerText);
                 // Переход к MainPage.fxml с передачей логина
                 try {
@@ -146,6 +149,9 @@ public class Controller implements Initializable {
             String answerText = answer.toString();
 
             if (answer.condition()) {
+                // Сохраняем логин и пароль в ClientApp
+                ClientApp.setGuiLogin(login);
+                ClientApp.setGuiPassword(password);
                 login_info_text.setText(AppResources.getCurrentLanguage().getRegisterButtonText() + ": " + answerText);
                 // Переход к MainPage.fxml с передачей логина
                 try {

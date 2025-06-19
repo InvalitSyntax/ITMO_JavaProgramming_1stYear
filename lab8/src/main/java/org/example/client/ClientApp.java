@@ -173,4 +173,17 @@ public class ClientApp {
         }
         return answer;
     }
+
+    public static void processCommandFromGUI(ICommand cmd, String[] tokens) throws Exception {
+        if (guiClientApp == null) throw new IllegalStateException("ClientApp не инициализирован для GUI");
+        guiClientApp.processCommandWithAnswer(cmd, tokens);
+    }
+    public static void setGuiLogin(String login) {
+        if (guiClientApp != null) guiClientApp.login = login;
+        if (guiClientApp != null) guiClientApp.authorized = true;
+    }
+    public static void setGuiPassword(String password) {
+        if (guiClientApp != null) guiClientApp.password = password;
+        if (guiClientApp != null) guiClientApp.authorized = true;
+    }
 }

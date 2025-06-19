@@ -20,32 +20,24 @@ public class RemoveByIdCommand extends ICommand {
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        
         if (args.length == 0) {
             ioManager.writeMessage("Вы не ввели id элемента коллекции!\n", false);
             return;
         }
-        
         try {
             int id = Integer.parseInt(args[0]);
+            // Проверка прав пользователя
             if (app.getSpaceMarineCollectionManager().checkLogin(id, login)) {
+                // Удаление из базы данных
                 if (app.getDbManager().removeElementById(id)) {
-                    boolean removed = app.getSpaceMarineCollectionManager().getMarines()
-                        .removeIf(marine -> marine.getId() == id);
-                    
-                    if (removed) {
-                        app.loadModel();
-                        ioManager.writeMessage("Десантник удален\n", false);
-                    } else {
-                        ioManager.writeMessage("""
-                            Элемент коллекции с таким id не найден!\s
-                            Введите show, чтобы вывести список доступных элементов.
-                            \n""", false);
-                    }
+                    // Перезагрузка коллекции из базы
+                    app.loadModel();
+                    ioManager.writeMessage("Десантник удален\n", false);
                 } else {
                     ioManager.writeMessage("Не удалось удалить элемент\n", false);
                 }
-                
+            } else {
+                ioManager.writeMessage("У вас нет прав для удаления этого десантника\n", false);
             }
         } catch (NumberFormatException e) {
             ioManager.writeMessage("Неверный формат ID\n", false);

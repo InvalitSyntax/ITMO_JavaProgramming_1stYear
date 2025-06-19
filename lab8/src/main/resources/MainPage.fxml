@@ -22,12 +22,7 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Text>
-                  <MenuButton fx:id="main_language" mnemonicParsing="false" text="Язык">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
+                  <MenuButton fx:id="main_language" mnemonicParsing="false" text="Язык" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -37,16 +32,14 @@
          <center>
             <TableView fx:id="main_table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="main_id" prefWidth="75.0" text="C1" />
-                <TableColumn fx:id="main_login" prefWidth="75.0" text="C2" />
-                  <TableColumn fx:id="main_name" prefWidth="75.0" text="C3" />
-                  <TableColumn fx:id="main_coord_id" prefWidth="75.0" text="C4" />
-                  <TableColumn fx:id="main_creation_date" prefWidth="75.0" text="C5" />
-                  <TableColumn fx:id="main_health" prefWidth="75.0" text="C6" />
-                  <TableColumn fx:id="main_loyal" prefWidth="75.0" text="C7" />
-                  <TableColumn fx:id="main_weapon_type" prefWidth="75.0" text="C8" />
-                  <TableColumn fx:id="main_melee_weapon" prefWidth="75.0" text="C9" />
-                  <TableColumn fx:id="main_chapter" prefWidth="75.0" text="C10" />
+                <TableColumn fx:id="main_id" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="main_login" prefWidth="75.0" text="Login" />
+                <TableColumn fx:id="main_name" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="main_creation_date" prefWidth="75.0" text="Creation Date" />
+                <TableColumn fx:id="main_health" prefWidth="75.0" text="Health" />
+                <TableColumn fx:id="main_loyal" prefWidth="75.0" text="Loyal" />
+                <TableColumn fx:id="main_weapon_type" prefWidth="75.0" text="Weapon Type" />
+                <TableColumn fx:id="main_melee_weapon" prefWidth="75.0" text="Melee Weapon" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
