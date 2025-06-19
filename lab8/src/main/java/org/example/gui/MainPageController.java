@@ -75,12 +75,20 @@ public class MainPageController implements Initializable {
         return userLogin;
     }
 
+    private void updateTexts() {
+        showFieldButton.setText(AppResources.get("button.showField"));
+        main_command_execute.setText(AppResources.get("button.execute"));
+        main_command_box.setPromptText(AppResources.get("commandBox.prompt"));
+        // ...добавить другие элементы, если есть...
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupTableColumns();
         setupUserInfo();
         setupCommandBox();
         setupTableContextMenu();
+        updateTexts();
         updateCollection();
         startCollectionUpdater();
         setInitialWindowSize();
@@ -90,38 +98,34 @@ public class MainPageController implements Initializable {
     }
 
     private void setupTableColumns() {
-        main_id.setText("ID");
-        main_login.setText("Login");
-        main_name.setText("Name");
-        main_health.setText("Health");
-        main_loyal.setText("Loyal");
-        main_weapon_type.setText("Weapon Type");
-        main_melee_weapon.setText("Melee Weapon");
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
-        main_creation_date.setText("Creation Date");
-        main_creation_date.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getCreationDate() != null ? cellData.getValue().getCreationDate().format(dateFormatter) : ""));
+        main_id.setText(AppResources.get("table.id"));
         main_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        main_login.setText(AppResources.get("table.login"));
         main_login.setCellValueFactory(new PropertyValueFactory<>("userLogin"));
+        main_name.setText(AppResources.get("table.name"));
         main_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        main_creation_date.setText(AppResources.get("table.creationDate"));
+        main_creation_date.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
+        main_health.setText(AppResources.get("table.health"));
         main_health.setCellValueFactory(new PropertyValueFactory<>("health"));
+        main_loyal.setText(AppResources.get("table.loyal"));
         main_loyal.setCellValueFactory(new PropertyValueFactory<>("loyal"));
-        main_weapon_type.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getWeaponType() != null ? cellData.getValue().getWeaponType().toString() : ""));
-        main_melee_weapon.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getMeleeWeapon() != null ? cellData.getValue().getMeleeWeapon().toString() : ""));
+        main_weapon_type.setText(AppResources.get("table.weaponType"));
+        main_weapon_type.setCellValueFactory(new PropertyValueFactory<>("weaponType"));
+        main_melee_weapon.setText(AppResources.get("table.meleeWeapon"));
+        main_melee_weapon.setCellValueFactory(new PropertyValueFactory<>("meleeWeapon"));
         // Координаты
-        TableColumn<SpaceMarine, String> coordXCol = new TableColumn<>("Coord X");
+        TableColumn<SpaceMarine, String> coordXCol = new TableColumn<>(AppResources.get("table.coordX"));
         coordXCol.setCellValueFactory(cellData -> new SimpleStringProperty(
             cellData.getValue().getCoordinates() != null ? String.valueOf(cellData.getValue().getCoordinates().getX()) : ""));
-        TableColumn<SpaceMarine, String> coordYCol = new TableColumn<>("Coord Y");
+        TableColumn<SpaceMarine, String> coordYCol = new TableColumn<>(AppResources.get("table.coordY"));
         coordYCol.setCellValueFactory(cellData -> new SimpleStringProperty(
             cellData.getValue().getCoordinates() != null && cellData.getValue().getCoordinates().getY() != null ? String.valueOf(cellData.getValue().getCoordinates().getY()) : ""));
         // Chapter
-        TableColumn<SpaceMarine, String> chapterNameCol = new TableColumn<>("Chapter Name");
+        TableColumn<SpaceMarine, String> chapterNameCol = new TableColumn<>(AppResources.get("table.chapterName"));
         chapterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(
             cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getName() : ""));
-        TableColumn<SpaceMarine, String> chapterWorldCol = new TableColumn<>("Chapter World");
+        TableColumn<SpaceMarine, String> chapterWorldCol = new TableColumn<>(AppResources.get("table.chapterWorld"));
         chapterWorldCol.setCellValueFactory(cellData -> new SimpleStringProperty(
             cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getWorld() : ""));
         main_table.getColumns().setAll(

@@ -31,11 +31,26 @@ public class AddMarineDialogController {
 
     @FXML
     public void initialize() {
-        addButton.setText("Accept");
+        updateTexts();
         weaponTypeBox.getItems().setAll(Weapon.values());
         meleeWeaponBox.getItems().setAll(MeleeWeapon.values());
         addButton.setOnAction(e -> handleAdd());
         cancelButton.setOnAction(e -> ((Stage) addButton.getScene().getWindow()).close());
+    }
+
+    private void updateTexts() {
+        addButton.setText(AppResources.get("button.accept"));
+        cancelButton.setText(AppResources.get("button.cancel"));
+        infoText.setText("");
+        nameField.setPromptText(AppResources.get("marine.name"));
+        coordXField.setPromptText(AppResources.get("marine.coordX"));
+        coordYField.setPromptText(AppResources.get("marine.coordY"));
+        healthField.setPromptText(AppResources.get("marine.health"));
+        loyalCheck.setText(AppResources.get("marine.loyal"));
+        weaponTypeBox.setPromptText(AppResources.get("marine.weaponType"));
+        meleeWeaponBox.setPromptText(AppResources.get("marine.meleeWeapon"));
+        chapterNameField.setPromptText(AppResources.get("marine.chapterName"));
+        chapterWorldField.setPromptText(AppResources.get("marine.chapterWorld"));
     }
 
     private void handleAdd() {

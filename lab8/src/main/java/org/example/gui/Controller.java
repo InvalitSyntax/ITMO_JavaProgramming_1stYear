@@ -50,15 +50,14 @@ public class Controller implements Initializable {
 
     private void updateTexts() {
         AppResources.Language lang = AppResources.getCurrentLanguage();
-        
         login_info_text.setText(lang.getLoginInfo());
         login_login_text.setText(lang.getLoginLabel());
         login_password_text.setText(lang.getPasswordLabel());
         login_login_button.setText(lang.getLoginButtonText());
         login_register_button.setText(lang.getRegisterButtonText());
-        
         login_login_field.setPromptText(lang.getLoginLabel());
         login_password_field.setPromptText(lang.getPasswordLabel());
+        login_language.setText(AppResources.get("button.language"));
     }
 
     private void handleLogin() {
