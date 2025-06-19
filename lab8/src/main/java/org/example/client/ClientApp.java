@@ -186,4 +186,38 @@ public class ClientApp {
         if (guiClientApp != null) guiClientApp.password = password;
         if (guiClientApp != null) guiClientApp.authorized = true;
     }
+    // --- Для GUI: поддержка скриптов ---
+    public static void executeScriptInGUI(String scriptPath) throws Exception {
+        if (guiClientApp == null) throw new IllegalStateException("ClientApp не инициализирован для GUI");
+            while (true) {
+            String input = guiClientApp.ioManager.getRawStringInput();
+            if (input == null) {
+                break; // Выход из цикла, если ввод пустой - закончились сканеры
+            } else {
+                String[] tokens = input.trim().split(" ");
+                if (tokens[0].equals("exit")) {
+                    break;
+                }
+                
+                try {
+                    Supplier<ICommand> command = guiClientApp.commandManager.getCommand(tokens[0]);
+                    if (command != null) {
+                        boolean condition = guiClientApp.processCommand(command.get(), tokens);
+                        if (guiClientApp.authorized == false){
+                            guiClientApp.authorized = condition;
+                            if (guiClientApp.authorized == true){
+                                guiClientApp.login = tokens[1];
+                                guiClientApp.password = tokens[2];
+                            }
+                            guiClientApp.registerCommandsWhenAutorized();
+                        }
+                    } else {
+                        System.out.println("Неизвестная команда: " + tokens[0]);
+                    }
+                } catch (Exception e) {
+                    System.out.print("Ошибка:" + e);
+                }
+            }
+        }
+    }
 }

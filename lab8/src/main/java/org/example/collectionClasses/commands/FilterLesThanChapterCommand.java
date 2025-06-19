@@ -15,17 +15,25 @@ import java.util.ArrayDeque;
  * @version 1.0
  */
 public class FilterLesThanChapterCommand extends ICommand {
+    private Chapter chapterArg;
     public FilterLesThanChapterCommand() {
         super();
     }
-
+    public void setChapterArg(Chapter chapter) {
+        this.chapterArg = chapter;
+    }
+    public Chapter getChapterArg() {
+        return chapterArg;
+    }
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
-        Chapter newChapter = new ModelBuilder(app).buildChapter();
-        
+        if (chapterArg == null) {
+            ioManager.writeMessage("Chapter не задан\n", false);
+            return;
+        }
         app.getSpaceMarineCollectionManager().getMarines().stream()
-            .filter(marine -> newChapter.compareTo(marine.getChapter()) > 0)
+            .filter(marine -> chapterArg.compareTo(marine.getChapter()) > 0)
             .forEach(marine -> ioManager.writeMessage(marine + "\n", false));
     }
 }

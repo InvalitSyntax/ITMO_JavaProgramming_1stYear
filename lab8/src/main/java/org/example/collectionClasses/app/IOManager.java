@@ -1,6 +1,8 @@
 package org.example.collectionClasses.app;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Function;
@@ -19,6 +21,7 @@ public class IOManager {
     private final ArrayList<String> executingScriptsName = new ArrayList<>();
     private StringBuilder writedMessagesStringBuilder = new StringBuilder();
     private boolean isCliet = false;
+    private Deque<Scanner> scriptScanners = new ArrayDeque<>();
 
     /**
      * Конструктор менеджера ввода/вывода.
@@ -37,6 +40,15 @@ public class IOManager {
      * @return строка ввода
      */
     public String getRawStringInput() {
+        if (!scriptScanners.isEmpty()) {
+            Scanner scanner = scriptScanners.peek();
+            if (scanner.hasNextLine()) {
+                return scanner.nextLine();
+            } else {
+                popScriptScanner();
+                return getRawStringInput();
+            }
+        }
         String input = null;
         writeMessage("> ", false);
 
@@ -67,6 +79,14 @@ public class IOManager {
      */
     public void addExecutingScanner(String name, Scanner scanner) {
         this.scannersFromExecute.push(new Pair<>(name, scanner));
+    }
+
+    public void pushScriptScanner(Scanner scanner) {
+        scriptScanners.push(scanner);
+    }
+
+    public void popScriptScanner() {
+        if (!scriptScanners.isEmpty()) scriptScanners.pop();
     }
 
     /**

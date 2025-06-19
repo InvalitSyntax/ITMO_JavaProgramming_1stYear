@@ -29,6 +29,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 
 public class MainPageController implements Initializable {
     @FXML private Text main_user_info;
@@ -141,7 +144,7 @@ public class MainPageController implements Initializable {
         updateCollection();
         startCollectionUpdater();
         if (main_command_box != null) {
-            main_command_box.getItems().addAll("Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script");
+            main_command_box.getItems().addAll("Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script", "Filter Less Than Chapter");
         }
         if (main_command_execute != null) {
             main_command_execute.setOnAction(event -> handleCommandExecute());
@@ -207,6 +210,43 @@ public class MainPageController implements Initializable {
         }
     }
 
+    // Новый диалог для ввода Chapter
+    private void openChapterDialog(java.util.function.Consumer<org.example.collectionClasses.model.Chapter> onResult) {
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Введите Chapter");
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new javafx.geometry.Insets(20));
+        TextField nameField = new TextField();
+        nameField.setPromptText("Name (обязательно)");
+        TextField worldField = new TextField();
+        worldField.setPromptText("World (обязательно)");
+        Text errorText = new Text();
+        errorText.setStyle("-fx-fill: red;");
+        Button okBtn = new Button("OK");
+        okBtn.setOnAction(e -> {
+            String name = nameField.getText();
+            String world = worldField.getText();
+            if (name == null || name.isEmpty()) {
+                errorText.setText("Name не может быть пустым");
+                return;
+            }
+            if (world == null) {
+                errorText.setText("World не может быть null");
+                return;
+            }
+            org.example.collectionClasses.model.Chapter chapter = new org.example.collectionClasses.model.Chapter(name, world);
+            onResult.accept(chapter);
+            dialogStage.close();
+        });
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn.setOnAction(e -> dialogStage.close());
+        vbox.getChildren().addAll(new Label("Введите Chapter для фильтрации:"),
+            new Label("Name:"), nameField, new Label("World:"), worldField, errorText, new HBox(10, okBtn, cancelBtn));
+        dialogStage.setScene(new Scene(vbox));
+        dialogStage.initOwner(main_command_box.getScene().getWindow());
+        dialogStage.showAndWait();
+    }
+
     private void handleCommandExecute() {
         String selected = main_command_box.getValue();
         if (selected == null) return;
@@ -232,10 +272,21 @@ public class MainPageController implements Initializable {
             }
         } else if (selected.equals("Count Less Than Loyal")) {
             try {
-                org.example.collectionClasses.commands.CountLessThanLoyalCommand cmd = new org.example.collectionClasses.commands.CountLessThanLoyalCommand();
-                String[] tokens = {"count_less_than_loyal", String.valueOf(loyalCheckBox.isSelected())};
-                var answer = ClientApp.processCommandFromGUI(cmd, tokens);
-                showInfoDialog("Result", answer.toString());
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Count Less Than Loyal");
+                dialog.setHeaderText("Введите значение loyal (true/false):");
+                dialog.setContentText("loyal:");
+                dialog.initOwner(main_command_box.getScene().getWindow());
+                dialog.showAndWait().ifPresent(loyalValue -> {
+                    try {
+                        org.example.collectionClasses.commands.CountLessThanLoyalCommand cmd = new org.example.collectionClasses.commands.CountLessThanLoyalCommand();
+                        String[] tokens = {"count_less_than_loyal", loyalValue};
+                        var answer = ClientApp.processCommandFromGUI(cmd, tokens);
+                        showInfoDialog("Result", answer.toString());
+                    } catch (Exception e) {
+                        showInfoDialog("Error", e.getMessage());
+                    }
+                });
             } catch (Exception e) {
                 showInfoDialog("Error", e.getMessage());
             }
@@ -254,6 +305,62 @@ public class MainPageController implements Initializable {
             } catch (Exception e) {
                 showInfoDialog("Error", e.getMessage());
             }
+        } else if (selected.equals("Filter Less Than Chapter")) {
+            openChapterDialog(chapter -> {
+                if (chapter == null) return;
+                List<SpaceMarine> all = main_table.getItems();
+                List<SpaceMarine> filtered = all.stream()
+                    .filter(marine -> chapter.compareTo(marine.getChapter()) > 0)
+                    .toList();
+                // Создаём новую таблицу с такими же свойствами, как в initialize
+                TableView<SpaceMarine> filteredTable = new TableView<>();
+                TableColumn<SpaceMarine, Integer> idCol = new TableColumn<>("ID");
+                idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                TableColumn<SpaceMarine, String> nameCol = new TableColumn<>("Name");
+                nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+                TableColumn<SpaceMarine, String> loginCol = new TableColumn<>("Login");
+                loginCol.setCellValueFactory(new PropertyValueFactory<>("userLogin"));
+                TableColumn<SpaceMarine, String> creationDateCol = new TableColumn<>("Creation Date");
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
+                creationDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getCreationDate() != null ? cellData.getValue().getCreationDate().format(dateFormatter) : ""));
+                TableColumn<SpaceMarine, Float> healthCol = new TableColumn<>("Health");
+                healthCol.setCellValueFactory(new PropertyValueFactory<>("health"));
+                TableColumn<SpaceMarine, Boolean> loyalCol = new TableColumn<>("Loyal");
+                loyalCol.setCellValueFactory(new PropertyValueFactory<>("loyal"));
+                TableColumn<SpaceMarine, String> weaponTypeCol = new TableColumn<>("Weapon Type");
+                weaponTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getWeaponType() != null ? cellData.getValue().getWeaponType().toString() : ""));
+                TableColumn<SpaceMarine, String> meleeWeaponCol = new TableColumn<>("Melee Weapon");
+                meleeWeaponCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getMeleeWeapon() != null ? cellData.getValue().getMeleeWeapon().toString() : ""));
+                TableColumn<SpaceMarine, String> coordXCol = new TableColumn<>("Coord X");
+                coordXCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getCoordinates() != null ? String.valueOf(cellData.getValue().getCoordinates().getX()) : ""));
+                TableColumn<SpaceMarine, String> coordYCol = new TableColumn<>("Coord Y");
+                coordYCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getCoordinates() != null && cellData.getValue().getCoordinates().getY() != null ? String.valueOf(cellData.getValue().getCoordinates().getY()) : ""));
+                TableColumn<SpaceMarine, String> chapterNameCol = new TableColumn<>("Chapter Name");
+                chapterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getName() : ""));
+                TableColumn<SpaceMarine, String> chapterWorldCol = new TableColumn<>("Chapter World");
+                chapterWorldCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+                    cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getWorld() : ""));
+                filteredTable.getColumns().addAll(idCol, loginCol, nameCol, creationDateCol, healthCol, loyalCol, weaponTypeCol, meleeWeaponCol, coordXCol, coordYCol, chapterNameCol, chapterWorldCol);
+                filteredTable.getItems().setAll(filtered);
+                filteredTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+                filteredTable.setPrefWidth(main_table.getWidth());
+                filteredTable.setPrefHeight(main_table.getHeight());
+                VBox box = new VBox(filteredTable);
+                box.setPadding(new javafx.geometry.Insets(20));
+                VBox.setVgrow(filteredTable, javafx.scene.layout.Priority.ALWAYS);
+                Stage dialog = new Stage();
+                dialog.setTitle("Filter Result");
+                Scene scene = new Scene(box, main_table.getWidth(), main_table.getHeight());
+                dialog.setScene(scene);
+                dialog.initOwner(main_command_box.getScene().getWindow());
+                dialog.showAndWait();
+            });
         }
     }
 
