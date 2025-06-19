@@ -35,7 +35,7 @@
             </HBox>
          </top>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="main_table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="main_id" prefWidth="75.0" text="C1" />
                 <TableColumn fx:id="main_login" prefWidth="75.0" text="C2" />

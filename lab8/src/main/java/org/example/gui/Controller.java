@@ -91,10 +91,12 @@ public class Controller implements Initializable {
             String answerText = answer.toString();
             if (answer.condition()) {
                 login_info_text.setText(AppResources.getCurrentLanguage().getLoginInfo() + ": " + answerText);
-                // Переход к MainPage.fxml
+                // Переход к MainPage.fxml с передачей логина
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
                     StackPane mainPage = loader.load();
+                    MainPageController mainPageController = loader.getController();
+                    mainPageController.setUserLogin(login);
                     Scene scene = login_register_button.getScene();
                     StackPane root = (StackPane) scene.getRoot();
                     root.getChildren().setAll(mainPage);
@@ -145,10 +147,12 @@ public class Controller implements Initializable {
 
             if (answer.condition()) {
                 login_info_text.setText(AppResources.getCurrentLanguage().getRegisterButtonText() + ": " + answerText);
-                // Переход к MainPage.fxml
+                // Переход к MainPage.fxml с передачей логина
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
                     StackPane mainPage = loader.load();
+                    MainPageController mainPageController = loader.getController();
+                    mainPageController.setUserLogin(login);
                     Scene scene = login_register_button.getScene();
                     StackPane root = (StackPane) scene.getRoot();
                     root.getChildren().setAll(mainPage);

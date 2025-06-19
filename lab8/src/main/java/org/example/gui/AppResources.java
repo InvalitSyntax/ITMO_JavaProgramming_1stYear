@@ -27,6 +27,9 @@ public class AppResources {
     public static String getEmptyPasswordError() {
         return "Пароль не может быть пустым";
     }
+    public static String getCurrentUserLabel() {
+        return getCurrentLanguage().getCurrentUserLabel();
+    }
 
     // Интерфейс для поддержки разных языков
     public interface Language {
@@ -36,6 +39,7 @@ public class AppResources {
         String getLoginButtonText();
         String getRegisterButtonText();
         String getWindowTitle();
+        String getCurrentUserLabel();
     }
 
     // Реализация для русского языка
@@ -46,6 +50,7 @@ public class AppResources {
         @Override public String getLoginButtonText() { return "Войти"; }
         @Override public String getRegisterButtonText() { return "Регистрация"; }
         @Override public String getWindowTitle() { return "Форма авторизации"; }
+        @Override public String getCurrentUserLabel() { return "Пользователь:"; }
     }
     // В будущем можно добавить другие языки
 }
