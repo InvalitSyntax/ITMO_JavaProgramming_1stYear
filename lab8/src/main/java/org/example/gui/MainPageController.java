@@ -144,7 +144,7 @@ public class MainPageController implements Initializable {
         updateCollection();
         startCollectionUpdater();
         if (main_command_box != null) {
-            main_command_box.getItems().addAll("Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script", "Filter Less Than Chapter");
+            main_command_box.getItems().addAll("Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script", "Filter Less Than Chapter", "Info", "Remove First", "Remove Greater", "Remove Head");
         }
         if (main_command_execute != null) {
             main_command_execute.setOnAction(event -> handleCommandExecute());
@@ -359,8 +359,57 @@ public class MainPageController implements Initializable {
                 Scene scene = new Scene(box, main_table.getWidth(), main_table.getHeight());
                 dialog.setScene(scene);
                 dialog.initOwner(main_command_box.getScene().getWindow());
-                dialog.showAndWait();
+                // Закрываем окно ввода параметров фильтрации
+                Stage filterStage = (Stage) main_command_box.getScene().getWindow();
+                dialog.show();
+                // Можно закрыть filterStage, если оно не главное окно
             });
+        } else if (selected.equals("Info")) {
+            try {
+                org.example.collectionClasses.commands.InfoCommand cmd = new org.example.collectionClasses.commands.InfoCommand();
+                String[] tokens = {"info"};
+                var answer = ClientApp.processCommandFromGUI(cmd, tokens);
+                showScrollableInfoDialog("Info", answer.toString());
+            } catch (Exception e) {
+                showInfoDialog("Error", e.getMessage());
+            }
+        } else if (selected.equals("Remove First")) {
+            try {
+                org.example.collectionClasses.commands.RemoveFirstCommand cmd = new org.example.collectionClasses.commands.RemoveFirstCommand();
+                String[] tokens = {"remove_first"};
+                var answer = ClientApp.processCommandFromGUI(cmd, tokens);
+                showInfoDialog("Remove First", answer.toString());
+                updateCollection();
+            } catch (Exception e) {
+                showInfoDialog("Error", e.getMessage());
+            }
+        } else if (selected.equals("Remove Greater")) {
+            openMarineDialog(marine -> {
+                if (marine == null) return;
+                try {
+                    org.example.collectionClasses.commands.RemoveGreater cmd = new org.example.collectionClasses.commands.RemoveGreater();
+                    cmd.setSpaceMarine(marine);
+                    String[] tokens = {"remove_greater"};
+                    var answer = ClientApp.processCommandFromGUI(cmd, tokens);
+                    showScrollableInfoDialog("Remove Greater", answer.toString());
+                    updateCollection();
+                } catch (Exception e) {
+                    showInfoDialog("Error", e.getMessage());
+                }
+            });
+        } else if (selected.equals("Remove Head")) {
+            try {
+                org.example.collectionClasses.commands.RemoveHeadCommand cmd = new org.example.collectionClasses.commands.RemoveHeadCommand();
+                String[] tokens = {"remove_head"};
+                var answer = ClientApp.processCommandFromGUI(cmd, tokens);
+                showScrollableInfoDialog("Remove Head", answer.toString());
+                updateCollection();
+            } catch (Exception e) {
+                showInfoDialog("Error", e.getMessage());
+            }
+        }
+        if (main_command_box != null) {
+            main_command_box.getItems().addAll("Remove Head");
         }
     }
 
@@ -374,5 +423,40 @@ public class MainPageController implements Initializable {
             dialog.initOwner(main_command_box.getScene().getWindow());
             dialog.showAndWait();
         });
+    }
+
+    private void showScrollableInfoDialog(String title, String message) {
+        Platform.runLater(() -> {
+            Stage dialog = new Stage();
+            dialog.setTitle(title);
+            javafx.scene.control.TextArea textArea = new javafx.scene.control.TextArea(message);
+            textArea.setWrapText(true);
+            textArea.setEditable(false);
+            textArea.setPrefWidth(500);
+            textArea.setPrefHeight(400);
+            VBox box = new VBox(textArea);
+            box.setPadding(new javafx.geometry.Insets(20));
+            dialog.setScene(new Scene(box));
+            dialog.initOwner(main_command_box.getScene().getWindow());
+            dialog.showAndWait();
+        });
+    }
+
+    // Универсальный диалог для ввода десантника (для RemoveGreater и других команд)
+    private void openMarineDialog(java.util.function.Consumer<SpaceMarine> onResult) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddMarineDialog.fxml"));
+            VBox dialogRoot = loader.load();
+            AddMarineDialogController dialogController = loader.getController();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("SpaceMarine Input");
+            dialogStage.setScene(new Scene(dialogRoot));
+            dialogStage.initOwner(main_command_box.getScene().getWindow());
+            dialogStage.showAndWait();
+            SpaceMarine newMarine = dialogController.getResult();
+            onResult.accept(newMarine);
+        } catch (Exception e) {
+            // Можно добавить вывод ошибки
+        }
     }
 }

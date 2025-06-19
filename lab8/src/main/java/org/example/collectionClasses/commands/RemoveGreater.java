@@ -20,30 +20,39 @@ public class RemoveGreater extends ICommand {
         super();
     }
     
-    @Override
-    public void setElement(IOManager ioManager) {
-        ModelBuilder modelBuilder = new ModelBuilder(ioManager);
-        this.spaceMarine = modelBuilder.build();
-        this.spaceMarine.setUserLogin(login);
+    // Для GUI: десантник задаётся напрямую, а не через ModelBuilder
+    // @Override
+    // public void setElement(IOManager ioManager) {
+    //     ModelBuilder modelBuilder = new ModelBuilder(ioManager);
+    //     this.spaceMarine = modelBuilder.build();
+    //     this.spaceMarine.setUserLogin(login);
+    // }
+    public void setSpaceMarine(SpaceMarine marine) {
+        this.spaceMarine = marine;
+        if (marine != null) marine.setUserLogin(login);
     }
     
     @Override
     public void execute(AppController app, String[] args) {
         IOManager ioManager = app.getIoManager();
         SpaceMarine newMarine = this.spaceMarine;
-        
+        if (newMarine == null) {
+            ioManager.writeMessage("SpaceMarine не задан!\n", false);
+            return;
+        }
         List<SpaceMarine> toRemove = app.getSpaceMarineCollectionManager().getMarines().stream()
             .filter(marine -> newMarine.compareTo(marine) < 0)
             .collect(Collectors.toList());
-        
+        StringBuilder sb = new StringBuilder();
         toRemove.forEach(marine -> {
             if (app.getSpaceMarineCollectionManager().checkLogin(marine.getId(), login)) {
                 app.getDbManager().removeElementById(marine.getId());
                 app.loadModel();
-                ioManager.writeMessage("Удален десантник: \n" + marine + "\n", false);
-            } else{
-                app.getIoManager().writeMessage("Элемент коллекции под id " + marine.getId() + " пренадлежит не вам! и он не будет удалён\n", false);
+                sb.append("Удален десантник: \n").append(marine).append("\n");
+            } else {
+                sb.append("Элемент коллекции под id ").append(marine.getId()).append(" пренадлежит не вам! и он не был удалён\n");
             }
         });
+        ioManager.writeMessage(sb.toString(), false);
     }
 }

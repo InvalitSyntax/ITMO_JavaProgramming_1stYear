@@ -31,6 +31,7 @@ public class AddMarineDialogController {
 
     @FXML
     public void initialize() {
+        addButton.setText("Accept");
         weaponTypeBox.getItems().setAll(Weapon.values());
         meleeWeaponBox.getItems().setAll(MeleeWeapon.values());
         addButton.setOnAction(e -> handleAdd());

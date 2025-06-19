@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Polygon?>
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" prefWidth="200" prefHeight="300" style="-fx-background-color: transparent;">
+    <children>
+        <!-- Голова -->
+        <Circle centerX="100" centerY="50" radius="25" fill="#3a5fa9" />
+        <!-- Тело -->
+        <Rectangle x="65" y="75" width="70" height="70" arcWidth="20" arcHeight="20" fill="#4a6fb9" />
+        <!-- Левая рука -->
+        <Rectangle x="35" y="85" width="30" height="15" arcWidth="10" arcHeight="10" fill="#2e4d7b" />
+        <!-- Правая рука -->
+        <Rectangle x="135" y="85" width="30" height="15" arcWidth="10" arcHeight="10" fill="#2e4d7b" />
+        <!-- Левая нога -->
+        <Rectangle x="75" y="145" width="15" height="40" arcWidth="8" arcHeight="8" fill="#3a5fa9" />
+        <!-- Правая нога -->
+        <Rectangle x="110" y="145" width="15" height="40" arcWidth="8" arcHeight="8" fill="#3a5fa9" />
+        <!-- Пояс -->
+        <Rectangle x="85" y="135" width="30" height="10" arcWidth="6" arcHeight="6" fill="#5a7fd9" />
+        <!-- Наплечник левый -->
+        <Ellipse centerX="55" centerY="80" radiusX="15" radiusY="10" fill="#6a8fe9" />
+        <!-- Наплечник правый -->
+        <Ellipse centerX="145" centerY="80" radiusX="15" radiusY="10" fill="#6a8fe9" />
+        <!-- Шлем (деталь) -->
+        <Polygon fill="#223a5e" points="100,30,110,45,90,45" />
+    </children>
+</AnchorPane>

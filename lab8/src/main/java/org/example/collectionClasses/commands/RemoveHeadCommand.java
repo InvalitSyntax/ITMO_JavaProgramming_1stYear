@@ -28,7 +28,6 @@ public class RemoveHeadCommand extends ICommand {
             } else {
                 app.getIoManager().writeMessage("""
                         Этот элемент коллекции пренадлежит не вам!\s
-                        Введите show, чтобы вывести список доступных для вас элементов.
                         \n""", false);
                         return;
             }
