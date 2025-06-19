@@ -6602,3 +6602,31 @@ SpaceMarine {
 17:12:02.335 [Thread-10] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:58103
 17:12:02.336 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@37ddbd00
 17:12:02.337 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:58103
+17:15:41.405 [main] INFO  org.example.server.ServerMain - Запуск сервера...
+17:15:43.363 [main] INFO  org.example.server.Server - Компоненты приложения инициализированы
+17:15:43.380 [main] INFO  org.example.server.Server - Сервер запущен на порту 57486
+17:16:07.384 [Thread-1] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63901
+17:16:07.400 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.AuthorizeCommand@5ce51872
+17:16:07.502 [request-worker-0] INFO  org.example.server.CommandProcessor - Команда обработана, результат: Авторизация успешна
+17:16:07.507 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63901
+17:16:07.605 [Thread-2] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63902
+17:16:07.607 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@721a2d1d
+17:16:07.618 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63902
+17:16:09.680 [Thread-3] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63903
+17:16:09.682 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@2cc2a4a
+17:16:09.683 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63903
+17:16:11.655 [Thread-4] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63904
+17:16:11.657 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@2af8fa59
+17:16:11.658 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63904
+17:16:13.725 [Thread-5] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:63905
+17:16:13.727 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@1e13fde6
+17:16:13.729 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:63905
+17:16:15.681 [Thread-6] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:64014
+17:16:15.684 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@3d4249fc
+17:16:15.686 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:64014
+17:16:17.751 [Thread-7] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:64015
+17:16:17.754 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@5e3faa64
+17:16:17.756 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:64015
+17:16:19.716 [Thread-8] INFO  org.example.server.ConnectionHandler - Получены данные от клиента: /127.0.0.1:64016
+17:16:19.719 [request-worker-0] INFO  org.example.server.RequestReader - Получена команда: org.example.collectionClasses.commands.UpdateCollectionCommand@33f8a9c8
+17:16:19.722 [response-worker-0] INFO  org.example.server.ResponseSender - Ответ отправлен клиенту: /127.0.0.1:64016
