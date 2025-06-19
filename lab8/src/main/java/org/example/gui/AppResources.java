@@ -12,6 +12,22 @@ public class AppResources {
         return currentLanguage;
     }
 
+    public static String getUserExistsError() {
+        return "Пользователь уже существует";
+    }
+    public static String getUserNotFoundError() {
+        return "Пользователь не найден";
+    }
+    public static String getWrongPasswordError() {
+        return "Неверный пароль";
+    }
+    public static String getEmptyLoginError() {
+        return "Логин не может быть пустым";
+    }
+    public static String getEmptyPasswordError() {
+        return "Пароль не может быть пустым";
+    }
+
     // Интерфейс для поддержки разных языков
     public interface Language {
         String getLoginInfo();
@@ -31,7 +47,5 @@ public class AppResources {
         @Override public String getRegisterButtonText() { return "Регистрация"; }
         @Override public String getWindowTitle() { return "Форма авторизации"; }
     }
-
-    // В будущем можно добавить:
-    // public static class EnglishLanguage implements Language { ... }
+    // В будущем можно добавить другие языки
 }

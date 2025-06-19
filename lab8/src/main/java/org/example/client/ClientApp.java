@@ -131,4 +131,40 @@ public class ClientApp {
         commandManager.putCommand("authorize", AuthorizeCommand::new);
         commandManager.putCommand("register", RegisterCommand::new);
     }
+    // --- Добавлено для GUI ---
+    private static ClientApp guiClientApp;
+    public static void initForGUI(IOManager ioManager, CommandManager commandManager, ClientNetworkManager networkManager) {
+        guiClientApp = new ClientApp(ioManager, commandManager, networkManager);
+    }
+    public static Answer loginWithAnswer(String login, String password) throws Exception {
+        if (guiClientApp == null) throw new IllegalStateException("ClientApp не инициализирован для GUI");
+        String[] tokens = {"authorize", login, password};
+        AuthorizeCommand cmd = new AuthorizeCommand();
+        return guiClientApp.processCommandWithAnswer(cmd, tokens);
+    }
+    public static Answer registerWithAnswer(String login, String password) throws Exception {
+        if (guiClientApp == null) throw new IllegalStateException("ClientApp не инициализирован для GUI");
+        String[] tokens = {"register", login, password};
+        RegisterCommand cmd = new RegisterCommand();
+        return guiClientApp.processCommandWithAnswer(cmd, tokens);
+    }
+    // Новый метод для возврата Answer
+    public Answer processCommandWithAnswer(ICommand command, String[] tokens) throws Exception {
+        if (this.authorized == true){
+            command.login = this.login;
+            command.password = this.password;
+        }
+        String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length);
+        command.setArgs(commandArgs);
+        command.setElement(ioManager);
+        if (command.needToExecutePartOnClient) {
+            command.partlyExecute(ioManager);
+        }
+        Answer answer = networkManager.sendCommandAndGetResponse(command);
+        // Логгируем ответ сервера в консоль всегда
+        if (answer != null && !answer.toString().isEmpty()) {
+            System.out.println("Ответ от сервера: " + answer.toString());
+        }
+        return answer;
+    }
 }
