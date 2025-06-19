@@ -61,7 +61,7 @@ public class Server {
         consolThread.start();
         while (true) {
             connectionHandler.processIncomingData(channel, appController);
-            Thread.yield();
+            Thread.sleep(100);
         }
     }
 }

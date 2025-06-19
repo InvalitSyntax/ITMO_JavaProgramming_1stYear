@@ -148,4 +148,17 @@ public class AddMarineDialogController {
     public SpaceMarine getResult() {
         return result;
     }
+
+    public void setInitialValues(SpaceMarine marine) {
+        if (marine == null) return;
+        nameField.setText(marine.getName());
+        coordXField.setText(marine.getCoordinates() != null ? String.valueOf(marine.getCoordinates().getX()) : "");
+        coordYField.setText(marine.getCoordinates() != null && marine.getCoordinates().getY() != null ? String.valueOf(marine.getCoordinates().getY()) : "");
+        healthField.setText(String.valueOf(marine.getHealth()));
+        loyalCheck.setSelected(marine.getLoyal());
+        weaponTypeBox.setValue(marine.getWeaponType());
+        meleeWeaponBox.setValue(marine.getMeleeWeapon());
+        chapterNameField.setText(marine.getChapter() != null ? marine.getChapter().getName() : "");
+        chapterWorldField.setText(marine.getChapter() != null ? marine.getChapter().getWorld() : "");
+    }
 }

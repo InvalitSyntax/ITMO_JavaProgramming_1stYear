@@ -57,14 +57,12 @@ public class UpdateCommand extends ICommand {
                 } else {
                     ioManager.writeMessage("""
                     Этот элемент коллекции пренадлежит не вам!\s
-                    Введите show, чтобы вывести список доступных для вас элементов.
                     \n""", false);
                     return;
                 }
             } else {
                 ioManager.writeMessage("""
                     Элемент коллекции с таким id не найден!\s
-                    Введите show, чтобы вывести список доступных элементов.
                     \n""", false);
             }
         } catch (NumberFormatException e) {

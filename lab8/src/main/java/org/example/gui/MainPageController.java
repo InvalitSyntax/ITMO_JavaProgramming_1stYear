@@ -7,24 +7,33 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.client.ClientApp;
+import org.example.client.ClientMain;
+import org.example.collectionClasses.commands.Answer;
 import org.example.collectionClasses.model.SpaceMarine;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextInputDialog;
@@ -53,6 +62,7 @@ public class MainPageController implements Initializable {
     private String userLogin;
     private Timeline updateTimeline;
     private CheckBox loyalCheckBox;
+    private final ContextMenu contextMenu = new ContextMenu();
 
     public void setUserLogin(String login) {
         this.userLogin = login;
@@ -99,43 +109,16 @@ public class MainPageController implements Initializable {
             cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getName() : ""));
         chapterWorldCol.setCellValueFactory(cellData -> new SimpleStringProperty(
             cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getWorld() : ""));
-        // Кнопка удаления
-        TableColumn<SpaceMarine, Void> actionCol = new TableColumn<>("Action");
-        actionCol.setCellFactory(col -> new TableCell<>() {
-            private final Button btn = new Button("Remove");
-            {
-                btn.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white;");
-                btn.setOnMouseEntered(event -> btn.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white;"));
-                btn.setOnMouseExited(event -> btn.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white;"));
-                btn.setOnAction(event -> {
-                    SpaceMarine marine = getTableView().getItems().get(getIndex());
-                    try {
-                        org.example.collectionClasses.commands.RemoveByIdCommand cmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
-                        String[] tokens = {"remove_by_id", String.valueOf(marine.getId())};
-                        ClientApp.processCommandFromGUI(cmd, tokens);
-                        updateCollection();
-                    } catch (Exception e) {
-                        // Можно добавить вывод ошибки
-                    }
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
-        });
+        // Удаляем колонку Action, если она есть
+        if (main_table != null) {
+            main_table.getColumns().removeIf(c -> c.getText().equals("Action"));
+        }
         // Добавляем новые колонки если их нет
         if (main_table != null) {
             if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Coord X"))) main_table.getColumns().add(coordXCol);
             if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Coord Y"))) main_table.getColumns().add(coordYCol);
             if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Chapter Name"))) main_table.getColumns().add(chapterNameCol);
             if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Chapter World"))) main_table.getColumns().add(chapterWorldCol);
-            if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Action"))) main_table.getColumns().add(0, actionCol);
             main_table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         }
         if (userLogin != null && main_user_info != null) {
@@ -164,6 +147,99 @@ public class MainPageController implements Initializable {
             }
         }
         this.loyalCheckBox = loyalCheckBox;
+
+        if (main_table != null && main_table.getScene() != null) {
+            Stage stage = (Stage) main_table.getScene().getWindow();
+            if (stage != null) {
+                stage.setWidth(2000);
+                stage.setHeight(1000);
+            }
+        }
+
+        main_table.setRowFactory(tv -> {
+            TableRow<SpaceMarine> row = new TableRow<>();
+            row.setOnMouseClicked(event -> handleRowRightClick(event, row));
+            return row;
+        });
+
+    }
+
+    private void handleRowRightClick(MouseEvent event, TableRow<SpaceMarine> row) {
+        if (!row.isEmpty() && event.getButton() == MouseButton.SECONDARY) {
+            SpaceMarine tableItem = row.getItem();
+
+            main_table.getSelectionModel().select(tableItem);
+
+            if (tableItem.getUserLogin() != null && tableItem.getUserLogin().equals(userLogin)) {
+                setupContextMenu();
+            } else {
+                setupEmptyContextMenu();
+            }
+            contextMenu.show(row, event.getScreenX(), event.getScreenY());
+        } else {
+            contextMenu.hide();
+        }
+    }
+    private void setupContextMenu() {
+        MenuItem editItem = new MenuItem("edit");
+        MenuItem deleteItem = new MenuItem("remove");
+
+        editItem.setOnAction(event -> {
+            SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
+            if (marine != null) {
+                try {
+                    // Открываем диалог с предзаполненными значениями
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddMarineDialog.fxml"));
+                    VBox dialogRoot = loader.load();
+                    AddMarineDialogController dialogController = loader.getController();
+                    dialogController.setInitialValues(marine); // метод для заполнения полей
+                    Stage dialogStage = new Stage();
+                    dialogStage.setTitle("Edit SpaceMarine");
+                    dialogStage.setScene(new Scene(dialogRoot));
+                    dialogStage.initOwner(main_command_box.getScene().getWindow());
+                    dialogStage.showAndWait();
+                    SpaceMarine editedMarine = dialogController.getResult();
+                    if (editedMarine != null) {
+                        // Сначала удаляем по id
+                        org.example.collectionClasses.commands.RemoveByIdCommand removeCmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
+                        String[] removeTokens = {"remove_by_id", String.valueOf(marine.getId())};
+                        ClientApp.processCommandFromGUI(removeCmd, removeTokens);
+                        // Затем добавляем новый
+                        org.example.collectionClasses.commands.AddCommand addCmd = new org.example.collectionClasses.commands.AddCommand();
+                        addCmd.spaceMarine = editedMarine;
+                        String[] addTokens = {"add"};
+                        ClientApp.processCommandFromGUI(addCmd, addTokens);
+                        updateCollection();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        deleteItem.setOnAction(event -> {
+            SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
+            if (marine != null) {
+                //addDragon(cResourceBundle.getString("edit_dragon_title"), this::sendUpdateDragonToServer, selectedDragon);
+                org.example.collectionClasses.commands.RemoveByIdCommand cmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
+                String[] tokens = {"remove_by_id", String.valueOf(marine.getId())};
+                try {
+                    ClientApp.processCommandFromGUI(cmd, tokens);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                updateCollection();
+            }
+        });
+
+        contextMenu.getItems().setAll(editItem, deleteItem);
+    }
+
+    private void setupEmptyContextMenu() {
+        MenuItem Item = new MenuItem("not your marine");
+
+        contextMenu.getItems().setAll(Item);
     }
 
     private void startCollectionUpdater() {
@@ -173,17 +249,25 @@ public class MainPageController implements Initializable {
     }
 
     private void updateCollection() {
-        Platform.runLater(() -> {
             try {
                 var answer = ClientApp.getCollectionFromServer();
                 List<SpaceMarine> collection = answer.getCollection();
                 if (collection != null) {
-                    main_table.getItems().setAll(collection);
+                    //main_table.getItems().setAll(collection);
+                    if (!new HashSet<>(collection).equals(new HashSet<>(main_table.getItems()))) { // Сравнение по хэшстеам чтобы сравнивалось без учета порядка
+                        SpaceMarine selectedDragon = main_table.getSelectionModel().getSelectedItem();
+
+                        main_table.getItems().setAll(collection);
+                        main_table.sort();
+
+                        if (selectedDragon != null) {
+                            main_table.getSelectionModel().select(selectedDragon);
+                        }
+                    }
                 }
             } catch (Exception e) {
                 // Можно добавить вывод ошибки в main_user_info или лог
             }
-        });
     }
 
     private void openAddDialog() {
