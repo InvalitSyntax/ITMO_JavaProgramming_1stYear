@@ -1,8 +1,6 @@
 package org.example.gui;
 
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +14,7 @@ import javafx.stage.Stage;
 
 // https://habr.com/ru/articles/474498/
 
-public class AppFX extends Application {
+public class AppFX_copy extends Application {
     
     public static void main(String[] args) {
         Application.launch();
@@ -24,17 +22,25 @@ public class AppFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // FXMLLoader loader = new FXMLLoader();
+        // URL xmlUrl = getClass().getResource("mainScene.fxml");
+        // loader.setLocation(xmlUrl);
+        // Parent root = loader.load();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LoginPage.fxml"));
+        // Scene scene = new Scene(root);
         
-        StackPane loaded = fxmlLoader.load();
-        //StackPane loaded = FXMLLoader.load(getClass().getResource("/LoginPage.fxml"));
+
+        // primaryStage.setScene(scene);
+        // primaryStage.setWidth(300);
+        // primaryStage.setHeight(200);
+        // primaryStage.show();
+
         
         
+        StackPane loaded = FXMLLoader.load(getClass().getResource("/SecondScene.fxml"));
         StackPane parent = new StackPane(loaded);
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
-        //primaryStage.setTitle("Login");
         primaryStage.show();
     }
 }
