@@ -80,6 +80,7 @@ public class MainPageController implements Initializable {
         main_command_execute.setText(AppResources.get("button.execute"));
         main_command_box.setPromptText(AppResources.get("commandBox.prompt"));
         main_user_info.setText(AppResources.getCurrentLanguage().getCurrentUserLabel() + " " + userLogin);
+        main_language.setText(AppResources.get("button.language")); 
         // Переводим команды в ComboBox
         // if (main_command_box != null) {
         //     main_command_box.getItems().setAll(

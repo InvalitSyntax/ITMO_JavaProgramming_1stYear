@@ -79,24 +79,27 @@ public class Controller implements Initializable {
         String login = login_login_field.getText();
         String password = login_password_field.getText();
         boolean hasError = false;
+        
         if (login == null || login.isEmpty()) {
             login_info_text.setText(AppResources.getEmptyLoginError());
-            login_login_field.setPromptText(AppResources.getEmptyLoginError());
+            login_login_field.setPromptText(AppResources.getEmptyLoginError()); // Используем getEmptyLoginError()
             login_login_field.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
             login_login_field.setPromptText(AppResources.getCurrentLanguage().getLoginLabel());
             login_login_field.setStyle("");
         }
+        
         if (password == null || password.isEmpty()) {
             login_info_text.setText(AppResources.getEmptyPasswordError());
-            login_password_field.setPromptText(AppResources.getEmptyPasswordError());
+            login_password_field.setPromptText(AppResources.getEmptyPasswordError()); // Используем getEmptyPasswordError()
             login_password_field.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
             login_password_field.setPromptText(AppResources.getCurrentLanguage().getPasswordLabel());
             login_password_field.setStyle("");
         }
+        
         if (hasError) {
             return;
         }
@@ -121,9 +124,9 @@ public class Controller implements Initializable {
                     ex.printStackTrace();
                     login_info_text.setText(AppResources.get("error.gotoMain") + ": " + ex.getMessage());
                 }
-            } else if (answerText.contains(AppResources.getUserNotFoundError())) {
+            } else if (answerText.contains("Пользователь не найден")) {
                 login_info_text.setText(AppResources.getUserNotFoundError());
-            } else if (answerText.contains(AppResources.getWrongPasswordError())) {
+            } else if (answerText.contains("Неверный пароль")) {
                 login_info_text.setText(AppResources.getWrongPasswordError());
             } else {
                 login_info_text.setText(AppResources.getCurrentLanguage().getLoginInfo() + ": " + answerText);
@@ -137,24 +140,27 @@ public class Controller implements Initializable {
         String login = login_login_field.getText();
         String password = login_password_field.getText();
         boolean hasError = false;
+        
         if (login == null || login.isEmpty()) {
             login_info_text.setText(AppResources.getEmptyLoginError());
-            login_login_field.setPromptText(AppResources.getEmptyLoginError());
+            login_login_field.setPromptText(AppResources.getEmptyLoginError()); // Используем getEmptyLoginError()
             login_login_field.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
             login_login_field.setPromptText(AppResources.getCurrentLanguage().getLoginLabel());
             login_login_field.setStyle("");
         }
+        
         if (password == null || password.isEmpty()) {
             login_info_text.setText(AppResources.getEmptyPasswordError());
-            login_password_field.setPromptText(AppResources.getEmptyPasswordError());
+            login_password_field.setPromptText(AppResources.getEmptyPasswordError()); // Используем getEmptyPasswordError()
             login_password_field.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
             login_password_field.setPromptText(AppResources.getCurrentLanguage().getPasswordLabel());
             login_password_field.setStyle("");
         }
+        
         if (hasError) {
             return;
         }

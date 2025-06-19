@@ -11,7 +11,7 @@ public class AppResources {
         return currentLanguage;
     }
 
-    private static final Map<String, String> RU_MAP = new HashMap<>();
+    public static final Map<String, String> RU_MAP = new HashMap<>();
     private static final Map<String, String> BE_MAP = new HashMap<>();
     private static final Map<String, String> EL_MAP = new HashMap<>();
     private static final Map<String, String> ES_NI_MAP = new HashMap<>();
@@ -57,7 +57,7 @@ public class AppResources {
         BE_MAP.put("error.wrongPassword", "Няправільны пароль");
         BE_MAP.put("error.emptyLogin", "Лагін не можа быць пустым");
         BE_MAP.put("error.emptyPassword", "Пароль не можа быць пустым");
-        BE_MAP.putAll(RU_MAP);
+        //BE_MAP.putAll(RU_MAP);
         BE_MAP.put("table.login", "Лагін");
         BE_MAP.put("table.name", "Імя");
         BE_MAP.put("button.showField", "Паказаць поле");
@@ -93,7 +93,7 @@ public class AppResources {
         EL_MAP.put("error.wrongPassword", "Λάθος κωδικός");
         EL_MAP.put("error.emptyLogin", "Το όνομα χρήστη δεν μπορεί να είναι κενό");
         EL_MAP.put("error.emptyPassword", "Ο κωδικός δεν μπορεί να είναι κενός");
-        EL_MAP.putAll(RU_MAP);
+        //EL_MAP.putAll(RU_MAP);
         EL_MAP.put("table.login", "Σύνδεση");
         EL_MAP.put("table.name", "Όνομα");
         EL_MAP.put("button.showField", "Εμφάνιση πεδίου");
@@ -129,7 +129,7 @@ public class AppResources {
         ES_NI_MAP.put("error.wrongPassword", "Contraseña incorrecta");
         ES_NI_MAP.put("error.emptyLogin", "El usuario no puede estar vacío");
         ES_NI_MAP.put("error.emptyPassword", "La contraseña no puede estar vacía");
-        ES_NI_MAP.putAll(RU_MAP);
+        //ES_NI_MAP.putAll(RU_MAP);
         ES_NI_MAP.put("table.login", "Usuario");
         ES_NI_MAP.put("table.name", "Nombre");
         ES_NI_MAP.put("button.showField", "Mostrar campo");
