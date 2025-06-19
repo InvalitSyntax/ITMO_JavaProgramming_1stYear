@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
@@ -23,6 +25,8 @@
                      </font>
                   </Text>
                   <MenuButton fx:id="main_language" mnemonicParsing="false" text="Язык" />
+                  <ComboBox fx:id="main_command_box" promptText="Select command" />
+                  <Button fx:id="main_command_execute" text="Execute" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

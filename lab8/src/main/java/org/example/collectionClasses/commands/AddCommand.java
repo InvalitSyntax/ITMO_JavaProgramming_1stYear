@@ -17,8 +17,8 @@ public class AddCommand extends ICommand{
     }
     @Override
     public void setElement(IOManager ioManager){
-        ModelBuilder modelBuilder = new ModelBuilder(ioManager);
-        this.spaceMarine = modelBuilder.build();
+    //     ModelBuilder modelBuilder = new ModelBuilder(ioManager);
+    //     this.spaceMarine = modelBuilder.build();
         this.spaceMarine.setUserLogin(login);
     }
     @Override

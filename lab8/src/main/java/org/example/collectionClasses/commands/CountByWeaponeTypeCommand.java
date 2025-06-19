@@ -34,6 +34,9 @@ public class CountByWeaponeTypeCommand extends ICommand {
                 Collectors.counting()
             ));
         
-        ioManager.writeMessage(counter + "\n", false);
+        StringBuilder sb = new StringBuilder();
+        //sb.append("Weapon Type Counts:\n");
+        counter.forEach((weapon, count) -> sb.append(weapon + ": " + count + "\n"));
+        ioManager.writeMessage(sb.toString(), false);
     }
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.AddMarineDialogController" spacing="10">
+    <alignment>CENTER</alignment>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+    <children>
+        <Text fx:id="infoText" text="Enter SpaceMarine data" />
+        <GridPane hgap="10" vgap="5">
+            <children>
+                <Text fx:id="nameError" style="-fx-fill: red;" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                <TextField fx:id="nameField" promptText="Non-empty string" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                <Text fx:id="coordXError" style="-fx-fill: red;" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                <Label text="Coord X:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <TextField fx:id="coordXField" promptText="Double" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                <Text fx:id="coordYError" style="-fx-fill: red;" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+                <Label text="Coord Y:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                <TextField fx:id="coordYField" promptText="> -501 (Float)" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+                <Text fx:id="healthError" style="-fx-fill: red;" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+                <Label text="Health:" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+                <TextField fx:id="healthField" promptText="> 0 (Float)" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+                <Text fx:id="weaponTypeError" style="-fx-fill: red;" GridPane.rowIndex="8" GridPane.columnIndex="1" />
+                <Label text="Weapon Type:" GridPane.rowIndex="9" GridPane.columnIndex="0" />
+                <ComboBox fx:id="weaponTypeBox" GridPane.rowIndex="9" GridPane.columnIndex="1" />
+
+                <Text fx:id="meleeWeaponError" style="-fx-fill: red;" GridPane.rowIndex="10" GridPane.columnIndex="1" />
+                <Label text="Melee Weapon:" GridPane.rowIndex="11" GridPane.columnIndex="0" />
+                <ComboBox fx:id="meleeWeaponBox" GridPane.rowIndex="11" GridPane.columnIndex="1" />
+
+                <Text fx:id="chapterNameError" style="-fx-fill: red;" GridPane.rowIndex="12" GridPane.columnIndex="1" />
+                <Label text="Chapter Name:" GridPane.rowIndex="13" GridPane.columnIndex="0" />
+                <TextField fx:id="chapterNameField" promptText="Non-empty string" GridPane.rowIndex="13" GridPane.columnIndex="1" />
+
+                <Label text="Chapter World:" GridPane.rowIndex="14" GridPane.columnIndex="0" />
+                <TextField fx:id="chapterWorldField" promptText="String (optional)" GridPane.rowIndex="14" GridPane.columnIndex="1" />
+
+                <Label text="Loyal:" GridPane.rowIndex="15" GridPane.columnIndex="0" />
+                <CheckBox fx:id="loyalCheck" GridPane.rowIndex="15" GridPane.columnIndex="1" />
+            </children>
+        </GridPane>
+        <HBox spacing="10">
+            <alignment>CENTER</alignment>
+            <children>
+                <Button fx:id="addButton" text="Add" />
+                <Button fx:id="cancelButton" text="Cancel" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
