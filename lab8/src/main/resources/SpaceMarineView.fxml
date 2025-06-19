@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.SpaceMarineViewController" fx:id="rootPane" prefWidth="120.0" prefHeight="180.0">
+    <Canvas fx:id="marineCanvas" width="120.0" height="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+    <SVGPath fx:id="marineShape" fill="#4682B4" stroke="black" strokeWidth="2" layoutX="10" layoutY="5"
+        content="M50,20 a15,15 0 1,1 30,0 a15,15 0 1,1 -30,0 M55,35 l20,0 l5,10 l-30,0 z M60,45 v35 l10,0 v-35 z M60,80 l-10,30 l10,0 l5,-25 l5,25 l10,0 l-10,-30 M55,45 l-20,20 l10,5 l15,-15 M75,45 l20,20 l-10,5 l-15,-15 M95,65 l10,2 l-2,8 l-10,-2 z"/>
+</AnchorPane>

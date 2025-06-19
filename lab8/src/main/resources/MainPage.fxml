@@ -27,6 +27,7 @@
                   <MenuButton fx:id="main_language" mnemonicParsing="false" text="Язык" />
                   <ComboBox fx:id="main_command_box" promptText="Select command" />
                   <Button fx:id="main_command_execute" text="Execute" />
+                  <Button fx:id="showFieldButton" text="Показать поле" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

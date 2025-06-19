@@ -58,10 +58,10 @@ public class MainPageController implements Initializable {
     @FXML private TableColumn<SpaceMarine, String> main_coord_id;
     @FXML private ComboBox<String> main_command_box;
     @FXML private Button main_command_execute;
+    @FXML private Button showFieldButton;
 
     private String userLogin;
     private Timeline updateTimeline;
-    private CheckBox loyalCheckBox;
     private final ContextMenu contextMenu = new ContextMenu();
 
     public void setUserLogin(String login) {
@@ -73,81 +73,87 @@ public class MainPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Подписи для колонок (на английском)
-        if (main_id != null) main_id.setText("ID");
-        if (main_login != null) main_login.setText("Login");
-        if (main_name != null) main_name.setText("Name");
-        if (main_health != null) main_health.setText("Health");
-        if (main_loyal != null) main_loyal.setText("Loyal");
-        if (main_weapon_type != null) main_weapon_type.setText("Weapon Type");
-        if (main_melee_weapon != null) main_melee_weapon.setText("Melee Weapon");
-        // Форматтер даты по локали
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
-        if (main_creation_date != null) main_creation_date.setText("Creation Date");
-        if (main_creation_date != null) main_creation_date.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getCreationDate() != null ? cellData.getValue().getCreationDate().format(dateFormatter) : ""));
-        if (main_id != null) main_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        if (main_login != null) main_login.setCellValueFactory(new PropertyValueFactory<>("userLogin"));
-        if (main_name != null) main_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        if (main_health != null) main_health.setCellValueFactory(new PropertyValueFactory<>("health"));
-        if (main_loyal != null) main_loyal.setCellValueFactory(new PropertyValueFactory<>("loyal"));
-        if (main_weapon_type != null) main_weapon_type.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getWeaponType() != null ? cellData.getValue().getWeaponType().toString() : ""));
-        if (main_melee_weapon != null) main_melee_weapon.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getMeleeWeapon() != null ? cellData.getValue().getMeleeWeapon().toString() : ""));
-        // Координаты по отдельным колонкам
-        TableColumn<SpaceMarine, String> coordXCol = new TableColumn<>("Coord X");
-        TableColumn<SpaceMarine, String> coordYCol = new TableColumn<>("Coord Y");
-        coordXCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getCoordinates() != null ? String.valueOf(cellData.getValue().getCoordinates().getX()) : ""));
-        coordYCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getCoordinates() != null && cellData.getValue().getCoordinates().getY() != null ? String.valueOf(cellData.getValue().getCoordinates().getY()) : ""));
-        // Chapter по отдельным колонкам
-        TableColumn<SpaceMarine, String> chapterNameCol = new TableColumn<>("Chapter Name");
-        TableColumn<SpaceMarine, String> chapterWorldCol = new TableColumn<>("Chapter World");
-        chapterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getName() : ""));
-        chapterWorldCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-            cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getWorld() : ""));
-        // Удаляем колонку Action, если она есть
-        if (main_table != null) {
-            main_table.getColumns().removeIf(c -> c.getText().equals("Action"));
-        }
-        // Добавляем новые колонки если их нет
-        if (main_table != null) {
-            if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Coord X"))) main_table.getColumns().add(coordXCol);
-            if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Coord Y"))) main_table.getColumns().add(coordYCol);
-            if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Chapter Name"))) main_table.getColumns().add(chapterNameCol);
-            if (main_table.getColumns().stream().noneMatch(c -> c.getText().equals("Chapter World"))) main_table.getColumns().add(chapterWorldCol);
-            main_table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        }
-        if (userLogin != null && main_user_info != null) {
-            main_user_info.setText(AppResources.getCurrentUserLabel() + " " + userLogin);
-        }
+        setupTableColumns();
+        setupUserInfo();
+        setupCommandBox();
+        setupTableContextMenu();
         updateCollection();
         startCollectionUpdater();
+        setInitialWindowSize();
+        if (showFieldButton != null) {
+            showFieldButton.setOnAction(e -> openFieldWindow());
+        }
+    }
+
+    private void setupTableColumns() {
+        main_id.setText("ID");
+        main_login.setText("Login");
+        main_name.setText("Name");
+        main_health.setText("Health");
+        main_loyal.setText("Loyal");
+        main_weapon_type.setText("Weapon Type");
+        main_melee_weapon.setText("Melee Weapon");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
+        main_creation_date.setText("Creation Date");
+        main_creation_date.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getCreationDate() != null ? cellData.getValue().getCreationDate().format(dateFormatter) : ""));
+        main_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        main_login.setCellValueFactory(new PropertyValueFactory<>("userLogin"));
+        main_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        main_health.setCellValueFactory(new PropertyValueFactory<>("health"));
+        main_loyal.setCellValueFactory(new PropertyValueFactory<>("loyal"));
+        main_weapon_type.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getWeaponType() != null ? cellData.getValue().getWeaponType().toString() : ""));
+        main_melee_weapon.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getMeleeWeapon() != null ? cellData.getValue().getMeleeWeapon().toString() : ""));
+        // Координаты
+        TableColumn<SpaceMarine, String> coordXCol = new TableColumn<>("Coord X");
+        coordXCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getCoordinates() != null ? String.valueOf(cellData.getValue().getCoordinates().getX()) : ""));
+        TableColumn<SpaceMarine, String> coordYCol = new TableColumn<>("Coord Y");
+        coordYCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getCoordinates() != null && cellData.getValue().getCoordinates().getY() != null ? String.valueOf(cellData.getValue().getCoordinates().getY()) : ""));
+        // Chapter
+        TableColumn<SpaceMarine, String> chapterNameCol = new TableColumn<>("Chapter Name");
+        chapterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getName() : ""));
+        TableColumn<SpaceMarine, String> chapterWorldCol = new TableColumn<>("Chapter World");
+        chapterWorldCol.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getWorld() : ""));
+        main_table.getColumns().setAll(
+            main_id, main_login, main_name, main_creation_date, main_health, main_loyal, main_weapon_type, main_melee_weapon,
+            coordXCol, coordYCol, chapterNameCol, chapterWorldCol
+        );
+        main_table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    private void setupUserInfo() {
+        main_user_info.setText(AppResources.getCurrentUserLabel() + " " + userLogin);
+    }
+
+    private void setupCommandBox() {
         if (main_command_box != null) {
-            main_command_box.getItems().addAll("Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script", "Filter Less Than Chapter", "Info", "Remove First", "Remove Greater", "Remove Head");
+            main_command_box.getItems().addAll(
+                "Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script", "Filter Less Than Chapter", "Info", "Remove First", "Remove Greater", "Remove Head"
+            );
+            main_command_box.valueProperty().addListener((obs, oldVal, newVal) -> {
+                // ...логика для loyalCheckBox, если нужно...
+            });
         }
         if (main_command_execute != null) {
             main_command_execute.setOnAction(event -> handleCommandExecute());
         }
-        // Добавим чекбокс для выбора loyal
-        CheckBox loyalCheckBox = new CheckBox("loyal");
-        loyalCheckBox.setVisible(false);
-        if (main_command_box != null) {
-            main_command_box.valueProperty().addListener((obs, oldVal, newVal) -> {
-                loyalCheckBox.setVisible("Count Less Than Loyal".equals(newVal));
-            });
-        }
-        if (main_table != null && main_table.getScene() != null && main_table.getScene().getRoot() instanceof VBox) {
-            VBox root = (VBox) main_table.getScene().getRoot();
-            if (!root.getChildren().contains(loyalCheckBox)) {
-                root.getChildren().add(1, loyalCheckBox); // после HBox с кнопками
-            }
-        }
-        this.loyalCheckBox = loyalCheckBox;
+    }
 
+    private void setupTableContextMenu() {
+        main_table.setRowFactory(tv -> {
+            TableRow<SpaceMarine> row = new TableRow<>();
+            row.setOnMouseClicked(event -> handleRowRightClick(event, row));
+            return row;
+        });
+    }
+
+    private void setInitialWindowSize() {
         if (main_table != null && main_table.getScene() != null) {
             Stage stage = (Stage) main_table.getScene().getWindow();
             if (stage != null) {
@@ -155,21 +161,12 @@ public class MainPageController implements Initializable {
                 stage.setHeight(1000);
             }
         }
-
-        main_table.setRowFactory(tv -> {
-            TableRow<SpaceMarine> row = new TableRow<>();
-            row.setOnMouseClicked(event -> handleRowRightClick(event, row));
-            return row;
-        });
-
     }
 
     private void handleRowRightClick(MouseEvent event, TableRow<SpaceMarine> row) {
         if (!row.isEmpty() && event.getButton() == MouseButton.SECONDARY) {
             SpaceMarine tableItem = row.getItem();
-
             main_table.getSelectionModel().select(tableItem);
-
             if (tableItem.getUserLogin() != null && tableItem.getUserLogin().equals(userLogin)) {
                 setupContextMenu();
             } else {
@@ -180,66 +177,62 @@ public class MainPageController implements Initializable {
             contextMenu.hide();
         }
     }
+
     private void setupContextMenu() {
         MenuItem editItem = new MenuItem("edit");
         MenuItem deleteItem = new MenuItem("remove");
-
-        editItem.setOnAction(event -> {
-            SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
-            if (marine != null) {
-                try {
-                    // Открываем диалог с предзаполненными значениями
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddMarineDialog.fxml"));
-                    VBox dialogRoot = loader.load();
-                    AddMarineDialogController dialogController = loader.getController();
-                    dialogController.setInitialValues(marine); // метод для заполнения полей
-                    Stage dialogStage = new Stage();
-                    dialogStage.setTitle("Edit SpaceMarine");
-                    dialogStage.setScene(new Scene(dialogRoot));
-                    dialogStage.initOwner(main_command_box.getScene().getWindow());
-                    dialogStage.showAndWait();
-                    SpaceMarine editedMarine = dialogController.getResult();
-                    if (editedMarine != null) {
-                        // Сначала удаляем по id
-                        org.example.collectionClasses.commands.RemoveByIdCommand removeCmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
-                        String[] removeTokens = {"remove_by_id", String.valueOf(marine.getId())};
-                        ClientApp.processCommandFromGUI(removeCmd, removeTokens);
-                        // Затем добавляем новый
-                        org.example.collectionClasses.commands.AddCommand addCmd = new org.example.collectionClasses.commands.AddCommand();
-                        addCmd.spaceMarine = editedMarine;
-                        String[] addTokens = {"add"};
-                        ClientApp.processCommandFromGUI(addCmd, addTokens);
-                        updateCollection();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        deleteItem.setOnAction(event -> {
-            SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
-            if (marine != null) {
-                //addDragon(cResourceBundle.getString("edit_dragon_title"), this::sendUpdateDragonToServer, selectedDragon);
-                org.example.collectionClasses.commands.RemoveByIdCommand cmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
-                String[] tokens = {"remove_by_id", String.valueOf(marine.getId())};
-                try {
-                    ClientApp.processCommandFromGUI(cmd, tokens);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                updateCollection();
-            }
-        });
-
+        editItem.setOnAction(event -> handleEditSelectedMarine());
+        deleteItem.setOnAction(event -> handleDeleteSelectedMarine());
         contextMenu.getItems().setAll(editItem, deleteItem);
     }
 
     private void setupEmptyContextMenu() {
-        MenuItem Item = new MenuItem("not your marine");
+        MenuItem item = new MenuItem("not your marine");
+        contextMenu.getItems().setAll(item);
+    }
 
-        contextMenu.getItems().setAll(Item);
+    private void handleEditSelectedMarine() {
+        SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
+        if (marine != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddMarineDialog.fxml"));
+                VBox dialogRoot = loader.load();
+                AddMarineDialogController dialogController = loader.getController();
+                dialogController.setInitialValues(marine);
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Edit SpaceMarine");
+                dialogStage.setScene(new Scene(dialogRoot));
+                dialogStage.initOwner(main_command_box.getScene().getWindow());
+                dialogStage.showAndWait();
+                SpaceMarine editedMarine = dialogController.getResult();
+                if (editedMarine != null) {
+                    org.example.collectionClasses.commands.RemoveByIdCommand removeCmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
+                    String[] removeTokens = {"remove_by_id", String.valueOf(marine.getId())};
+                    ClientApp.processCommandFromGUI(removeCmd, removeTokens);
+                    org.example.collectionClasses.commands.AddCommand addCmd = new org.example.collectionClasses.commands.AddCommand();
+                    addCmd.spaceMarine = editedMarine;
+                    String[] addTokens = {"add"};
+                    ClientApp.processCommandFromGUI(addCmd, addTokens);
+                    updateCollection();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void handleDeleteSelectedMarine() {
+        SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
+        if (marine != null) {
+            org.example.collectionClasses.commands.RemoveByIdCommand cmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
+            String[] tokens = {"remove_by_id", String.valueOf(marine.getId())};
+            try {
+                ClientApp.processCommandFromGUI(cmd, tokens);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            updateCollection();
+        }
     }
 
     private void startCollectionUpdater() {
@@ -249,25 +242,22 @@ public class MainPageController implements Initializable {
     }
 
     private void updateCollection() {
-            try {
-                var answer = ClientApp.getCollectionFromServer();
-                List<SpaceMarine> collection = answer.getCollection();
-                if (collection != null) {
-                    //main_table.getItems().setAll(collection);
-                    if (!new HashSet<>(collection).equals(new HashSet<>(main_table.getItems()))) { // Сравнение по хэшстеам чтобы сравнивалось без учета порядка
-                        SpaceMarine selectedDragon = main_table.getSelectionModel().getSelectedItem();
-
-                        main_table.getItems().setAll(collection);
-                        main_table.sort();
-
-                        if (selectedDragon != null) {
-                            main_table.getSelectionModel().select(selectedDragon);
-                        }
+        try {
+            var answer = ClientApp.getCollectionFromServer();
+            List<SpaceMarine> collection = answer.getCollection();
+            if (collection != null) {
+                if (!new HashSet<>(collection).equals(new HashSet<>(main_table.getItems()))) {
+                    SpaceMarine selected = main_table.getSelectionModel().getSelectedItem();
+                    main_table.getItems().setAll(collection);
+                    main_table.sort();
+                    if (selected != null) {
+                        main_table.getSelectionModel().select(selected);
                     }
                 }
-            } catch (Exception e) {
-                // Можно добавить вывод ошибки в main_user_info или лог
             }
+        } catch (Exception e) {
+            // Можно добавить вывод ошибки в main_user_info или лог
+        }
     }
 
     private void openAddDialog() {
@@ -282,7 +272,6 @@ public class MainPageController implements Initializable {
             dialogStage.showAndWait();
             SpaceMarine newMarine = dialogController.getResult();
             if (newMarine != null) {
-                // Отправить на сервер команду добавления
                 org.example.collectionClasses.commands.AddCommand cmd = new org.example.collectionClasses.commands.AddCommand();
                 cmd.spaceMarine = newMarine;
                 String[] tokens = {"add"};
@@ -294,7 +283,6 @@ public class MainPageController implements Initializable {
         }
     }
 
-    // Новый диалог для ввода Chapter
     private void openChapterDialog(java.util.function.Consumer<org.example.collectionClasses.model.Chapter> onResult) {
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Введите Chapter");
@@ -424,13 +412,7 @@ public class MainPageController implements Initializable {
                 TableColumn<SpaceMarine, String> coordYCol = new TableColumn<>("Coord Y");
                 coordYCol.setCellValueFactory(cellData -> new SimpleStringProperty(
                     cellData.getValue().getCoordinates() != null && cellData.getValue().getCoordinates().getY() != null ? String.valueOf(cellData.getValue().getCoordinates().getY()) : ""));
-                TableColumn<SpaceMarine, String> chapterNameCol = new TableColumn<>("Chapter Name");
-                chapterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-                    cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getName() : ""));
-                TableColumn<SpaceMarine, String> chapterWorldCol = new TableColumn<>("Chapter World");
-                chapterWorldCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-                    cellData.getValue().getChapter() != null ? cellData.getValue().getChapter().getWorld() : ""));
-                filteredTable.getColumns().addAll(idCol, loginCol, nameCol, creationDateCol, healthCol, loyalCol, weaponTypeCol, meleeWeaponCol, coordXCol, coordYCol, chapterNameCol, chapterWorldCol);
+                filteredTable.getColumns().addAll(idCol, loginCol, nameCol, creationDateCol, healthCol, loyalCol, weaponTypeCol, meleeWeaponCol, coordXCol, coordYCol);
                 filteredTable.getItems().setAll(filtered);
                 filteredTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
                 filteredTable.setPrefWidth(main_table.getWidth());
@@ -526,7 +508,6 @@ public class MainPageController implements Initializable {
         });
     }
 
-    // Универсальный диалог для ввода десантника (для RemoveGreater и других команд)
     private void openMarineDialog(java.util.function.Consumer<SpaceMarine> onResult) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddMarineDialog.fxml"));
@@ -541,6 +522,22 @@ public class MainPageController implements Initializable {
             onResult.accept(newMarine);
         } catch (Exception e) {
             // Можно добавить вывод ошибки
+        }
+    }
+
+    private void openFieldWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpaceFieldView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Space Field");
+            stage.setScene(new Scene(loader.load()));
+            SpaceFieldController controller = loader.getController();
+            // Передаём текущую коллекцию
+            List<SpaceMarine> marines = main_table.getItems();
+            controller.showMarines(marines);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
