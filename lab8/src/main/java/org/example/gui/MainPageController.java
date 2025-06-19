@@ -67,7 +67,7 @@ public class MainPageController implements Initializable {
     public void setUserLogin(String login) {
         this.userLogin = login;
         if (main_user_info != null) {
-            main_user_info.setText(AppResources.getCurrentUserLabel() + " " + login);
+            main_user_info.setText(AppResources.getCurrentLanguage().getCurrentUserLabel() + " " + login);
         }
     }
 
@@ -79,7 +79,22 @@ public class MainPageController implements Initializable {
         showFieldButton.setText(AppResources.get("button.showField"));
         main_command_execute.setText(AppResources.get("button.execute"));
         main_command_box.setPromptText(AppResources.get("commandBox.prompt"));
-        // ...добавить другие элементы, если есть...
+        main_user_info.setText(AppResources.getCurrentLanguage().getCurrentUserLabel() + " " + userLogin);
+        // Переводим команды в ComboBox
+        // if (main_command_box != null) {
+        //     main_command_box.getItems().setAll(
+        //         AppResources.get("command.addElement"),
+        //         AppResources.get("command.clearCollection"),
+        //         AppResources.get("command.countByWeaponType"),
+        //         AppResources.get("command.countLessThanLoyal"),
+        //         AppResources.get("command.executeScript"),
+        //         AppResources.get("command.filterLessThanChapter"),
+        //         AppResources.get("command.info"),
+        //         AppResources.get("command.removeFirst"),
+        //         AppResources.get("command.removeGreater"),
+        //         AppResources.get("command.removeHead")
+        //     );
+        // }
     }
 
     @Override
@@ -89,6 +104,18 @@ public class MainPageController implements Initializable {
         setupCommandBox();
         setupTableContextMenu();
         updateTexts();
+        // --- добавляем обработку смены языка ---
+        main_language.getItems().clear();
+        MenuItem ru = new MenuItem("Русский");
+        MenuItem be = new MenuItem("Беларуская");
+        MenuItem el = new MenuItem("Ελληνικά");
+        MenuItem es = new MenuItem("Español (NI)");
+        ru.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.RU); setupTableColumns(); updateTexts(); });
+        be.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.BE); setupTableColumns(); updateTexts(); });
+        el.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.EL); setupTableColumns(); updateTexts(); });
+        es.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.ES_NI); setupTableColumns(); updateTexts(); });
+        main_language.getItems().addAll(ru, be, el, es);
+        // --- конец блока смены языка ---
         updateCollection();
         startCollectionUpdater();
         setInitialWindowSize();
@@ -136,13 +163,13 @@ public class MainPageController implements Initializable {
     }
 
     private void setupUserInfo() {
-        main_user_info.setText(AppResources.getCurrentUserLabel() + " " + userLogin);
+        main_user_info.setText(AppResources.getCurrentLanguage().getCurrentUserLabel() + " " + userLogin);
     }
 
     private void setupCommandBox() {
         if (main_command_box != null) {
             main_command_box.getItems().addAll(
-                "Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Execute Script", "Filter Less Than Chapter", "Info", "Remove First", "Remove Greater", "Remove Head"
+                "Add Element", "Clear Collection", "Count By Weapon Type", "Count Less Than Loyal", "Filter Less Than Chapter", "Info", "Remove First", "Remove Greater", "Remove Head"
             );
             main_command_box.valueProperty().addListener((obs, oldVal, newVal) -> {
                 // ...логика для loyalCheckBox, если нужно...
@@ -187,15 +214,15 @@ public class MainPageController implements Initializable {
     }
 
     private void setupContextMenu() {
-        MenuItem editItem = new MenuItem("edit");
-        MenuItem deleteItem = new MenuItem("remove");
+        MenuItem editItem = new MenuItem(AppResources.get("edit"));
+        MenuItem deleteItem = new MenuItem(AppResources.get("remove"));
         editItem.setOnAction(event -> handleEditSelectedMarine());
         deleteItem.setOnAction(event -> handleDeleteSelectedMarine());
         contextMenu.getItems().setAll(editItem, deleteItem);
     }
 
     private void setupEmptyContextMenu() {
-        MenuItem item = new MenuItem("not your marine");
+        MenuItem item = new MenuItem(AppResources.get("not your marine"));
         contextMenu.getItems().setAll(item);
     }
 
@@ -293,35 +320,36 @@ public class MainPageController implements Initializable {
 
     private void openChapterDialog(java.util.function.Consumer<org.example.collectionClasses.model.Chapter> onResult) {
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Введите Chapter");
+        dialogStage.setTitle(AppResources.get("chapter.inputTitle"));
         VBox vbox = new VBox(10);
         vbox.setPadding(new javafx.geometry.Insets(20));
         TextField nameField = new TextField();
-        nameField.setPromptText("Name (обязательно)");
+        nameField.setPromptText(AppResources.get("marine.chapterName") + " (" + AppResources.get("required") + ")");
         TextField worldField = new TextField();
-        worldField.setPromptText("World (обязательно)");
+        worldField.setPromptText(AppResources.get("marine.chapterWorld") + " (" + AppResources.get("required") + ")");
         Text errorText = new Text();
         errorText.setStyle("-fx-fill: red;");
-        Button okBtn = new Button("OK");
+        Button okBtn = new Button(AppResources.get("button.accept"));
         okBtn.setOnAction(e -> {
             String name = nameField.getText();
             String world = worldField.getText();
             if (name == null || name.isEmpty()) {
-                errorText.setText("Name не может быть пустым");
+                errorText.setText(AppResources.get("error.emptyChapterName"));
                 return;
             }
             if (world == null) {
-                errorText.setText("World не может быть null");
+                errorText.setText(AppResources.get("error.emptyChapterWorld"));
                 return;
             }
             org.example.collectionClasses.model.Chapter chapter = new org.example.collectionClasses.model.Chapter(name, world);
             onResult.accept(chapter);
             dialogStage.close();
         });
-        Button cancelBtn = new Button("Cancel");
+        Button cancelBtn = new Button(AppResources.get("button.cancel"));
         cancelBtn.setOnAction(e -> dialogStage.close());
-        vbox.getChildren().addAll(new Label("Введите Chapter для фильтрации:"),
-            new Label("Name:"), nameField, new Label("World:"), worldField, errorText, new HBox(10, okBtn, cancelBtn));
+        vbox.getChildren().addAll(new Label(AppResources.get("chapter.inputLabel")),
+            new Label(AppResources.get("marine.chapterName")), nameField,
+            new Label(AppResources.get("marine.chapterWorld")), worldField, errorText, new HBox(10, okBtn, cancelBtn));
         dialogStage.setScene(new Scene(vbox));
         dialogStage.initOwner(main_command_box.getScene().getWindow());
         dialogStage.showAndWait();
@@ -490,7 +518,7 @@ public class MainPageController implements Initializable {
     private void showInfoDialog(String title, String message) {
         Platform.runLater(() -> {
             Stage dialog = new Stage();
-            dialog.setTitle(title);
+            dialog.setTitle(AppResources.get(title));
             VBox box = new VBox(new Text(message));
             box.setPadding(new javafx.geometry.Insets(20));
             dialog.setScene(new Scene(box));
@@ -502,7 +530,7 @@ public class MainPageController implements Initializable {
     private void showScrollableInfoDialog(String title, String message) {
         Platform.runLater(() -> {
             Stage dialog = new Stage();
-            dialog.setTitle(title);
+            dialog.setTitle(AppResources.get(title));
             javafx.scene.control.TextArea textArea = new javafx.scene.control.TextArea(message);
             textArea.setWrapText(true);
             textArea.setEditable(false);

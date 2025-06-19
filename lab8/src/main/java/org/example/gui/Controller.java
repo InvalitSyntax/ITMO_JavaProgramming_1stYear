@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import org.example.client.ClientApp;
 import org.example.collectionClasses.app.IOManager;
 import org.example.collectionClasses.commands.Answer;
+import org.example.gui.AppResources.Language;
 import org.example.collectionClasses.app.CommandManager;
 import org.example.client.ClientNetworkManager;
 
@@ -19,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.MenuItem;
 
 public class Controller implements Initializable {
     @FXML
@@ -34,6 +36,18 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateTexts();
+        // --- добавляем обработку смены языка ---
+        login_language.getItems().clear();
+        MenuItem ru = new MenuItem("Русский");
+        MenuItem be = new MenuItem("Беларуская");
+        MenuItem el = new MenuItem("Ελληνικά");
+        MenuItem es = new MenuItem("Español (NI)");
+        ru.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.RU); updateTexts(); });
+        be.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.BE); updateTexts(); });
+        el.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.EL); updateTexts(); });
+        es.setOnAction(e -> { AppResources.setLanguage(AppResources.Lang.ES_NI); updateTexts(); });
+        login_language.getItems().addAll(ru, be, el, es);
+        // --- конец блока смены языка ---
         // Инициализация клиента для GUI (один раз на приложение)
         try {
             IOManager ioManager = new org.example.collectionClasses.app.IOManager();
@@ -42,22 +56,23 @@ public class Controller implements Initializable {
             org.example.client.ClientNetworkManager networkManager = new org.example.client.ClientNetworkManager("localhost", 57486);
             org.example.client.ClientApp.initForGUI(ioManager, commandManager, networkManager);
         } catch (Exception e) {
-            login_info_text.setText("Ошибка инициализации клиента: " + e.getMessage());
+            login_info_text.setText(AppResources.get("error.initClient") + ": " + e.getMessage());
         }
         login_login_button.setOnAction(event -> handleLogin());
         login_register_button.setOnAction(event -> handleRegister());
     }
 
     private void updateTexts() {
-        AppResources.Language lang = AppResources.getCurrentLanguage();
-        login_info_text.setText(lang.getLoginInfo());
+        Language lang = AppResources.getCurrentLanguage(); // Теперь будет возвращать правильный язык
+        
         login_login_text.setText(lang.getLoginLabel());
         login_password_text.setText(lang.getPasswordLabel());
         login_login_button.setText(lang.getLoginButtonText());
         login_register_button.setText(lang.getRegisterButtonText());
-        login_login_field.setPromptText(lang.getLoginLabel());
+        login_login_field.setPromptText(lang.getLoginLabel()); // Теперь prompt тоже обновится
         login_password_field.setPromptText(lang.getPasswordLabel());
-        login_language.setText(AppResources.get("button.language"));
+        login_language.setText(AppResources.get("button.language")); // Использует currentLang
+        login_info_text.setText("");
     }
 
     private void handleLogin() {
@@ -104,7 +119,7 @@ public class Controller implements Initializable {
                     root.getChildren().setAll(mainPage);
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    login_info_text.setText("Ошибка перехода на главную страницу: " + ex.getMessage());
+                    login_info_text.setText(AppResources.get("error.gotoMain") + ": " + ex.getMessage());
                 }
             } else if (answerText.contains(AppResources.getUserNotFoundError())) {
                 login_info_text.setText(AppResources.getUserNotFoundError());
@@ -114,7 +129,7 @@ public class Controller implements Initializable {
                 login_info_text.setText(AppResources.getCurrentLanguage().getLoginInfo() + ": " + answerText);
             }
         } catch (Exception e) {
-            login_info_text.setText("Ошибка соединения: " + e.getMessage());
+            login_info_text.setText(AppResources.get("error.connection") + ": " + e.getMessage());
         }
     }
 
@@ -163,7 +178,7 @@ public class Controller implements Initializable {
                     root.getChildren().setAll(mainPage);
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    login_info_text.setText("Ошибка перехода на главную страницу: " + ex.getMessage());
+                    login_info_text.setText(AppResources.get("error.gotoMain") + ": " + ex.getMessage());
                 }
             } else if (answerText.equals(AppResources.getUserExistsError())) {
                 login_info_text.setText(AppResources.getUserExistsError());
@@ -171,7 +186,7 @@ public class Controller implements Initializable {
                 login_info_text.setText(AppResources.getCurrentLanguage().getRegisterButtonText() + ": " + answerText);
             }
         } catch (Exception e) {
-            login_info_text.setText("Ошибка соединения: " + e.getMessage());
+            login_info_text.setText(AppResources.get("error.connection") + ": " + e.getMessage());
         }
     }
 }
