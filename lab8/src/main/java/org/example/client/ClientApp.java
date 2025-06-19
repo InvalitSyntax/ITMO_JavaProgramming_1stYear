@@ -148,6 +148,12 @@ public class ClientApp {
         RegisterCommand cmd = new RegisterCommand();
         return guiClientApp.processCommandWithAnswer(cmd, tokens);
     }
+    public static Answer getCollectionFromServer() throws Exception {
+        if (guiClientApp == null) throw new IllegalStateException("ClientApp не инициализирован для GUI");
+        String[] tokens = {"update_collection"};
+        ICommand cmd = new org.example.collectionClasses.commands.UpdateCollectionCommand();
+        return guiClientApp.processCommandWithAnswer(cmd, tokens);
+    }
     // Новый метод для возврата Answer
     public Answer processCommandWithAnswer(ICommand command, String[] tokens) throws Exception {
         if (this.authorized == true){

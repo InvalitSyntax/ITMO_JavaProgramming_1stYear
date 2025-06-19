@@ -11,6 +11,9 @@ public class CommandProcessor {
 
     public synchronized Answer processCommand(ICommand receivedCommand, AppController appController) {
         receivedCommand.execute(appController, receivedCommand.getArgs());
+        if (receivedCommand.getAnswer() != null) {
+            return receivedCommand.getAnswer();
+        }
         String writedMessages = appController.getIoManager().popWritedMessages();
         String result = writedMessages.length() != 0 ? writedMessages : "Команда выполнена";
         logger.info("Команда обработана, результат: {}", result);

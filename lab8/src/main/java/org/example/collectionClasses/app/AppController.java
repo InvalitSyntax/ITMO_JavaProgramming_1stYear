@@ -47,6 +47,7 @@ public class AppController {
     private void putCommands() {
         commandManager.putCommand("help", HelpCommandServer::new);
         commandManager.putCommand("show", ShowCommand::new);
+        commandManager.putCommand("update_collection", UpdateCollectionCommand::new);
     }
 
     /**

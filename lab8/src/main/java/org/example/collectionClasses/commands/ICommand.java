@@ -11,6 +11,8 @@ public class ICommand implements Command {
     public boolean needToExecutePartOnClient = false;
     public boolean condition = false;
     public String login, password;
+    protected Answer answer;
+    public Answer getAnswer() { return answer; }
     public void setArgs(String[] args) {
         this.args = args;
     }
