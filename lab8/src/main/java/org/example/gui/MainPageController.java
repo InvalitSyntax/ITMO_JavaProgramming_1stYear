@@ -45,7 +45,7 @@ import javafx.scene.layout.HBox;
 public class MainPageController implements Initializable {
     @FXML private Text main_user_info;
     @FXML private MenuButton main_language;
-    @FXML private TableView<SpaceMarine> main_table;
+    @FXML protected TableView<SpaceMarine> main_table;
     @FXML private TableColumn<SpaceMarine, Integer> main_id;
     @FXML private TableColumn<SpaceMarine, String> main_login;
     @FXML private TableColumn<SpaceMarine, String> main_name;
@@ -60,7 +60,7 @@ public class MainPageController implements Initializable {
     @FXML private Button main_command_execute;
     @FXML private Button showFieldButton;
 
-    private String userLogin;
+    protected String userLogin;
     private Timeline updateTimeline;
     private final ContextMenu contextMenu = new ContextMenu();
 
@@ -69,6 +69,10 @@ public class MainPageController implements Initializable {
         if (main_user_info != null) {
             main_user_info.setText(AppResources.getCurrentUserLabel() + " " + login);
         }
+    }
+
+    public String getUserLogin() {
+        return userLogin;
     }
 
     @Override
@@ -163,7 +167,7 @@ public class MainPageController implements Initializable {
         }
     }
 
-    private void handleRowRightClick(MouseEvent event, TableRow<SpaceMarine> row) {
+    protected void handleRowRightClick(MouseEvent event, TableRow<SpaceMarine> row) {
         if (!row.isEmpty() && event.getButton() == MouseButton.SECONDARY) {
             SpaceMarine tableItem = row.getItem();
             main_table.getSelectionModel().select(tableItem);
@@ -191,7 +195,7 @@ public class MainPageController implements Initializable {
         contextMenu.getItems().setAll(item);
     }
 
-    private void handleEditSelectedMarine() {
+    public void handleEditSelectedMarine() {
         SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
         if (marine != null) {
             try {
@@ -221,7 +225,7 @@ public class MainPageController implements Initializable {
         }
     }
 
-    private void handleDeleteSelectedMarine() {
+    public void handleDeleteSelectedMarine() {
         SpaceMarine marine = main_table.getSelectionModel().getSelectedItem();
         if (marine != null) {
             org.example.collectionClasses.commands.RemoveByIdCommand cmd = new org.example.collectionClasses.commands.RemoveByIdCommand();
@@ -532,6 +536,7 @@ public class MainPageController implements Initializable {
             stage.setTitle("Space Field");
             stage.setScene(new Scene(loader.load()));
             SpaceFieldController controller = loader.getController();
+            controller.setMainPageController(this);
             // Передаём текущую коллекцию
             List<SpaceMarine> marines = main_table.getItems();
             controller.showMarines(marines);
@@ -539,5 +544,9 @@ public class MainPageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public TableView<SpaceMarine> getMainTable() {
+        return main_table;
     }
 }

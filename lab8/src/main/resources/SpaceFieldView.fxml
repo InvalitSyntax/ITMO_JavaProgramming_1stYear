@@ -3,9 +3,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.SpaceFieldController" prefWidth="800.0" prefHeight="600.0">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.SpaceFieldController" prefWidth="800.0" prefHeight="800.0">
     <!-- Космический фон -->
-    <Rectangle width="800.0" height="600.0" fill="#23234a"/>
+    <Rectangle width="800.0" height="800.0" fill="#23234a"/>
     <!-- Много звёзд -->
     <Circle centerX="100" centerY="120" radius="2" fill="white"/>
     <Circle centerX="300" centerY="80" radius="1.5" fill="white"/>
@@ -16,15 +16,15 @@
     <Circle centerX="200" centerY="300" radius="1.7" fill="white"/>
     <Circle centerX="750" centerY="100" radius="2.1" fill="white"/>
     <Circle centerX="650" centerY="350" radius="1.3" fill="white"/>
-    <Circle centerX="500" centerY="550" radius="1.9" fill="white"/>
+    <Circle centerX="500" centerY="750" radius="1.9" fill="white"/>
     <Circle centerX="350" centerY="250" radius="1.4" fill="white"/>
-    <Circle centerX="120" centerY="500" radius="1.6" fill="white"/>
-    <Circle centerX="780" centerY="580" radius="1.1" fill="white"/>
+    <Circle centerX="120" centerY="700" radius="1.6" fill="white"/>
+    <Circle centerX="780" centerY="780" radius="1.1" fill="white"/>
     <Circle centerX="600" centerY="50" radius="1.5" fill="white"/>
-    <Circle centerX="250" centerY="550" radius="1.3" fill="white"/>
+    <Circle centerX="250" centerY="750" radius="1.3" fill="white"/>
     <Circle centerX="700" centerY="300" radius="1.8" fill="white"/>
     <Circle centerX="500" centerY="100" radius="1.2" fill="white"/>
-    <Circle centerX="350" centerY="500" radius="1.7" fill="white"/>
+    <Circle centerX="350" centerY="700" radius="1.7" fill="white"/>
     <!-- Контейнер для десантников -->
-    <Pane fx:id="marinesPane" prefWidth="800.0" prefHeight="600.0" />
+    <Pane fx:id="marinesPane" prefWidth="800.0" prefHeight="800.0" />
 </AnchorPane>
